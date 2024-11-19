@@ -7,14 +7,14 @@ enum icon_sizes
     INCREACE_KOEF = 2       //! Коэффициент увеличения при наведении
 };
 
-Skill::Skill(QWidget *parent) : QLabel(parent)
+Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(parent)
 {
-    this->move(100,100);
+    this->move(500,100);
     this->setScaledContents(true);
     this->resize(BASE_SIZE,BASE_SIZE);
     //! Подключаем обработчик событий
     this->installEventFilter(this);
-    description = new Description("text", parent, this);
+    description = new Description(parent, this, name_text, desc_txt);
     description->hide();
 }
 

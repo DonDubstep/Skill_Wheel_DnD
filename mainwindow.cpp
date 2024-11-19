@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    s = new Skill(this);
+    s = new Skill(this, "Название", "Описание");
     QPixmap *pic = new QPixmap(QCoreApplication::applicationDirPath() + "/GraveCold_13_11zon.png");
     s->setPixmap(*pic);
 

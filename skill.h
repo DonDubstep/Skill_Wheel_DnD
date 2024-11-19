@@ -8,7 +8,7 @@
 class Skill : public QLabel
 {
 public:
-    Skill(QWidget *parent=nullptr);
+    Skill(QWidget *parent, QString name_text, QString desc_txt);
     bool eventFilter(QObject* object, QEvent* event);
     Description* description;
 protected:
