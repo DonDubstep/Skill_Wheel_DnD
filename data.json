@@ -1,0 +1,30 @@
+{
+    "Attack":[
+        {
+            "icon_path" : "Attack/Attack1_14_11zon.png",
+            "title" : "Titl1",
+            "description" : "desc1",
+            "title_color" : "yellow"
+        },
+        {
+            "icon_path" : "Attack/Attack2_13_11zon.png",
+            "title" : "Titl2",
+            "description" : "desc2",
+            "title_color" : "red"
+        }
+    ],
+    "BattleCries":[
+        {
+            "icon_path" : "BattleCries/BattleCry1_8_11zon.png",
+            "title" : "Titl1",
+            "description" : "desc1",
+            "title_color" : "yellow"
+        },
+        {
+            "icon_path" : "BattleCries/BattleCry2_7_11zon.png",
+            "title" : "Titl2",
+            "description" : "desc2",
+            "title_color" : "red"
+        }
+    ]
+}
