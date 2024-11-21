@@ -1,7 +1,8 @@
-QT       += core gui
+QT       += core gui widgets
+#QT       -= network sql xml multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+#QMAKE_CXXFLAGS_RELEASE += -s
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -34,5 +35,12 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+win64
+{
+   DESTDIR = $$PWD/bin
+   QMAKE_POST_LINK = windeployqt $$shell_path($$DESTDIR/$${TARGET}.exe)
+}
+
 DISTFILES += \
-    README.md
+    README.md \
+    data.json
