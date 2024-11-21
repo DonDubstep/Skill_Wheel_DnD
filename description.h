@@ -13,8 +13,10 @@ public:
     QLabel* description_text;
     QLabel* name;
     QWidget* parent_skill;
+    QWidget* parent_window;
     QVBoxLayout* frame_vlayout;
 
+public slots:
     void show();
 };
 

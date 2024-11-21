@@ -38,6 +38,7 @@ Description::Description(QWidget *window, QWidget* skill, QString name_text, QSt
     name->setAlignment(Qt::AlignHCenter);
     //! Запоминаем указатель на иконку навыка
     parent_skill = skill;
+    parent_window = window;
     //! Компоновка по вертикали
     frame_vlayout = new QVBoxLayout(this);
     frame_vlayout->addWidget(name);
@@ -63,7 +64,22 @@ Description::~Description()
 //! Переопределённый метод для появления рамки в нужном месте
 void Description::show()
 {
-    this->move(parent_skill->x() - this->width() / 2 + 30, parent_skill->y()+80);
+    int x,y;
+    //! Распологаем посередине относительно иконки по Х
+    x = parent_skill->x() - this->width() / 2 + 30;
+    //! Располагаем у под иконкой
+    y = parent_skill->y()+60;
+    //! Если выходим за левый край
+    if(x < 0)
+        x = 0;
+    //! Если выходим за правый край
+    else if ((x + this->width()) > parent_window->width())
+        x = parent_window->width() - this->width();
+    //! Если выходим за нижный край
+    if((y + this->height()) > parent_window->height())
+        y = parent_skill->y() - this->height();
+    //! Присваиваем вычисленные координаты
+    this->move(x,y);
 
     QLabel::show();
 }
