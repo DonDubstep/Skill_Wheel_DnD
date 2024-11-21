@@ -9,7 +9,7 @@ enum icon_sizes
 
 Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(parent)
 {
-    this->move(500,100);
+//    this->move(500,500);
     this->setScaledContents(true);
     this->resize(BASE_SIZE,BASE_SIZE);
     //! Подключаем обработчик событий
