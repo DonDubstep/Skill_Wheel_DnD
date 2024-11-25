@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <math.h>
+#include <QPainter>
 
 enum wheel_size
 {
@@ -67,6 +68,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     read_json();
     show_icons();
+
 }
 
 MainWindow::~MainWindow()
@@ -111,25 +113,64 @@ void MainWindow::read_json()
 //! Здесь рисуем иконки
 void MainWindow::show_icons()
 {
-    double radius = 253; // 196 // 253 // 310 //376
+    double radius = 194; // 194 // 253 // 310 //376
     int sectors = 12;
     int n_pics_in_sector = 3;
     double x,y;
     double angle;
     int j = 0;
-    for(int sector = 0; sector < sectors; sector++)
+    Skill* s1;
+    Skill* s2;
+    Skill* s3;
+    Skill* s4;
+    for(int icon = 0; icon < 48; icon++)
     {
-        for(int i = 0; i < 3; i++)
-        {
 
-            angle = 2 * M_PI /sectors * (sector + (i+1.)/ (n_pics_in_sector+1));
-            x = (WHEEL_WIDTH / 2 - 15 + 3.5) + radius * cos(angle);     //! 3.5 - выверенное смещение, не править!
-            y = (WHEEL_HEIGHT / 2 - 15 + 3.5) + radius * -sin(angle);   //! 3.5 - выверенное смещение, не править!
-            Skill* skill = all_skills_data["Attack"][j].skill;
-            skill = new Skill(ui->tab1, all_skills_data["Attack"][j].title, all_skills_data["Attack"][j].descriprion);
-            skill->setPixmap(QPixmap(PIC_PATH + all_skills_data["Attack"][j++].icon_path));
-            skill->move(int(x),int(y));
+//      angle = 2 * M_PI /sectors * (sector + (i+1.)/ (n_pics_in_sector+1));
+        angle = 2 * M_PI /48 * icon;
+        x = (WHEEL_WIDTH / 2 - 15 + 4.1) + radius * cos(angle);     //! 3.5 - выверенное смещение, не править!
+        y = (WHEEL_HEIGHT / 2 - 15 + 3.5) + radius * -sin(angle);   //! 3.5 - выверенное смещение, не править!
+        if(icon == 0)
+        {
+            qDebug() << 0;
+            s1 = new Skill(ui->tab1, "ЫЫЫ", "УУУ");
+            s1->setPixmap(QPixmap(PIC_PATH + "hor.png"));
+            s1->move(int(x),int(y));
+            continue;
         }
+        if(icon == 24)
+        {
+            qDebug() << 24;
+            s2 = new Skill(ui->tab1, "ЫЫЫ", "УУУ");
+            s2->setPixmap(QPixmap(PIC_PATH + "hor.png"));
+            s2->move(int(x),int(y));
+            continue;
+        }
+        if(icon == 12)
+        {
+            qDebug() << 12;
+            s3 = new Skill(ui->tab1, "ЫЫЫ", "УУУ");
+            s3->setPixmap(QPixmap(PIC_PATH + "vert.png"));
+            s3->move(int(x),int(y));
+            continue;
+        }
+        if(icon == 36)
+        {
+            qDebug() << 36;
+            qDebug() << PIC_PATH + "vert.jpg";
+            s4 = new Skill(ui->tab1, "ЫЫЫ", "УУУ");
+            s4->setPixmap(QPixmap(PIC_PATH + "vert.png"));
+            s4->move(int(x),int(y));
+            continue;
+        }
+        if(icon % 4 == 0)
+            continue;
+
+        Skill* skill = all_skills_data["Attack"][j].skill;
+        skill = new Skill(ui->tab1, all_skills_data["Attack"][j].title, all_skills_data["Attack"][j].descriprion);
+        skill->setPixmap(QPixmap(PIC_PATH + all_skills_data["Attack"][j++].icon_path));
+        skill->move(int(x),int(y));
+
     }
     this->update();
 }
