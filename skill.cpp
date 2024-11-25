@@ -3,7 +3,7 @@
 
 enum icon_sizes
 {
-    BASE_SIZE = 30,         //! Размер иконки
+    BASE_SIZE = 32,         //! Размер иконки
     INCREACE_KOEF = 2       //! Коэффициент увеличения при наведении
 };
 
@@ -14,6 +14,7 @@ Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(pare
     this->resize(BASE_SIZE,BASE_SIZE);
     //! Подключаем обработчик событий
     this->installEventFilter(this);
+
     description = new Description(parent, this, name_text, desc_txt);
     description->hide();
 }
@@ -30,6 +31,8 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         //! Смещаем объект так, чтобы увеличение происходило без сдвига
         int offset = BASE_SIZE / 2;
         this->move(this->x() - offset, this->y() - offset);
+        this->raise();
+        description->raise();
         description->show();
 
     }
