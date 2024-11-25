@@ -12,6 +12,7 @@ struct skill_struct
     QString descriprion;
     QString title_color;
     Skill* skill;
+
 };
 
 struct all_skills_struct
@@ -31,16 +32,56 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QVector<Skill*> skills;
-    Skill* s;
-
     void read_json();
     void show_icons();
-    all_skills_struct all_skills_data;
-    QWidget* window_ptr;
-    const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/HoMM5_Skills/";
 
 private:
+    QVector<QString> icon_categories
+    {
+        "Attack",
+        "BattleCries",
+        "BrightMagic",
+        "ChaosMagic",
+        "Classes/Barbarian",
+        "Classes/Knight",
+        "Classes/MasterOfDemons",
+        "Classes/Necromancer",
+        "Classes/Ranger",
+        "Classes/RuneCleric",
+        "Classes/Warlock",
+        "Classes/Wizard",
+        "DarkMagic",
+        "Defence",
+        "Education",
+        "Leadership",
+        "Logistics",
+        "Luck",
+        "ShatterChaos",
+        "ShatterDark",
+        "ShatterLight",
+        "ShatterSummoning",
+        "Sorcery",
+        "SummoningMagic",
+        "WarMachines"
+    };
+    QStringList pages
+    {
+        "Маг",
+        "П. Демонов",
+        "Рыцарь",
+        "Некромант",
+        "Рейнджер",
+        "Рунный жрец",
+        "Чернокнижник",
+        "Варвар"
+    };
+    QVector<Skill*> skills;
+    QMap<QString, QVector<skill_struct>> all_skills_data;
+    const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/HoMM5_Skills/";
     Ui::MainWindow *ui;
+    QLabel* background[8];
+
+private slots:
+    void change_page(int index);
 };
 #endif // MAINWINDOW_H
