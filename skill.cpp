@@ -1,12 +1,12 @@
 #include "skill.h"
 #include <QEvent>
+#include <QKeyEvent>
 
 enum icon_sizes
 {
     BASE_SIZE = 32,         //! Размер иконки
     INCREACE_KOEF = 2       //! Коэффициент увеличения при наведении
 };
-
 Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(parent)
 {
 //    this->move(500,500);
@@ -14,6 +14,7 @@ Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(pare
     this->resize(BASE_SIZE,BASE_SIZE);
     //! Подключаем обработчик событий
     this->installEventFilter(this);
+    this->setFocusPolicy(Qt::StrongFocus);
 
     description = new Description(parent, this, name_text, desc_txt);
     description->hide();
@@ -24,6 +25,18 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
 {
     Q_UNUSED(object)
     // Если наводим курсором
+/*    if(event->type() == QEvent::KeyPress)
+    {
+        qDebug() << "yse";
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_T)
+        {
+            qDebug() << "Клавиша T нажата!";
+            fix_description = fix_description == 0 ? 1 : 0;
+            return true;
+        }
+    }
+    else */
     if(event->type() == QEvent::Enter)
     {
         //! Увеличиваем объект
@@ -34,6 +47,7 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         this->raise();
         description->raise();
         description->show();
+//        this->setEnabled(true);
 
     }
     //! Если убираем курсор
@@ -46,5 +60,6 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         this->resize(BASE_SIZE, BASE_SIZE);
         description->hide();
     }
+
     return false;
 }

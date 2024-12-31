@@ -16,7 +16,7 @@ enum sizes
 Description::Description(QWidget *window, QWidget* skill, QString name_text, QString desc_txt) : QLabel(window)
 {
     //! Устанавливаем фон описания
-    this->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/FonOpisania.png"));
+    this->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/FonOpisania.png"));
     this->setScaledContents(true);
     //! Название
     name = new QLabel (name_text, this);
@@ -34,7 +34,7 @@ Description::Description(QWidget *window, QWidget* skill, QString name_text, QSt
                               "font-weight: bold"
                              );
     //! Центрируем текст
-    description_text->setAlignment(Qt::AlignHCenter);
+    description_text->setAlignment(Qt::AlignLeft);
     name->setAlignment(Qt::AlignHCenter);
     //! Запоминаем указатель на иконку навыка
     parent_skill = skill;

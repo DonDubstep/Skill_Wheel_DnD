@@ -34,35 +34,16 @@ public:
     ~MainWindow();
     void read_json();
     void show_icons();
+    void paint_icons_page(QWidget* page);
 
 private:
     QVector<QString> icon_categories
     {
-        "Attack",
-        "BattleCries",
-        "BrightMagic",
-        "ChaosMagic",
-        "Classes/Barbarian",
-        "Classes/Knight",
-        "Classes/MasterOfDemons",
-        "Classes/Necromancer",
-        "Classes/Ranger",
-        "Classes/RuneCleric",
-        "Classes/Warlock",
-        "Classes/Wizard",
-        "DarkMagic",
-        "Defence",
-        "Education",
-        "Leadership",
-        "Logistics",
-        "Luck",
-        "ShatterChaos",
-        "ShatterDark",
-        "ShatterLight",
-        "ShatterSummoning",
-        "Sorcery",
-        "SummoningMagic",
-        "WarMachines"
+        "CircleBase",
+        "Circle1",
+        "Circle2",
+        "Circle3"
+
     };
     QStringList pages
     {
@@ -77,7 +58,7 @@ private:
     };
     QVector<Skill*> skills;
     QMap<QString, QVector<skill_struct>> all_skills_data;
-    const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/HoMM5_Skills/";
+    const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     Ui::MainWindow *ui;
     QLabel* background[8];
 

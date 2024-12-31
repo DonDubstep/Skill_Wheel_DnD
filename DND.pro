@@ -34,13 +34,22 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
 win64
 {
-   DESTDIR = $$PWD/bin
-   QMAKE_POST_LINK = windeployqt $$shell_path($$DESTDIR/$${TARGET}.exe)
+
+    DESTDIR = $$PWD/bin
+    QMAKE_POST_LINK = windeployqt $$shell_path($$DESTDIR/$${TARGET}.exe)
+
+#    message($$shell_path($$DESTDIR/$${TARGET}.exe))
+    # Copy data folder
+    SOURCE_DIR = $$PWD/src
+    TARGET_DIR = $$DESTDIR/src
+
+    copydata.commands = if not exist $$shell_path($$TARGET_DIR) mkdir $$shell_path($$TARGET_DIR) && xcopy /E /I /Y $$shell_path($$SOURCE_DIR) $$shell_path($$TARGET_DIR)
+    QMAKE_EXTRA_TARGETS += copydata
+    PRE_TARGETDEPS += copydata
 }
 
 DISTFILES += \
     README.md \
-    data.json
+    src/data.json
