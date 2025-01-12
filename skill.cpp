@@ -7,6 +7,9 @@ enum icon_sizes
     BASE_SIZE = 32,         //! Размер иконки
     INCREACE_KOEF = 2       //! Коэффициент увеличения при наведении
 };
+
+int Skill::show_description = 0;
+
 Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(parent)
 {
 //    this->move(500,500);
@@ -15,8 +18,10 @@ Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(pare
     //! Подключаем обработчик событий
     this->installEventFilter(this);
     this->setFocusPolicy(Qt::StrongFocus);
+    setFocus();
 
     description = new Description(parent, this, name_text, desc_txt);
+//    description->show();
     description->hide();
 }
 
@@ -24,19 +29,7 @@ Skill::Skill(QWidget *parent, QString name_text, QString desc_txt) : QLabel(pare
 bool Skill::eventFilter(QObject *object, QEvent *event)
 {
     Q_UNUSED(object)
-    // Если наводим курсором
-/*    if(event->type() == QEvent::KeyPress)
-    {
-        qDebug() << "yse";
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_T)
-        {
-            qDebug() << "Клавиша T нажата!";
-            fix_description = fix_description == 0 ? 1 : 0;
-            return true;
-        }
-    }
-    else */
+    //! Если наводим курсором
     if(event->type() == QEvent::Enter)
     {
         //! Увеличиваем объект
@@ -47,8 +40,8 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         this->raise();
         description->raise();
         description->show();
+        return true;
 //        this->setEnabled(true);
-
     }
     //! Если убираем курсор
     else if(event->type() == QEvent::Leave)
@@ -58,8 +51,19 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         this->move(this->x() + offset, this->y() + offset);
         //! Уменьшаем объект
         this->resize(BASE_SIZE, BASE_SIZE);
-        description->hide();
+        if (!show_description)
+            description->hide();
+        return true;
+    }
+    else if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_T)
+        {
+            show_description = !show_description;
+            return true;
+        }
     }
 
-    return false;
+    return QWidget::eventFilter(object, event);
 }
