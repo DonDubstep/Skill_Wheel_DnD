@@ -9,7 +9,7 @@ struct skill_struct
 {
     QString icon_path;
     QString title;
-    QString descriprion;
+    QString description;
     QString title_color;
     Skill* skill;
 
@@ -35,6 +35,7 @@ public:
     void read_json();
     void show_icons();
     void paint_icons_page(QWidget* page);
+    bool eventFilter(QObject* object, QEvent* event);
 
 private:
     QVector<QString> icon_categories
@@ -64,5 +65,9 @@ private:
 
 private slots:
     void change_page(int index);
+public slots:
+    void zoom_widget(Skill* skill);
+    void zoom_out_widget(Skill* skill);
+
 };
 #endif // MAINWINDOW_H

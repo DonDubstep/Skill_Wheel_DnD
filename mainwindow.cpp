@@ -8,12 +8,14 @@
 #include <QLabel>
 #include <math.h>
 #include <QPainter>
+#include <QEvent>
 
 enum wheel_size
 {
     WHEEL_WIDTH = 799,
     WHEEL_HEIGHT = 799
 };
+
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -103,7 +105,7 @@ void MainWindow::read_json()
             //! Считываем данные из полей
             cur_skill.icon_path = cur_obj["icon_path"].toString();
             cur_skill.title = cur_obj["title"].toString();
-            cur_skill.descriprion = cur_obj["description"].toString();
+            cur_skill.description = cur_obj["description"].toString();
             //! Сохраняем в единую структуру данных
             all_skills_data[cur_dir_name].append(cur_skill);
         }
@@ -150,18 +152,54 @@ void MainWindow::paint_icons_page(QWidget *page)
 
                 x = (WHEEL_WIDTH / 2 - 16 + 2.4) + radius[n_circle] * cos(angle);     //! 2.4 - выверенное смещение, не править!
                 y = (WHEEL_HEIGHT / 2 - 16 + 1) + radius[n_circle] * -sin(angle);     //! 1 - выверенное смещение, не править!
-                Skill* skill = all_skills_data[circle_name][cur_circle_el].skill;
-                skill = new Skill(page, all_skills_data[circle_name][cur_circle_el].title, all_skills_data[circle_name][cur_circle_el].descriprion);
-                skill->setPixmap(QPixmap(PIC_PATH + all_skills_data[circle_name][cur_circle_el].icon_path));
-                skill->move(int(x),int(y));
+                QString icon_path = PIC_PATH + all_skills_data[circle_name][cur_circle_el].icon_path;
+                QString title = all_skills_data[circle_name][cur_circle_el].title;
+                QString description = all_skills_data[circle_name][cur_circle_el].description;
+                all_skills_data[circle_name][cur_circle_el].skill = new Skill(page,icon_path, title, description);
+                all_skills_data[circle_name][cur_circle_el].skill->move(int(x),int(y));
+                all_skills_data[circle_name][cur_circle_el].skill->installEventFilter(this);
                 cur_circle_el++;
             }
         }
     }
 }
 
+bool MainWindow::eventFilter(QObject* object, QEvent* event)
+{
+    if(object->objectName()[0] == 'S')
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            zoom_widget(static_cast<Skill*>(object));
+            return true;
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            zoom_out_widget(static_cast<Skill*>(object));
+            return true;
+        }
+    }
+    return QMainWindow::eventFilter(object, event);
+}
 void MainWindow::change_page(int index)
 {
     ui->tabWidget->setCurrentIndex(index);
+}
+
+void MainWindow::zoom_widget(Skill* skill)
+{
+    skill->setFixedSize(BASE_SIZE * INCREACE_KOEF, BASE_SIZE * INCREACE_KOEF);
+    int offset = BASE_SIZE / 2;
+    skill->move(skill->x() - offset, skill->y() - offset);
+    skill->description->show();
+    skill->description->raise();
+}
+
+void MainWindow::zoom_out_widget(Skill *skill)
+{
+    skill->setFixedSize(BASE_SIZE, BASE_SIZE);
+    int offset = BASE_SIZE / 2;
+    skill->move(skill->x() + offset, skill->y() + offset);
+    skill->description->hide();
 }
 
