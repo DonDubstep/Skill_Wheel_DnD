@@ -5,17 +5,8 @@
 #include <QObject>
 #include <QPainter>
 #include <QVBoxLayout>
+#include "settings.h"
 
-enum sizes
-{
-    MARGIN_LEFT = 15,
-    MARGIN_TOP = 20,
-    MARGIN_RIGHT = MARGIN_LEFT,
-    MARGIN_BOTOM = MARGIN_TOP,
-    MINIMUM_FRAME_WIDTH = 300,
-    MINIMUM_FRAME_HEIGHT= 100,
-    MAXIMUM_FRAME_WIDTH = MINIMUM_FRAME_WIDTH,
-};
 
 //! Класс рамки описания
 class Description : public QWidget
@@ -23,9 +14,13 @@ class Description : public QWidget
 public:
     Description(QWidget *window, QWidget* skill, QString name_text, QString desc_txt);
     ~Description();
+    //! Текст описания
     QLabel* description_text;
+    //! Название
     QLabel* name;
+    //! Скилл, к которому привязано описание
     QWidget* parent_skill;
+    //! Окно на котором рисуется рамка
     QWidget* parent_window;
     QVBoxLayout* frame_vlayout;
 

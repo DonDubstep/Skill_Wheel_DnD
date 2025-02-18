@@ -3,7 +3,9 @@
 
 #include <QCoreApplication>
 #include <QMainWindow>
+#include <QMap>
 #include "skill.h"
+#include "settings.h"
 
 struct skill_struct
 {
@@ -12,13 +14,6 @@ struct skill_struct
     QString description;
     QString title_color;
     Skill* skill;
-
-};
-
-struct all_skills_struct
-{
-    QVector<skill_struct> attack;
-    QVector<skill_struct> battle_cries;
 };
 
 QT_BEGIN_NAMESPACE
@@ -62,12 +57,18 @@ private:
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     Ui::MainWindow *ui;
     QLabel* background[8];
+    //! Вектор зафиксированных скиллов
+    QVector<QObject*> pinned_skills;
 
 private slots:
     void change_page(int index);
 public slots:
     void zoom_widget(Skill* skill);
     void zoom_out_widget(Skill* skill);
+    void switch_dont_hide_description_flag(Skill* skill);
+    int get_dont_hide_description_flag(Skill* skill);
+    void delete_from_pinned_skills(QObject* object);
+
 
 };
 #endif // MAINWINDOW_H

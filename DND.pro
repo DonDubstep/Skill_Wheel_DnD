@@ -25,6 +25,7 @@ SOURCES += \
 HEADERS += \
     description.h \
     mainwindow.h \
+    settings.h \
     skill.h
 
 FORMS += \
