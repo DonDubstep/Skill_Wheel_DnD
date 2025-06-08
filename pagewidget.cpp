@@ -1,4 +1,5 @@
 #include "pagewidget.h"
+#include <math.h>
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
@@ -46,8 +47,6 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     segment_colors[2][11] = "#E5FFCE";
 }
 
-#include <math.h>
-#include <QDebug>
 void PageWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
@@ -68,14 +67,6 @@ void PageWidget::paintEvent(QPaintEvent *)
     int radius5 = static_cast<int>(radius4 + half_min_window_size * step_koef / 2);   // расстояние до внешних кружочков
     int radius_small_circles = static_cast<int>(half_min_window_size * small_circle_koef);  // радиус внешних кружочков
     int radius[] = {radius2, radius3, radius4};
-    qDebug() << "width: " << width;
-    qDebug() << "height: " << height;
-    qDebug() << "radiuses";
-    qDebug() << radius2;
-    qDebug() << radius3;
-    qDebug() << radius4;
-    qDebug() << radius5;
-    qDebug() << "circle radius: " << radius_small_circles;
 
     painter.setPen(Qt::black);
     for(int r = 2; r >= 0; r--)
@@ -92,9 +83,6 @@ void PageWidget::paintEvent(QPaintEvent *)
     painter.setBrush(Qt::white);
     painter.drawEllipse(centerX - radius1, centerY - radius1, radius1 * 2, radius1 * 2);
 
-//    painter.drawLine(centerX, centerY, centerX, centerY - radius5);
-//    painter.drawLine(centerX, centerY, centerX + radius5, centerY);
-//    painter.drawLine(centerX, centerY, centerX + static_cast<int>(radius5 * cos(9 * M_PI / 180)), centerY - static_cast<int>(radius5 * sin(9 * M_PI / 180)));
     for(int s = 0; s < 360/segment_angle; s++)
     {
         int hidden_segments_count = 5;
