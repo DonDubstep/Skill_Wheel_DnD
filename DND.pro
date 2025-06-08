@@ -20,11 +20,13 @@ SOURCES += \
     description.cpp \
     main.cpp \
     mainwindow.cpp \
+    pagewidget.cpp \
     skill.cpp
 
 HEADERS += \
     description.h \
     mainwindow.h \
+    pagewidget.h \
     settings.h \
     skill.h
 

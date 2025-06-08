@@ -18,4 +18,9 @@ enum sizes
     MINIMUM_FRAME_WIDTH = 300,  //! Минимальная ширина окна описания
 };
 
+enum pages
+{
+    NUM_OF_PAGES = 8
+};
+
 #endif // SETTINGS_H

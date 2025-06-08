@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <QEvent>
 #include <QKeyEvent>
+#include <pagewidget.h>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -19,56 +20,27 @@ MainWindow::MainWindow(QWidget* parent)
     ui->combo_pages->addItems(pages);
     connect(ui->combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(change_page(int)));
     ui->tabWidget->tabBar()->setVisible(false);
-    // Делаем фон на всех страницах
-    background[0] = new QLabel(ui->tab1);
-    background[0]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[0]->move(0,0);
-    background[0]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[0]->setScaledContents(true);
-    background[1] = new QLabel(ui->tab2);
-    background[1]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[1]->move(0,0);
-    background[1]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[1]->setScaledContents(true);
-    background[2] = new QLabel(ui->tab3);
-    background[2]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[2]->move(0,0);
-    background[2]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[2]->setScaledContents(true);
-    background[3] = new QLabel(ui->tab4);
-    background[3]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[3]->move(0,0);
-    background[3]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[3]->setScaledContents(true);
-    background[4] = new QLabel(ui->tab5);
-    background[4]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[4]->move(0,0);
-    background[4]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[4]->setScaledContents(true);
-    background[5] = new QLabel(ui->tab6);
-    background[5]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[5]->move(0,0);
-    background[5]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[5]->setScaledContents(true);
-    background[6] = new QLabel(ui->tab7);
-    background[6]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[6]->move(0,0);
-    background[6]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[6]->setScaledContents(true);
-    background[7] = new QLabel(ui->tab8);
-    background[7]->setPixmap(QPixmap(QCoreApplication::applicationDirPath() + "/src/skillwheelBACKGROUND.png"));
-    background[7]->move(0,0);
-    background[7]->resize(int(WHEEL_WIDTH),int(WHEEL_HEIGHT));
-    background[7]->setScaledContents(true);
+
+    addTabs();
 
     read_json();
-    show_icons();
+//    show_icons();
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+//! Добавляет страницы в виджет QTabWidget
+void MainWindow::addTabs()
+{
+    for(int i = 0; i < NUM_OF_PAGES; i++)
+    {
+        PageWidget *page = new PageWidget;
+        ui->tabWidget->addTab(page, QString::number(i+1));
+    }
 }
 
 //! Здесь читаем json
@@ -105,18 +77,13 @@ void MainWindow::read_json()
     }
 }
 
-
 //! Здесь рисуем иконки
 void MainWindow::show_icons()
 {
-    paint_icons_page(ui->tab1);
-    paint_icons_page(ui->tab2);
-    paint_icons_page(ui->tab3);
-    paint_icons_page(ui->tab4);
-    paint_icons_page(ui->tab5);
-    paint_icons_page(ui->tab6);
-    paint_icons_page(ui->tab7);
-    paint_icons_page(ui->tab8);
+    for(int i = 0; i < NUM_OF_PAGES; i++)
+    {
+        paint_icons_page(ui->tabWidget->widget(i));
+    }
     this->update();
 }
 
