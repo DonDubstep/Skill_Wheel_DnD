@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
     addTabs();
 
     read_json();
-//    show_icons();
+    show_icons();
 
 }
 
