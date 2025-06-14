@@ -2,6 +2,7 @@
 #include <QPainter>
 #include "settings.h"
 #include <QDebug>
+#include <QKeyEvent>
 
 Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc_txt) : QWidget(parent)
 {
@@ -21,12 +22,13 @@ void Skill::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0,0,QPixmap(this->icon_path).scaled(size()));
     QWidget::paintEvent(event);
 }
+
 bool Skill::eventFilter(QObject *object, QEvent *event)
 {
-//    int dont_hide_description_flag = get_dont_hide_description_flag(static_cast<Skill*>(object));
     // При наведении на скилл мышкой
     if(event->type() == QEvent::Enter)
     {
+        this->setFocus();
         // Увеличиваем если только уже не увеличили
         if(dont_hide_description_flag == 0)
         {
@@ -37,32 +39,29 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     // Убираем мышку со скилла
     else if(event->type() == QEvent::Leave)
     {
+        this->clearFocus();
         // Уменьшаем, если не закрепили скилл
         if(dont_hide_description_flag == 0)
         {
             zoom_out_widget();
-//            delete_from_pinned_skills(object);
         }
         return true;
     }
     // Нажимаем кнопку на клавиатуре
-//    else if(event->type() == QEvent::KeyPress)
-//    {
-//        QKeyEvent *key_event = static_cast<QKeyEvent*>(event);
-//        // Нажимаем букву T
-//        if(key_event->key() == Qt::Key_T)
-//        {
-//            // Добавляем скилл в вектор зафиксированных
-//            if(get_dont_hide_description_flag(static_cast<Skill*>(object)) == 0)
-//                pinned_skills.push_back(object);
-//            // Фиксируем флагом
-//            switch_dont_hide_description_flag(static_cast<Skill*>(object));
-//        }
-//        return true;
-//    }
+    else if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *key_event = static_cast<QKeyEvent*>(event);
+        // Нажимаем букву T
+        if(key_event->key() == Qt::Key_T && is_changed_size)
+        {
+            dont_hide_description_flag = !dont_hide_description_flag;
+            this->clearFocus();
+        }
+        return true;
+    }
     return QWidget::eventFilter(object, event);
 }
-#include "pagewidget.h"
+
 //! Функция увеличения иконки скилла и отображения рамки описания
 void Skill::zoom_widget()
 {
