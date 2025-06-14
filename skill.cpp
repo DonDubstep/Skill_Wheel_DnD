@@ -27,7 +27,6 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     // При наведении на скилл мышкой
     if(event->type() == QEvent::Enter)
     {
-        static_cast<Skill*>(object)->setFocus();
         // Увеличиваем если только уже не увеличили
         if(dont_hide_description_flag == 0)
         {
@@ -38,7 +37,6 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     // Убираем мышку со скилла
     else if(event->type() == QEvent::Leave)
     {
-        static_cast<Skill*>(object)->clearFocus();
         // Уменьшаем, если не закрепили скилл
         if(dont_hide_description_flag == 0)
         {

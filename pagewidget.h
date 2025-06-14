@@ -26,14 +26,27 @@ public:
     PageWidget(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *) override;
     void init_background_colors();
-    void forceUpdate();
     void read_json();
     void init_skills();
+    void paint_concentric_circles();
+    void paint_small_circles();
+    void paint_skills();
+//    void paint_circ
 
     int enable_repaint = 1;
 
 private:
-    int segment_angle = 30;
+    int centerX;
+    int centerY;
+    float half_min_window_size;
+    int radius1;
+    int radius2;
+    int radius3;
+    int radius4;
+    int radius5;
+    int radius_small_circles;
+
+    QPainter* painter;
     QString** segment_colors;
     QVector<QString> icon_categories
     {
@@ -44,6 +57,8 @@ private:
     };
     QMap<QString, QVector<skill_struct>> all_skills_data;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
+
+
 };
 
 #endif // TABWIDGET_H

@@ -1,6 +1,12 @@
 #include "pagewidget.h"
 #include <math.h>
 
+#define RADUIS_KOEF 0.36f
+#define STEP_KOEF 0.16f
+#define SMALL_CIRCLE_KOEF 0.05f
+#define SEGMENT_ANGLE 30
+#define ICON_KOEF 0.08f 
+
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
     init_background_colors();
@@ -11,7 +17,7 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 void PageWidget::init_background_colors()
 {
     segment_colors = new QString*[3];
-    segment_colors[0] = new QString[360/segment_angle];
+    segment_colors[0] = new QString[360/SEGMENT_ANGLE];
     segment_colors[0][0] = "#FFCCB2";
     segment_colors[0][1] = "#FF99FF";
     segment_colors[0][2] = "#FFE478";
@@ -25,7 +31,7 @@ void PageWidget::init_background_colors()
     segment_colors[0][10] = "#8FB4FF";
     segment_colors[0][11] = "#B6FF6F";
 
-    segment_colors[1] = new QString[360/segment_angle];
+    segment_colors[1] = new QString[360/SEGMENT_ANGLE];
     segment_colors[1][0] = "#FFDAC7";
     segment_colors[1][1] = "#FFC2FF";
     segment_colors[1][2] = "#FFEEAB";
@@ -39,7 +45,7 @@ void PageWidget::init_background_colors()
     segment_colors[1][10] = "#B0CAFF";
     segment_colors[1][11] = "#D2FFA8";
 
-    segment_colors[2] = new QString[360/segment_angle];
+    segment_colors[2] = new QString[360/SEGMENT_ANGLE];
     segment_colors[2][0] = "#FFE9DE";
     segment_colors[2][1] = "#FFE0FF";
     segment_colors[2][2] = "#FFF7D9";
@@ -102,85 +108,114 @@ void PageWidget::init_skills()
             QString description = all_skills_data[circle_name][s].description;
 
             Skill *cur_skill = new Skill(this, icon_path, title, description);
-//            cur_skill->installEventFilter(this->parent());
             all_skills_data[circle_name][s].skill = cur_skill;
         }
     }
 }
 
-#include <QDebug>
 void PageWidget::paintEvent(QPaintEvent *e)
 {
-//    if(!enable_repaint) return;
-    static int i = 0;
-    qDebug() << i++;
-    QPainter painter(this);
+    painter = new QPainter(this);
 
     int width = this->width();
     int height = this->height();
-    int centerX = width / 2;
-    int centerY = height / 2;
+    centerX = width / 2;
+    centerY = height / 2;
 
-    float half_min_window_size = std::min(width,height)/2;
-    float radius_koef = 0.36f;
-    float step_koef = 0.16f;
-    float small_circle_koef = 0.05f;
-    int radius1 = static_cast<int>(half_min_window_size * radius_koef);           // малый круг
-    int radius2 = static_cast<int>(radius1 + half_min_window_size * step_koef);   // средний круг
-    int radius3 = static_cast<int>(radius2 + half_min_window_size * step_koef);   // средний круг
-    int radius4 = static_cast<int>(radius3 + half_min_window_size * step_koef);   // большой круг
-    int radius5 = static_cast<int>(radius4 + half_min_window_size * step_koef / 2);   // расстояние до внешних кружочков
-    int radius_small_circles = static_cast<int>(half_min_window_size * small_circle_koef);  // радиус внешних кружочков
+    paint_concentric_circles();
+    paint_small_circles();
+    paint_skills();
+
+    delete painter;
+    QWidget::paintEvent(e);
+}
+
+//! Отрисовка основных кругов
+void PageWidget::paint_concentric_circles()
+{
+    half_min_window_size = std::min(this->width(), this->height()) / 2;
+    radius1 = static_cast<int>(half_min_window_size * RADUIS_KOEF);           // малый круг
+    radius2 = static_cast<int>(radius1 + half_min_window_size * STEP_KOEF);   // средний круг
+    radius3 = static_cast<int>(radius2 + half_min_window_size * STEP_KOEF);   // средний круг
+    radius4 = static_cast<int>(radius3 + half_min_window_size * STEP_KOEF);   // большой круг
+    radius5 = static_cast<int>(radius4 + half_min_window_size * STEP_KOEF / 2);   // расстояние до внешних кружочков
+    radius_small_circles = static_cast<int>(half_min_window_size * SMALL_CIRCLE_KOEF);  // радиус внешних кружочков
     int radius[] = {radius2, radius3, radius4};
 
-    painter.setPen(Qt::black);
+    painter->setPen(Qt::black);
     for(int r = 2; r >= 0; r--)
     {
         int current_angle = 0;
-        for(int a = 0; a < 360/segment_angle; a++)
+        for(int a = 0; a < 360/SEGMENT_ANGLE; a++)
         {
-            painter.setBrush(QColor(segment_colors[r][a]));
-            painter.drawPie(centerX - radius[r], centerY - radius[r], radius[r] * 2, radius[r] * 2,
-                            current_angle * 16, segment_angle * 16);
-            current_angle += segment_angle;
+            painter->setBrush(QColor(segment_colors[r][a]));
+            painter->drawPie(centerX - radius[r], centerY - radius[r], radius[r] * 2, radius[r] * 2,
+                            current_angle * 16, SEGMENT_ANGLE * 16);
+            current_angle += SEGMENT_ANGLE;
         }
     }
-    painter.setBrush(Qt::white);
-    painter.drawEllipse(centerX - radius1, centerY - radius1, radius1 * 2, radius1 * 2);
+    painter->setBrush(Qt::white);
+    painter->setPen(Qt::black);
+    painter->drawEllipse(centerX - radius1, centerY - radius1, radius1 * 2, radius1 * 2);
+}
 
-    for(int s = 0; s < 360/segment_angle; s++)
+//! Отрисовка внешних кружочков
+void PageWidget::paint_small_circles()
+{
+    for(int s = 0; s < 360/SEGMENT_ANGLE; s++)
     {
         int hidden_segments_count = 5;
-        int current_angle = s*segment_angle + segment_angle / hidden_segments_count + segment_angle / hidden_segments_count / 2;
+        int current_angle = s*SEGMENT_ANGLE + SEGMENT_ANGLE / hidden_segments_count + SEGMENT_ANGLE / hidden_segments_count / 2;
         for(int c = 0; c < 3; c++)
         {
-            painter.setBrush(QColor(segment_colors[c][s]));
+            painter->setBrush(QColor(segment_colors[c][s]));
             int centerX_circles = centerX + static_cast<int>(radius5 * cos(current_angle * M_PI / 180));
             int centerY_circles = centerY - static_cast<int>(radius5 * sin(current_angle * M_PI / 180));
-            painter.drawEllipse(centerX_circles - radius_small_circles, centerY_circles - radius_small_circles,
+            painter->drawEllipse(centerX_circles - radius_small_circles, centerY_circles - radius_small_circles,
                                 radius_small_circles * 2, radius_small_circles * 2);
-            current_angle += segment_angle / hidden_segments_count;
+            current_angle += SEGMENT_ANGLE / hidden_segments_count;
         }
     }
+}
 
+//! Отрисовка скиллов
+void PageWidget::paint_skills()
+{
     int icon_radius_1 = static_cast<int>(radius1 + (radius2-radius1)/2);
-    int icon_radius_2 = static_cast<int>(icon_radius_1 + half_min_window_size * step_koef);
-    int icon_radius_3 = static_cast<int>(icon_radius_2 + half_min_window_size * step_koef);
-    int icon_radius_4 = static_cast<int>(icon_radius_3 + half_min_window_size * step_koef);
+    int icon_radius_2 = static_cast<int>(icon_radius_1 + half_min_window_size * STEP_KOEF);
+    int icon_radius_3 = static_cast<int>(icon_radius_2 + half_min_window_size * STEP_KOEF);
+    int icon_radius_4 = static_cast<int>(icon_radius_3 + half_min_window_size * STEP_KOEF);
 
     int icon_radiuses[] = {icon_radius_1, icon_radius_2, icon_radius_3, icon_radius_4};
-    float icon_coef = 0.08f;
-    int cur_size = static_cast<int>(half_min_window_size * icon_coef);
+    int cur_size = static_cast<int>(half_min_window_size * ICON_KOEF);
 
-    int hidden_segments_count = 5;
+    int hidden_segments_count;
 
     for (int circle = 0; circle < icon_categories.length(); ++circle)
     {
+        if (circle == icon_categories.length() - 1)
+        {
+            hidden_segments_count = 5;
+        }
+        else
+        {
+            hidden_segments_count = 3;
+        }
         QString circle_name = icon_categories[circle];
         int skill_num = 0;
-        for(int seg = 0; seg < 360/segment_angle; seg++)
+        int start_icon_offset = 9;
+        int start_base_icon_offset = 5;
+        for(int seg = 0; seg < 360/SEGMENT_ANGLE; seg++)
         {
-            int current_angle = seg * segment_angle + segment_angle/hidden_segments_count + segment_angle/hidden_segments_count/2;
+            int current_angle;
+            if (circle == icon_categories.length() - 1)
+            {
+                current_angle = seg*SEGMENT_ANGLE + start_icon_offset;
+            }
+            else
+            {
+                current_angle = seg*SEGMENT_ANGLE + start_base_icon_offset;
+            }
             for(int c = 0; c < 3; c++)
             {
                 int x = centerX + static_cast<int>(icon_radiuses[circle] * cos(current_angle * M_PI / 180)) - cur_size / 2;
@@ -190,11 +225,13 @@ void PageWidget::paintEvent(QPaintEvent *e)
                     all_skills_data[circle_name][skill_num].skill->resize(cur_size, cur_size);
                     all_skills_data[circle_name][skill_num].skill->move(x,y);
                 }
-                all_skills_data[circle_name][skill_num].skill->is_changed_size = 0;
-                current_angle += segment_angle / hidden_segments_count;
+                if(all_skills_data[circle_name][skill_num].skill->is_changed_size == 1)
+                {
+                    all_skills_data[circle_name][skill_num].skill->is_changed_size = 0;
+                }
+                current_angle += SEGMENT_ANGLE / hidden_segments_count;
                 skill_num++;
             }
         }
     }
-    QWidget::paintEvent(e);
 }
