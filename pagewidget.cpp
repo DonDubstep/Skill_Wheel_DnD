@@ -3,6 +3,13 @@
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
+    init_background_colors();
+    read_json();
+    init_skills();
+}
+
+void PageWidget::init_background_colors()
+{
     segment_colors = new QString*[3];
     segment_colors[0] = new QString[360/segment_angle];
     segment_colors[0][0] = "#FFCCB2";
@@ -47,8 +54,66 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     segment_colors[2][11] = "#E5FFCE";
 }
 
-void PageWidget::paintEvent(QPaintEvent *)
+//! Здесь читаем json
+void PageWidget::read_json()
 {
+    QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        qWarning("Не открыть файл");
+    //! Читаем данные из файла
+    QByteArray raw_data = file.readAll();
+    //! Преобразуем в формат Json
+    QJsonDocument doc = QJsonDocument::fromJson(raw_data);
+    //! Преобразуем в объект Json
+    QJsonObject obj = doc.object();
+    //! Сохранять текущий элемент будем сюда
+    skill_struct cur_skill;
+    //! Для каждой категории иконок
+    for (int dir_num = 0; dir_num < icon_categories.length(); ++dir_num)
+    {
+        //! Сохряняем имя категории
+        QString cur_dir_name = icon_categories[dir_num];
+        //! Берём массив по этому имени
+        const QJsonArray arr = obj[cur_dir_name].toArray();
+        //! Проходимся по массиву этой категории
+        for (const QJsonValue& cur_val : arr) {
+            QJsonObject cur_obj = cur_val.toObject();
+            //! Считываем данные из полей
+            cur_skill.icon_path = cur_obj["icon_path"].toString();
+            cur_skill.title = cur_obj["title"].toString();
+            cur_skill.description = cur_obj["description"].toString();
+            //! Сохраняем в единую структуру данных
+            all_skills_data[cur_dir_name].append(cur_skill);
+        }
+    }
+}
+
+
+void PageWidget::init_skills()
+{
+    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    {
+        //! Сохряняем имя категории
+        QString circle_name = icon_categories[circle];
+        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+        {
+            QString icon_path = PIC_PATH + all_skills_data[circle_name][s].icon_path;
+            QString title = all_skills_data[circle_name][s].title;
+            QString description = all_skills_data[circle_name][s].description;
+
+            Skill *cur_skill = new Skill(this, icon_path, title, description);
+//            cur_skill->installEventFilter(this->parent());
+            all_skills_data[circle_name][s].skill = cur_skill;
+        }
+    }
+}
+
+#include <QDebug>
+void PageWidget::paintEvent(QPaintEvent *e)
+{
+//    if(!enable_repaint) return;
+    static int i = 0;
+    qDebug() << i++;
     QPainter painter(this);
 
     int width = this->width();
@@ -86,7 +151,7 @@ void PageWidget::paintEvent(QPaintEvent *)
     for(int s = 0; s < 360/segment_angle; s++)
     {
         int hidden_segments_count = 5;
-        int current_angle = s*30 + segment_angle / hidden_segments_count + segment_angle / hidden_segments_count / 2;
+        int current_angle = s*segment_angle + segment_angle / hidden_segments_count + segment_angle / hidden_segments_count / 2;
         for(int c = 0; c < 3; c++)
         {
             painter.setBrush(QColor(segment_colors[c][s]));
@@ -97,4 +162,39 @@ void PageWidget::paintEvent(QPaintEvent *)
             current_angle += segment_angle / hidden_segments_count;
         }
     }
+
+    int icon_radius_1 = static_cast<int>(radius1 + (radius2-radius1)/2);
+    int icon_radius_2 = static_cast<int>(icon_radius_1 + half_min_window_size * step_koef);
+    int icon_radius_3 = static_cast<int>(icon_radius_2 + half_min_window_size * step_koef);
+    int icon_radius_4 = static_cast<int>(icon_radius_3 + half_min_window_size * step_koef);
+
+    int icon_radiuses[] = {icon_radius_1, icon_radius_2, icon_radius_3, icon_radius_4};
+    float icon_coef = 0.08f;
+    int cur_size = static_cast<int>(half_min_window_size * icon_coef);
+
+    int hidden_segments_count = 5;
+
+    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    {
+        QString circle_name = icon_categories[circle];
+        int skill_num = 0;
+        for(int seg = 0; seg < 360/segment_angle; seg++)
+        {
+            int current_angle = seg * segment_angle + segment_angle/hidden_segments_count + segment_angle/hidden_segments_count/2;
+            for(int c = 0; c < 3; c++)
+            {
+                int x = centerX + static_cast<int>(icon_radiuses[circle] * cos(current_angle * M_PI / 180)) - cur_size / 2;
+                int y = centerY - static_cast<int>(icon_radiuses[circle] * sin(current_angle * M_PI / 180)) - cur_size / 2;
+                if(!all_skills_data[circle_name][skill_num].skill->is_changed_size)
+                {
+                    all_skills_data[circle_name][skill_num].skill->resize(cur_size, cur_size);
+                    all_skills_data[circle_name][skill_num].skill->move(x,y);
+                }
+                all_skills_data[circle_name][skill_num].skill->is_changed_size = 0;
+                current_angle += segment_angle / hidden_segments_count;
+                skill_num++;
+            }
+        }
+    }
+    QWidget::paintEvent(e);
 }

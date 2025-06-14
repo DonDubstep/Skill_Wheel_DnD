@@ -7,14 +7,14 @@
 #include "skill.h"
 #include "settings.h"
 
-struct skill_struct
-{
-    QString icon_path;
-    QString title;
-    QString description;
-    QString title_color;
-    Skill* skill;
-};
+//struct skill_struct
+//{
+//    QString icon_path;
+//    QString title;
+//    QString description;
+//    QString title_color;
+//    Skill* skill;
+//};
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,7 +53,7 @@ private:
         "Варвар"
     };
     QVector<Skill*> skills;
-    QMap<QString, QVector<skill_struct>> all_skills_data;
+//    QMap<QString, QVector<skill_struct>> all_skills_data;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     Ui::MainWindow *ui;
     QLabel* background[8];
