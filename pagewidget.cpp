@@ -229,6 +229,7 @@ void PageWidget::paint_skills()
                 {
                     all_skills_data[circle_name][skill_num].skill->resize(cur_size*2, cur_size*2);
                     all_skills_data[circle_name][skill_num].skill->move(x-cur_size / 2 , y - cur_size / 2);
+                    all_skills_data[circle_name][skill_num].skill->description->show();
                 }
 
                 current_angle += SEGMENT_ANGLE / hidden_segments_count;
