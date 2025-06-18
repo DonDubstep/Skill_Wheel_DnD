@@ -7,7 +7,6 @@
 Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc_txt) : QWidget(parent)
 {
     this->installEventFilter(this);
-    this->resize(BASE_SIZE, BASE_SIZE);
     this->icon_path = icon_path;
     this->description = new Description(parent, this, name_text, desc_txt);
     this->description->hide();
@@ -57,6 +56,12 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
             dont_hide_description_flag = !dont_hide_description_flag;
             this->clearFocus();
         }
+        return true;
+    }
+    else if(event->type() == QEvent::MouseButtonPress)
+    {
+        qDebug() << "Mouse clicked";
+        this->setDisabled(true);
         return true;
     }
     return QWidget::eventFilter(object, event);

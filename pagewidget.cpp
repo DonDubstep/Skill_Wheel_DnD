@@ -220,15 +220,17 @@ void PageWidget::paint_skills()
             {
                 int x = centerX + static_cast<int>(icon_radiuses[circle] * cos(current_angle * M_PI / 180)) - cur_size / 2;
                 int y = centerY - static_cast<int>(icon_radiuses[circle] * sin(current_angle * M_PI / 180)) - cur_size / 2;
-                if(!all_skills_data[circle_name][skill_num].skill->is_changed_size)
+                if(all_skills_data[circle_name][skill_num].skill->is_changed_size != 2)
                 {
-                    all_skills_data[circle_name][skill_num].skill->resize(cur_size, cur_size);
                     all_skills_data[circle_name][skill_num].skill->move(x,y);
+                    all_skills_data[circle_name][skill_num].skill->resize(cur_size, cur_size);
                 }
-                if(all_skills_data[circle_name][skill_num].skill->is_changed_size == 1)
+                else
                 {
-                    all_skills_data[circle_name][skill_num].skill->is_changed_size = 0;
+                    all_skills_data[circle_name][skill_num].skill->resize(cur_size*2, cur_size*2);
+                    all_skills_data[circle_name][skill_num].skill->move(x-cur_size / 2 , y - cur_size / 2);
                 }
+
                 current_angle += SEGMENT_ANGLE / hidden_segments_count;
                 skill_num++;
             }
