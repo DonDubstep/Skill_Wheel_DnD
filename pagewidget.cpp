@@ -9,6 +9,9 @@
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
+    installEventFilter(this);
+
+
     init_background_colors();
     read_json();
     init_skills();
@@ -109,6 +112,8 @@ void PageWidget::init_skills()
 
             Skill *cur_skill = new Skill(this, icon_path, title, description);
             all_skills_data[circle_name][s].skill = cur_skill;
+
+            connect(all_skills_data[circle_name][s].skill, Skill::icon_selected,this, this->selection_mode_on);
         }
     }
 }
@@ -128,6 +133,16 @@ void PageWidget::paintEvent(QPaintEvent *e)
 
     delete painter;
     QWidget::paintEvent(e);
+}
+#include <QDebug>
+bool PageWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        selection_mode_off();
+        return true;
+    }
+    return QWidget::eventFilter(watched, event);
 }
 
 //! Отрисовка основных кругов
@@ -235,6 +250,34 @@ void PageWidget::paint_skills()
                 current_angle += SEGMENT_ANGLE / hidden_segments_count;
                 skill_num++;
             }
+        }
+    }
+}
+
+void PageWidget::selection_mode_on(Skill* selected_skill)
+{
+    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    {
+        QString circle_name = icon_categories[circle];
+        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+        {
+            if(all_skills_data[circle_name][s].skill == selected_skill)
+                continue;
+            all_skills_data[circle_name][s].skill->is_gray = 1;
+            all_skills_data[circle_name][s].skill->repaint();
+        }
+    }
+}
+
+void PageWidget::selection_mode_off()
+{
+    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    {
+        QString circle_name = icon_categories[circle];
+        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+        {
+            all_skills_data[circle_name][s].skill->is_gray = 0;
+            all_skills_data[circle_name][s].skill->repaint();
         }
     }
 }

@@ -18,7 +18,19 @@ Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc
 void Skill::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,QPixmap(this->icon_path).scaled(size()));
+
+    QImage img(this->icon_path);
+
+    if(this->is_gray == 1)
+    {
+        QImage alpha = img.alphaChannel();
+        QImage gray = img.convertToFormat(QImage::Format_Grayscale8);
+        gray.setAlphaChannel(alpha);
+        img = gray;
+    }
+    QRect rect(0,0,width(), height());
+    painter.drawImage(rect,img );
+
     QWidget::paintEvent(event);
 }
 
@@ -60,8 +72,7 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     }
     else if(event->type() == QEvent::MouseButtonPress)
     {
-        qDebug() << "Mouse clicked";
-        this->setDisabled(true);
+        emit icon_selected(this);
         return true;
     }
     return QWidget::eventFilter(object, event);

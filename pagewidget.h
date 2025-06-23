@@ -1,5 +1,5 @@
-#ifndef TABWIDGET_H
-#define TABWIDGET_H
+#ifndef PAGEWIDGET_H
+#define PAGEWIDGET_H
 
 #include <QWidget>
 #include <QPainter>
@@ -22,9 +22,11 @@ struct skill_struct
 
 class PageWidget : public QWidget
 {
+    Q_OBJECT
 public:
     PageWidget(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     void init_background_colors();
     void read_json();
     void init_skills();
@@ -58,7 +60,9 @@ private:
     QMap<QString, QVector<skill_struct>> all_skills_data;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
 
-
+public slots:
+    void selection_mode_on(Skill*);
+    void selection_mode_off();
 };
 
-#endif // TABWIDGET_H
+#endif // PAGEWIDGET_H
