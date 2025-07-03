@@ -10,15 +10,11 @@
 #include <QJsonObject>
 #include <skill.h>
 #include <QCoreApplication>
+#include "skills_data.h"
 
-struct skill_struct
-{
-    QString icon_path;
-    QString title;
-    QString description;
-    QString title_color;
-    Skill* skill;
-};
+
+
+
 
 class PageWidget : public QWidget
 {
@@ -50,14 +46,9 @@ private:
 
     QPainter* painter;
     QString** segment_colors;
-    QVector<QString> icon_categories
-    {
-        "Circle3",
-        "Circle2",
-        "Circle1",
-        "CircleBase",
-    };
+
     QMap<QString, QVector<skill_struct>> all_skills_data;
+    SkillDependencies skill_dependencies;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
 
 public slots:

@@ -3,6 +3,7 @@
 #include "description.h"
 #include <QEvent>
 #include <QPushButton>
+#include "settings.h"
 
 //! Класс иконки навыка
 class Skill : public QWidget
@@ -26,5 +27,24 @@ private slots:
 public slots:
 
 };
+
+struct skill_struct
+{
+    QString icon_path;
+    QString title;
+    QString description;
+    QString title_color;
+    Skill* skill;
+    skill_struct* depends[NUM_OF_DEPENDS];
+};
+
+const QString icon_categories[]
+{
+    "Circle3",
+    "Circle2",
+    "Circle1",
+    "CircleBase",
+};
+
 
 #endif // SKILL_H

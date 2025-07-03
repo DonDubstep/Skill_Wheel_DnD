@@ -1,20 +1,15 @@
 #include "pagewidget.h"
 #include <math.h>
-
-#define RADUIS_KOEF 0.36f
-#define STEP_KOEF 0.16f
-#define SMALL_CIRCLE_KOEF 0.05f
-#define SEGMENT_ANGLE 30
-#define ICON_KOEF 0.08f 
+#include <QDebug>
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
 
-
     init_background_colors();
     read_json();
     init_skills();
+    skill_dependencies.make_depends(&all_skills_data);
 }
 
 void PageWidget::init_background_colors()
@@ -78,7 +73,7 @@ void PageWidget::read_json()
     //! Сохранять текущий элемент будем сюда
     skill_struct cur_skill;
     //! Для каждой категории иконок
-    for (int dir_num = 0; dir_num < icon_categories.length(); ++dir_num)
+    for (int dir_num = 0; dir_num < NUM_OF_CATEGORIES; ++dir_num)
     {
         //! Сохряняем имя категории
         QString cur_dir_name = icon_categories[dir_num];
@@ -100,7 +95,7 @@ void PageWidget::read_json()
 
 void PageWidget::init_skills()
 {
-    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
     {
         //! Сохряняем имя категории
         QString circle_name = icon_categories[circle];
@@ -134,7 +129,6 @@ void PageWidget::paintEvent(QPaintEvent *e)
     delete painter;
     QWidget::paintEvent(e);
 }
-#include <QDebug>
 bool PageWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)
@@ -206,9 +200,9 @@ void PageWidget::paint_skills()
 
     int hidden_segments_count;
 
-    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
     {
-        if (circle == icon_categories.length() - 1)
+        if (circle == NUM_OF_CATEGORIES - 1)
         {
             hidden_segments_count = 5;
         }
@@ -223,7 +217,7 @@ void PageWidget::paint_skills()
         for(int seg = 0; seg < 360/SEGMENT_ANGLE; seg++)
         {
             int current_angle;
-            if (circle == icon_categories.length() - 1)
+            if (circle == NUM_OF_CATEGORIES - 1)
             {
                 current_angle = seg*SEGMENT_ANGLE + start_icon_offset;
             }
@@ -254,14 +248,26 @@ void PageWidget::paint_skills()
     }
 }
 
+int find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill* skill)
+{
+    for(int i = 0; i < dependent_skills.length(); i++)
+    {
+        if(dependent_skills[i] == skill)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
 void PageWidget::selection_mode_on(Skill* selected_skill)
 {
-    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    QVector<Skill*> dependent_skills = skill_dependencies.show_depends(selected_skill);
+    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
     {
         QString circle_name = icon_categories[circle];
         for(int s = 0; s < all_skills_data[circle_name].size(); s++)
         {
-            if(all_skills_data[circle_name][s].skill == selected_skill)
+            if(find_in_dependent_skills(dependent_skills, all_skills_data[circle_name][s].skill))
                 continue;
             all_skills_data[circle_name][s].skill->is_gray = 1;
             all_skills_data[circle_name][s].skill->repaint();
@@ -271,7 +277,7 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
 
 void PageWidget::selection_mode_off()
 {
-    for (int circle = 0; circle < icon_categories.length(); ++circle)
+    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
     {
         QString circle_name = icon_categories[circle];
         for(int s = 0; s < all_skills_data[circle_name].size(); s++)

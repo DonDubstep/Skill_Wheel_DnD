@@ -7,15 +7,6 @@
 #include "skill.h"
 #include "settings.h"
 
-//struct skill_struct
-//{
-//    QString icon_path;
-//    QString title;
-//    QString description;
-//    QString title_color;
-//    Skill* skill;
-//};
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -33,14 +24,6 @@ public:
     bool eventFilter(QObject* object, QEvent* event) override;
 
 private:
-    QVector<QString> icon_categories
-    {
-        "CircleBase",
-        "Circle1",
-        "Circle2",
-        "Circle3"
-
-    };
     QStringList pages
     {
         "Маг",
@@ -53,7 +36,6 @@ private:
         "Варвар"
     };
     QVector<Skill*> skills;
-//    QMap<QString, QVector<skill_struct>> all_skills_data;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     Ui::MainWindow *ui;
     QLabel* background[8];

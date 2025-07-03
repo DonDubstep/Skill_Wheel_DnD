@@ -1,6 +1,5 @@
 #include "skill.h"
 #include <QPainter>
-#include "settings.h"
 #include <QDebug>
 #include <QKeyEvent>
 
