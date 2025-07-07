@@ -1,7 +1,4 @@
 #include "skill.h"
-#include <QPainter>
-#include <QDebug>
-#include <QKeyEvent>
 
 Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc_txt) : QWidget(parent)
 {
@@ -33,6 +30,7 @@ void Skill::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
+//! Обработчик событий
 bool Skill::eventFilter(QObject *object, QEvent *event)
 {
     // При наведении на скилл мышкой

@@ -1,12 +1,12 @@
 #include "skills_data.h"
-#include <QMap>
-#include <QDebug>
 
+//! Присваивает ссылку структуры всех скиллов
 void SkillDependencies::link_skill_data(QMap<QString, QVector<skill_struct> >* all_skills_data)
 {
     this->all_skills_data = all_skills_data;
 }
 
+//! Рекурсивно назодит все зависимости скилла
 QVector<Skill *> SkillDependencies::show_depends(Skill *skill)
 {
     QString circle;
@@ -18,6 +18,8 @@ QVector<Skill *> SkillDependencies::show_depends(Skill *skill)
 
     return result;
 }
+
+//! Функция задания зависимостей между скиллами
 void SkillDependencies::make_depends(QMap<QString, QVector<skill_struct> >* all_skills_data)
 {
     link_skill_data(all_skills_data);
@@ -27,6 +29,7 @@ void SkillDependencies::make_depends(QMap<QString, QVector<skill_struct> >* all_
     (*all_skills_data)[icon_categories[3]][0].depends[0] = &(*all_skills_data)[icon_categories[3]][1];
 }
 
+//! Функция нахождения скилла в структуре всех скиллов
 void SkillDependencies::find_skill(Skill *skill, QString *circle, int *index)
 {
     for(int c = 0; c <= NUM_OF_CATEGORIES; c++)
@@ -44,6 +47,7 @@ void SkillDependencies::find_skill(Skill *skill, QString *circle, int *index)
     }
 }
 
+//! Заполняет нулевыми ссылками все зависимости у всех скиллов
 void SkillDependencies::init_skill_depends()
 {
     for(int c = 0; c < NUM_OF_CATEGORIES; c++)
@@ -60,7 +64,7 @@ void SkillDependencies::init_skill_depends()
 }
 
 
-
+//! Рекурсивный поиск всех зависимостей скилла
 void SkillDependencies::dfs(skill_struct* graph, QVector<Skill *> *nodes)
 {
     (*nodes).append((*graph).skill);

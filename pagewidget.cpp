@@ -1,6 +1,5 @@
 #include "pagewidget.h"
 #include <math.h>
-#include <QDebug>
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
@@ -12,8 +11,10 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     skill_dependencies.make_depends(&all_skills_data);
 }
 
+//! Заносим данные цветов сегментов кругов
 void PageWidget::init_background_colors()
 {
+    // Внутренний круг
     segment_colors = new QString*[3];
     segment_colors[0] = new QString[360/SEGMENT_ANGLE];
     segment_colors[0][0] = "#FFCCB2";
@@ -29,6 +30,7 @@ void PageWidget::init_background_colors()
     segment_colors[0][10] = "#8FB4FF";
     segment_colors[0][11] = "#B6FF6F";
 
+    // Средний круг
     segment_colors[1] = new QString[360/SEGMENT_ANGLE];
     segment_colors[1][0] = "#FFDAC7";
     segment_colors[1][1] = "#FFC2FF";
@@ -43,6 +45,7 @@ void PageWidget::init_background_colors()
     segment_colors[1][10] = "#B0CAFF";
     segment_colors[1][11] = "#D2FFA8";
 
+    // Внешний круг
     segment_colors[2] = new QString[360/SEGMENT_ANGLE];
     segment_colors[2][0] = "#FFE9DE";
     segment_colors[2][1] = "#FFE0FF";
@@ -92,12 +95,11 @@ void PageWidget::read_json()
     }
 }
 
-
+//! Заполнение структуры всех скиллов
 void PageWidget::init_skills()
 {
     for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
     {
-        //! Сохряняем имя категории
         QString circle_name = icon_categories[circle];
         for(int s = 0; s < all_skills_data[circle_name].size(); s++)
         {
@@ -113,6 +115,7 @@ void PageWidget::init_skills()
     }
 }
 
+//! Обработчик события перерисовки
 void PageWidget::paintEvent(QPaintEvent *e)
 {
     painter = new QPainter(this);
@@ -129,8 +132,11 @@ void PageWidget::paintEvent(QPaintEvent *e)
     delete painter;
     QWidget::paintEvent(e);
 }
+
+//! Обработчик событий
 bool PageWidget::eventFilter(QObject *watched, QEvent *event)
 {
+    // Если нажимаем мышкой в свободном месте
     if(event->type() == QEvent::MouseButtonPress)
     {
         selection_mode_off();
@@ -248,7 +254,8 @@ void PageWidget::paint_skills()
     }
 }
 
-int find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill* skill)
+//! Функция поиска скилла в полученном списке зависимых скиллов
+int PageWidget::find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill* skill)
 {
     for(int i = 0; i < dependent_skills.length(); i++)
     {
@@ -259,6 +266,8 @@ int find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill* skill)
     }
     return 0;
 }
+
+//! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void PageWidget::selection_mode_on(Skill* selected_skill)
 {
     QVector<Skill*> dependent_skills = skill_dependencies.show_depends(selected_skill);
@@ -275,6 +284,7 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
     }
 }
 
+//! Делает все скиллы цветными
 void PageWidget::selection_mode_off()
 {
     for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)

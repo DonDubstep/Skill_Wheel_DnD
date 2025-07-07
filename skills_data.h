@@ -8,9 +8,11 @@ class SkillDependencies
 public:
     void make_depends(QMap<QString, QVector<skill_struct> >* all_skills_data);
     QVector<Skill*> show_depends(Skill* skill);
-    void link_skill_data(QMap<QString, QVector<skill_struct> >* all_skills_data);
-    QMap<QString, QVector<skill_struct> >* all_skills_data;
 private:
+    //! Ссылка на структуру со всеми скиллами
+    QMap<QString, QVector<skill_struct> >* all_skills_data;
+
+    void link_skill_data(QMap<QString, QVector<skill_struct> >* all_skills_data);
     void find_skill(Skill *skill, QString *circle, int *index);
     void init_skill_depends();
     void dfs(skill_struct* graph, QVector<Skill*> *nodes);

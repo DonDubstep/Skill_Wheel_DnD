@@ -1,8 +1,4 @@
 #include "description.h"
-#include <QCoreApplication>
-#include <QDebug>
-
-
 
 Description::Description(QWidget *window, QWidget* skill, QString name_text, QString desc_txt) : QWidget(window)
 {

@@ -2,7 +2,8 @@
 #define SKILL_H
 #include "description.h"
 #include <QEvent>
-#include <QPushButton>
+#include <QPainter>
+#include <QKeyEvent>
 #include "settings.h"
 
 //! Класс иконки навыка
@@ -17,6 +18,7 @@ public:
     int dont_hide_description_flag = 0;
     int is_changed_size = 0;
     int is_gray = 0;
+
 signals:
     void icon_selected(Skill*);
 private slots:
@@ -24,7 +26,6 @@ private slots:
     bool eventFilter(QObject* object, QEvent* event) override;
     void zoom_widget();
     void zoom_out_widget();
-public slots:
 
 };
 

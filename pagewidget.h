@@ -13,25 +13,11 @@
 #include "skills_data.h"
 
 
-
-
-
 class PageWidget : public QWidget
 {
     Q_OBJECT
 public:
     PageWidget(QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent *) override;
-    bool eventFilter(QObject *watched, QEvent *event) override;
-    void init_background_colors();
-    void read_json();
-    void init_skills();
-    void paint_concentric_circles();
-    void paint_small_circles();
-    void paint_skills();
-//    void paint_circ
-
-    int enable_repaint = 1;
 
 private:
     int centerX;
@@ -50,6 +36,16 @@ private:
     QMap<QString, QVector<skill_struct>> all_skills_data;
     SkillDependencies skill_dependencies;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
+
+    int find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill* skill);
+    bool eventFilter(QObject *watched, QEvent *event) override;
+    void paintEvent(QPaintEvent *) override;
+    void init_background_colors();
+    void read_json();
+    void init_skills();
+    void paint_concentric_circles();
+    void paint_small_circles();
+    void paint_skills();
 
 public slots:
     void selection_mode_on(Skill*);
