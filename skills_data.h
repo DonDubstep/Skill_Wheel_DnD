@@ -16,6 +16,9 @@ private:
     void find_skill(Skill *skill, QString *circle, int *index);
     void init_skill_depends();
     void dfs(skill_struct* graph, QVector<Skill*> *nodes);
+    void make_depends_circle_0(QMap<QString, QVector<skill_struct> >* all_skills_data);
+    void make_depends_circle_1_3(QMap<QString, QVector<skill_struct> >* all_skills_data);
+    void make_optional_depends(QMap<QString, QVector<skill_struct> >* all_skills_data);
 };
 
 #endif // SKILLSDATA_H
