@@ -18,10 +18,7 @@ QVector<Skill *> SkillDependencies::show_depends(Skill *skill)
 
     return result;
 }
-
-void make_depends_circle_0(QMap<QString, QVector<skill_struct> >* all_skills_data);
-void make_depends_circle_1_3(QMap<QString, QVector<skill_struct> >* all_skills_data);
-
+#include <QDebug>
 //! Функция задания зависимостей между скиллами
 void SkillDependencies::make_depends(QMap<QString, QVector<skill_struct> >* all_skills_data)
 {
@@ -61,10 +58,10 @@ void SkillDependencies::make_depends_circle_1_3(QMap<QString, QVector<skill_stru
     }
 }
 
-void SkillDependencies::make_optional_depends(QMap<QString, QVector<skill_struct> > *all_skills_data)
-{
+//void SkillDependencies::make_optional_depends(QMap<QString, QVector<skill_struct> > *all_skills_data)
+//{
 
-}
+//}
 
 //! Функция нахождения скилла в структуре всех скиллов
 void SkillDependencies::find_skill(Skill *skill, QString *circle, int *index)

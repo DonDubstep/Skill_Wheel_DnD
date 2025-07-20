@@ -43,6 +43,9 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
+     <widget class="HeaderWidget" name="widget" native="true"/>
+    </item>
+    <item>
      <widget class="QComboBox" name="combo_pages">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
@@ -103,6 +106,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HeaderWidget</class>
+   <extends>QWidget</extends>
+   <header>headerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

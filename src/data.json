@@ -726,5 +726,31 @@
             "title" : "Titl2",
             "description" : "desc2"
         }
+    ],
+    "Basic_skills":[
+        {
+            "class_name" : "Mage",
+            "icon_path" : "Basic_skills/Mage/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Mage",
+            "icon_path" : "Basic_skills/Mage/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Mage",
+            "icon_path" : "Basic_skills/Mage/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Mage",
+            "icon_path" : "Basic_skills/Mage/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        }
     ]
 }

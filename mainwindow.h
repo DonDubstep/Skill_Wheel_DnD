@@ -8,6 +8,7 @@
 #include "skill.h"
 #include "settings.h"
 #include <pagewidget.h>
+#include "headerwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,18 +23,6 @@ public:
     ~MainWindow();
 
 private:
-    QStringList pages
-    {
-        "Маг",
-        "П. Демонов",
-        "Рыцарь",
-        "Некромант",
-        "Рейнджер",
-        "Рунный жрец",
-        "Чернокнижник",
-        "Варвар"
-    };
-    const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     Ui::MainWindow *ui;
 
 private slots:

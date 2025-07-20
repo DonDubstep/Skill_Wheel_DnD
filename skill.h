@@ -46,6 +46,15 @@ const QString icon_categories[]
     "Circle1",
     "CircleBase",
 };
-
-
+const QStringList pages
+{
+    "Маг",
+    "П. Демонов",
+    "Рыцарь",
+    "Некромант",
+    "Рейнджер",
+    "Рунный жрец",
+    "Чернокнижник",
+    "Варвар"
+};
 #endif // SKILL_H
