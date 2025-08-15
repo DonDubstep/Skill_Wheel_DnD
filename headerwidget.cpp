@@ -8,19 +8,13 @@
 
 HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 {
-    this->setStyleSheet("background-image: url(./src/FonRamki.png);");
+    installEventFilter(this);
     layout = new QHBoxLayout(this);
-    init_basic_skills();
     read_json();
     add_combobox();
-}
-
-void HeaderWidget::init_basic_skills()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        basic_skills[pages[i]] = new Skill*[4];
-    }
+    add_basic_skills();
+    layout->addSpacing(500);
+    this->setStyleSheet("background-image: url(./src/FonRamki.png);");
 }
 
 //! Здесь читаем json
@@ -41,20 +35,20 @@ void HeaderWidget::read_json()
     for (int dir_num = 0; dir_num < 1; ++dir_num)
     {
         //! Сохряняем имя категории
-        QString cur_class_name = pages[dir_num];
+        QString cur_class_name = "Basic_skills";
         //! Берём массив по этому имени
         const QJsonArray class_arr = obj[cur_class_name].toArray();
-        int i = 0;
         //! Проходимся по массиву этой категории
         for (const QJsonValue& cur_val : class_arr) {
+            QJsonObject cur_obj = cur_val.toObject();
             QString class_name = cur_val["class_name"].toString();
             if(is_class_name_exists(class_name))
             {
-                QJsonObject cur_obj = cur_val.toObject();
-                QString icon_path = cur_obj["icon_path"].toString();
-                QString title = cur_obj["icon_path"].toString();
-                QString description = cur_obj["icon_path"].toString();
-                basic_skills[cur_class_name][i++] = new Skill(this, PIC_PATH + icon_path,title, description);
+                QString icon_path = PIC_PATH + cur_obj["icon_path"].toString();
+                QString title = cur_obj["title"].toString();
+                QString description = cur_obj["description"].toString();
+                Skill* cur_skill = new Skill(this, icon_path, title, description);
+                basic_skills[class_name].append(cur_skill);
             }
         }
     }
@@ -63,7 +57,8 @@ int HeaderWidget::is_class_name_exists(QString name)
 {
     for(int i = 0; i < pages.size(); i++)
     {
-        if(name == pages[i])
+        QString page_el = pages[i];
+        if(name == page_el)
             return 1;
     }
     return 0;
@@ -77,4 +72,43 @@ void HeaderWidget::add_combobox()
         combo_pages->addItem(pages[i]);
     }
     layout->addWidget(combo_pages);
+}
+
+void HeaderWidget::add_basic_skills()
+{
+    QString class_name = pages[0];
+    int icon_size = this->height()/2;
+    for(int i = 0; i < basic_skills[class_name].size(); i++)
+    {
+        basic_skills[class_name][i]->resize(icon_size,icon_size);
+//        basic_skills[class_name][i]
+        layout->addWidget(basic_skills[class_name][i]);
+    }
+}
+
+//! Обработчик события перерисовки
+void HeaderWidget::paintEvent(QPaintEvent *e)
+{
+    QString class_name = pages[0];
+    int icon_size = this->height()/2;
+    for(int i = 0; i < basic_skills[class_name].size(); i++)
+    {
+        if(basic_skills[class_name][i]->is_changed_size != 2)
+        {
+            basic_skills[class_name][i]->resize(icon_size,icon_size);
+        }
+    }
+
+    QWidget::paintEvent(e);
+}
+//! Обработчик событий
+bool HeaderWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    // Если нажимаем мышкой в свободном месте
+//    if(event->type() == QEvent::MouseButtonPress)
+//    {
+//        selection_mode_off();
+//        return true;
+//    }
+    return QWidget::eventFilter(watched, event);
 }

@@ -57,4 +57,5 @@ const QStringList pages
     "Чернокнижник",
     "Варвар"
 };
+
 #endif // SKILL_H
