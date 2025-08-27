@@ -17,9 +17,12 @@ private:
     QHBoxLayout* layout;
     void paintEvent(QPaintEvent *e) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+
+private slots:
+    void activate_combobox_changed(int page_num);
+
 public:
     QComboBox* combo_pages;
-//    QWidget* basic_skills_container;
     QLabel* score;
     HeaderWidget(QWidget *parent);
     void init_basic_skills();
@@ -27,6 +30,10 @@ public:
     void add_combobox();
     void add_basic_skills();
     int is_class_name_exists(QString name);
+
+signals:
+    void combobox_changed(int);
+
 };
 
 #endif // HEADERWIDGET_H

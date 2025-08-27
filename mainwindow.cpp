@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     this->installEventFilter(this);
-    ui->combo_pages->addItems(pages);
-    connect(ui->combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(change_page(int)));
+    connect(ui->header_widget, SIGNAL(combobox_changed(int)), this, SLOT(change_page(int)));
     ui->tabWidget->tabBar()->setVisible(false);
 
     addTabs();

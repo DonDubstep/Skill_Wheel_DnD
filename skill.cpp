@@ -37,12 +37,10 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     // При наведении на скилл мышкой
     if(event->type() == QEvent::Enter)
     {
-        qDebug() << "hover" << this->icon_path;
         this->setFocus();
         // Увеличиваем если только уже не увеличили
         if(dont_hide_description_flag == 0)
         {
-            qDebug() << "zoom";
             zoom_widget();
         }
         return true;
@@ -81,21 +79,18 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
 //! Функция увеличения иконки скилла и отображения рамки описания
 void Skill::zoom_widget()
 {
-    qDebug() << "before" << this->width() << this->height();
-    this->is_changed_size = 2;
+    this->is_changed_size = 1;
     int offset = this->width() / 2;
     this->resize(this->width() * INCREACE_KOEF, this->height() * INCREACE_KOEF);
     this->move(this->x() - offset, this->y() - offset);
     this->description->show();
     this->description->raise();
-    qDebug() << this->height() * INCREACE_KOEF;
-    qDebug() << "ater" << this->width() << this->height();
 }
 
 //! Функция возвращения иконки скилла в исходное положение и скрытие рамки
 void Skill::zoom_out_widget()
 {
-    this->is_changed_size = 1;
+    this->is_changed_size = 0;
     this->resize(this->width() / 2, this->height() / 2);
     int offset = this->width()  / 2;
     this->move(this->x() + offset, this->y() + offset);
