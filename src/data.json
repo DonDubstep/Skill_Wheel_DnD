@@ -751,6 +751,174 @@
             "icon_path" : "Basic_skills/Mage/4.png",
             "title" : "Titl2",
             "description" : "desc2"
+        },
+        {
+            "class_name" : "П. Демонов",
+            "icon_path" : "Basic_skills/Demon_Lord/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "П. Демонов",
+            "icon_path" : "Basic_skills/Demon_Lord/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "П. Демонов",
+            "icon_path" : "Basic_skills/Demon_Lord/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "П. Демонов",
+            "icon_path" : "Basic_skills/Demon_Lord/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рыцарь",
+            "icon_path" : "Basic_skills/Knight/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рыцарь",
+            "icon_path" : "Basic_skills/Knight/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рыцарь",
+            "icon_path" : "Basic_skills/Knight/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рыцарь",
+            "icon_path" : "Basic_skills/Knight/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Некромант",
+            "icon_path" : "Basic_skills/Necromancer/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Некромант",
+            "icon_path" : "Basic_skills/Necromancer/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Некромант",
+            "icon_path" : "Basic_skills/Necromancer/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Некромант",
+            "icon_path" : "Basic_skills/Necromancer/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рейнджер",
+            "icon_path" : "Basic_skills/Ranger/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рейнджер",
+            "icon_path" : "Basic_skills/Ranger/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рейнджер",
+            "icon_path" : "Basic_skills/Ranger/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рейнджер",
+            "icon_path" : "Basic_skills/Ranger/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рунный жрец",
+            "icon_path" : "Basic_skills/Rune_Priest/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рунный жрец",
+            "icon_path" : "Basic_skills/Rune_Priest/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рунный жрец",
+            "icon_path" : "Basic_skills/Rune_Priest/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Рунный жрец",
+            "icon_path" : "Basic_skills/Rune_Priest/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Чернокнижник",
+            "icon_path" : "Basic_skills/Warlock/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Чернокнижник",
+            "icon_path" : "Basic_skills/Warlock/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Чернокнижник",
+            "icon_path" : "Basic_skills/Warlock/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Чернокнижник",
+            "icon_path" : "Basic_skills/Warlock/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Варвар",
+            "icon_path" : "Basic_skills/Barbarian/1.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Варвар",
+            "icon_path" : "Basic_skills/Barbarian/2.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Варвар",
+            "icon_path" : "Basic_skills/Barbarian/3.png",
+            "title" : "Titl2",
+            "description" : "desc2"
+        },
+        {
+            "class_name" : "Варвар",
+            "icon_path" : "Basic_skills/Barbarian/4.png",
+            "title" : "Titl2",
+            "description" : "desc2"
         }
     ]
 }
