@@ -12,9 +12,9 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
     layout = new QHBoxLayout(this);
     read_json();
     add_combobox();
-    add_basic_skills();
-    layout->addSpacing(500);
-    this->setStyleSheet("background-image: url(./src/FonRamki.png);");
+    add_basic_skills(0);
+//    layout->addSpacing(500);
+//    this->setStyleSheet("background-image: url(./src/FonRamki.png);");
 }
 
 //! Здесь читаем json
@@ -23,35 +23,26 @@ void HeaderWidget::read_json()
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
-    //! Читаем данные из файла
     QByteArray raw_data = file.readAll();
-    //! Преобразуем в формат Json
     QJsonDocument doc = QJsonDocument::fromJson(raw_data);
-    //! Преобразуем в объект Json
     QJsonObject obj = doc.object();
-    //! Сохранять текущий элемент будем сюда
     skill_struct cur_skill;
-    //! Для каждой категории иконок
-    for (int dir_num = 0; dir_num < 1; ++dir_num)
-    {
-        //! Сохряняем имя категории
-        QString cur_class_name = "Basic_skills";
-        //! Берём массив по этому имени
-        const QJsonArray class_arr = obj[cur_class_name].toArray();
-        //! Проходимся по массиву этой категории
-        for (const QJsonValue& cur_val : class_arr) {
-            QJsonObject cur_obj = cur_val.toObject();
-            QString class_name = cur_val["class_name"].toString();
-            if(is_class_name_exists(class_name))
-            {
-                QString icon_path = PIC_PATH + cur_obj["icon_path"].toString();
-                QString title = cur_obj["title"].toString();
-                QString description = cur_obj["description"].toString();
-                Skill* cur_skill = new Skill(this, icon_path, title, description);
-                basic_skills[class_name].append(cur_skill);
-            }
+    QString cur_class_name = "Basic_skills";
+    const QJsonArray class_arr = obj[cur_class_name].toArray();
+    for (const QJsonValue& cur_val : class_arr) {
+        QJsonObject cur_obj = cur_val.toObject();
+        QString class_name = cur_val["class_name"].toString();
+        if(is_class_name_exists(class_name))
+        {
+            QString icon_path = PIC_PATH + cur_obj["icon_path"].toString();
+            QString title = cur_obj["title"].toString();
+            QString description = cur_obj["description"].toString();
+            Skill* cur_skill = new Skill(this, icon_path, title, description);
+            cur_skill->hide();
+            basic_skills[class_name].append(cur_skill);
         }
     }
+
 }
 int HeaderWidget::is_class_name_exists(QString name)
 {
@@ -69,30 +60,41 @@ void HeaderWidget::add_combobox()
     combo_pages = new QComboBox();
     combo_pages->addItems(pages);
     layout->addWidget(combo_pages);
-    connect(combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(activate_combobox_changed(int)));
+    connect(combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(combobox_changed(int)));
 }
 
-void HeaderWidget::activate_combobox_changed(int page_num)
+void HeaderWidget::combobox_changed(int page_num)
 {
-    emit combobox_changed(page_num);
+    remove_basic_skills();
+    add_basic_skills(page_num);
 }
 
-void HeaderWidget::add_basic_skills()
+void HeaderWidget::remove_basic_skills()
 {
-    QString class_name = pages[0];
+    for(int i = 0; i < 4; i++)
+    {
+        layout->removeWidget(cur_class_skills[i]);
+        cur_class_skills[i]->hide();
+    }
+}
+
+void HeaderWidget::add_basic_skills(int page_num)
+{
+    QString class_name = pages[page_num];
     int icon_size = this->height()/2;
     for(int i = 0; i < basic_skills[class_name].size(); i++)
     {
         basic_skills[class_name][i]->resize(icon_size,icon_size);
-//        basic_skills[class_name][i]
-        layout->addWidget(basic_skills[class_name][i]);
+        cur_class_skills[i] = basic_skills[class_name][i];
+        layout->addWidget(cur_class_skills[i]);
+        cur_class_skills[i]->show();
     }
 }
 
 //! Обработчик события перерисовки
 void HeaderWidget::paintEvent(QPaintEvent *e)
 {
-    QString class_name = pages[0];
+    QString class_name = pages[combo_pages->currentIndex()];
     int icon_size = this->height()/2;
     for(int i = 0; i < basic_skills[class_name].size(); i++)
     {
