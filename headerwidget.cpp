@@ -9,12 +9,10 @@
 HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
-    layout = new QHBoxLayout(this);
     read_json();
     add_combobox();
     add_basic_skills(0);
-//    layout->addSpacing(500);
-//    this->setStyleSheet("background-image: url(./src/FonRamki.png);");
+    add_scores(0);
 }
 
 //! Здесь читаем json
@@ -55,13 +53,6 @@ int HeaderWidget::is_class_name_exists(QString name)
     return 0;
 }
 
-void HeaderWidget::add_combobox()
-{
-    combo_pages = new QComboBox();
-    combo_pages->addItems(pages);
-    layout->addWidget(combo_pages);
-    connect(combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(combobox_changed(int)));
-}
 
 void HeaderWidget::combobox_changed(int page_num)
 {
@@ -71,43 +62,16 @@ void HeaderWidget::combobox_changed(int page_num)
 
 void HeaderWidget::remove_basic_skills()
 {
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < BASIC_SKILL_NUM; i++)
     {
         layout->removeWidget(cur_class_skills[i]);
         cur_class_skills[i]->hide();
     }
 }
 
-void HeaderWidget::add_basic_skills(int page_num)
-{
-    QString class_name = pages[page_num];
-    int icon_size = this->height()/2;
-    for(int i = 0; i < basic_skills[class_name].size(); i++)
-    {
-        basic_skills[class_name][i]->resize(icon_size,icon_size);
-        cur_class_skills[i] = basic_skills[class_name][i];
-        layout->addWidget(cur_class_skills[i]);
-        cur_class_skills[i]->show();
-    }
-}
-
 //! Обработчик события перерисовки
 void HeaderWidget::paintEvent(QPaintEvent *e)
 {
-    QString class_name = pages[combo_pages->currentIndex()];
-    int icon_size = this->height()/2;
-    for(int i = 0; i < basic_skills[class_name].size(); i++)
-    {
-        if(basic_skills[class_name][i]->is_changed_size == 0)
-        {
-            basic_skills[class_name][i]->resize(icon_size,icon_size);
-        }
-        else
-        {
-            basic_skills[class_name][i]->resize(icon_size*2,icon_size*2);
-
-        }
-    }
 
     QWidget::paintEvent(e);
 }
@@ -122,3 +86,79 @@ bool HeaderWidget::eventFilter(QObject *watched, QEvent *event)
 //    }
     return QWidget::eventFilter(watched, event);
 }
+
+void HeaderWidget::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED(e)
+    paint_combobox();
+    paint_basic_skills();
+    paint_scores();
+}
+
+void HeaderWidget::add_combobox()
+{
+    combo_pages = new QComboBox(this);
+    combo_pages->addItems(pages);
+    connect(combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(combobox_changed(int)));
+    paint_combobox();
+}
+void HeaderWidget::add_basic_skills(int page_num)
+{
+    QString class_name = pages[page_num];
+    for(int i = 0; i < basic_skills[class_name].size(); i++)
+    {
+        cur_class_skills[i] = basic_skills[class_name][i];
+    }
+    paint_basic_skills();
+}
+
+void HeaderWidget::add_scores(int score)
+{
+    scores = new QLabel();
+    scores->setParent(this);
+    scores->setText(QString::number(score));
+    paint_scores();
+}
+
+#define LEFT_PADDING_K 0.01875
+#define TOP_PADDING_K 0.234375
+#define COMBO_WIDTH_K 0.25
+#define COMBO_HEIGHT_K 0.53125
+#define ICON_DIAMETER_K 0.5
+#define ICON_PADDING_LEFT_K 0.33125
+#define ICON_MARGIN_BETWEEN_K 0.02
+#define LABEL_PADDING_K 0.5825
+
+
+void HeaderWidget::paint_combobox()
+{
+    int x = static_cast<int>(this->width() * LEFT_PADDING_K);
+    int y = static_cast<int>(this->height() * TOP_PADDING_K);
+    int w = static_cast<int>(this->width() * COMBO_WIDTH_K);
+    int h = static_cast<int>(this->height() * COMBO_HEIGHT_K);
+    combo_pages->setGeometry(x, y, w ,h);
+}
+void HeaderWidget::paint_basic_skills()
+{
+    int icon_size = static_cast<int>(this->height() * ICON_DIAMETER_K);
+    int x, y;
+    for(int i = 0; i < BASIC_SKILL_NUM; i++)
+    {
+        x = static_cast<int>(this->width() * ICON_PADDING_LEFT_K + i * (this->height() * ICON_DIAMETER_K + this->width() * ICON_MARGIN_BETWEEN_K));
+        y = static_cast<int>(this->height() * TOP_PADDING_K);
+        cur_class_skills[i]->move(x, y);
+        cur_class_skills[i]->resize(icon_size, icon_size);
+        cur_class_skills[i]->show();
+    }
+
+}
+void HeaderWidget::paint_scores()
+{
+    QFont font = QFont("Helvetica", 20, true);
+    font.setBold(true);
+    scores->setFont(font);
+    int x = static_cast<int>(this->width() * LABEL_PADDING_K);
+    int y = static_cast<int>(this->height() * TOP_PADDING_K);
+    scores->move(x, y);
+}
+
