@@ -64,7 +64,6 @@ void HeaderWidget::remove_basic_skills()
 {
     for(int i = 0; i < BASIC_SKILL_NUM; i++)
     {
-        layout->removeWidget(cur_class_skills[i]);
         cur_class_skills[i]->hide();
     }
 }
