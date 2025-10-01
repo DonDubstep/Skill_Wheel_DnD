@@ -88,10 +88,10 @@ bool HeaderWidget::eventFilter(QObject *watched, QEvent *event)
 
 void HeaderWidget::resizeEvent(QResizeEvent *e)
 {
-    Q_UNUSED(e)
     paint_combobox();
     paint_basic_skills();
     paint_scores();
+    QWidget::resizeEvent(e);
 }
 
 void HeaderWidget::add_combobox()
@@ -126,7 +126,8 @@ void HeaderWidget::add_scores(int score)
 #define ICON_DIAMETER_K 0.5
 #define ICON_PADDING_LEFT_K 0.33125
 #define ICON_MARGIN_BETWEEN_K 0.02
-#define LABEL_PADDING_K 0.5825
+#define LABEL_PADDING_OF_SKILLS_K 0.03125
+#define FONT_SIZE_K 0.4
 
 
 void HeaderWidget::paint_combobox()
@@ -153,10 +154,13 @@ void HeaderWidget::paint_basic_skills()
 }
 void HeaderWidget::paint_scores()
 {
-    QFont font = QFont("Helvetica", 20, true);
+    int font_size = static_cast<int>(this->height() * FONT_SIZE_K);
+    QFont font = QFont("Bradley Hand ITC", font_size);
     font.setBold(true);
+    font.setItalic(true);
     scores->setFont(font);
-    int x = static_cast<int>(this->width() * LABEL_PADDING_K);
+    double x_end_of_prev_elements = this->width() * ICON_PADDING_LEFT_K + BASIC_SKILL_NUM * (this->height() * ICON_DIAMETER_K + this->width() * ICON_MARGIN_BETWEEN_K);
+    int x = static_cast<int>(x_end_of_prev_elements + this->width() * LABEL_PADDING_OF_SKILLS_K);
     int y = static_cast<int>(this->height() * TOP_PADDING_K);
     scores->move(x, y);
 }
