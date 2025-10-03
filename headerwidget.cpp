@@ -22,7 +22,6 @@ void HeaderWidget::read_json()
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
-    file.close();
     QByteArray raw_data = file.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(raw_data);
     QJsonObject root = doc.object();
@@ -43,6 +42,7 @@ void HeaderWidget::read_json()
             basic_skills[class_name].append(cur_skill);
         }
     }
+    file.close();
 }
 int HeaderWidget::is_class_name_exists(QString name)
 {
@@ -164,5 +164,6 @@ void HeaderWidget::paint_scores()
     int x = static_cast<int>(x_end_of_prev_elements + this->width() * LABEL_PADDING_OF_SKILLS_K);
     int y = static_cast<int>(this->height() * TOP_PADDING_K);
     scores->move(x, y);
+    scores->resize(font_size, font_size);
 }
 

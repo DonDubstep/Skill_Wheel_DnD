@@ -80,7 +80,6 @@ void PageWidget::read_json()
         qWarning("Не открыть файл");
     //! Читаем данные из файла
     QByteArray raw_data = file.readAll();
-    file.close();
     //! Преобразуем в формат Json
     QJsonDocument doc = QJsonDocument::fromJson(raw_data);
     //! Преобразуем в объект Json
@@ -117,6 +116,7 @@ void PageWidget::read_json()
             }
         }
     }
+    file.close();
 }
 
 //! Обработчик события перерисовки
@@ -287,7 +287,7 @@ int PageWidget::find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill
 //! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void PageWidget::selection_mode_on(Skill* selected_skill)
 {
-    qDebug() << "eveve";
+//    qDebug() << "eveve";
 //    QVector<Skill*> dependent_skills = skill_dependencies.show_depends(selected_skill);
 //    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
 //    {
@@ -305,7 +305,7 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
 //! Делает все скиллы цветными
 void PageWidget::selection_mode_off()
 {
-    qDebug() << "eveve";
+//    qDebug() << "eveve";
 //    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
 //    {
 //        QString circle_name = icon_categories[circle];
