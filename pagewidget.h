@@ -37,6 +37,12 @@ struct circle_skill_data_t
     sector_data_t summoning_magic;
 };
 
+struct temp_depends_struct_t
+{
+    Skill* skill;
+    short index;
+    QVector<short> depends;
+};
 
 
 class PageWidget : public QWidget
@@ -61,6 +67,7 @@ private:
 
     circle_skill_data_t circle_skills;
     sector_data_t* sector_ptrs[12];
+    QVector<temp_depends_struct_t>* temp_depends_struct;
 
 
     SkillDependencies skill_dependencies;
@@ -73,6 +80,7 @@ private:
     void init_background_colors();
     void init_sector_pointers();
     void read_json();
+    void make_dependencies();
     void paint_concentric_circles();
     void paint_small_circles();
     void paint_skills();

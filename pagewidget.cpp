@@ -1,14 +1,16 @@
 #include "pagewidget.h"
 #include <math.h>
+#include <QDebug>
 
 PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
+    temp_depends_struct = new QVector<temp_depends_struct_t>();
 
     init_background_colors();
     init_sector_pointers();
     read_json();
-
+    make_dependencies();
 //    skill_dependencies.make_depends(&all_skills_data);
 }
 
@@ -75,6 +77,9 @@ void PageWidget::read_json()
 {
     QString title, description, icon_path;
     short index;
+    QVector<short> depends;
+    temp_depends_struct_t temp_skill_with_depends;
+
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
@@ -103,7 +108,23 @@ void PageWidget::read_json()
                 icon_path = cur_skill_data["icon_path"].toString();
                 index = static_cast<short>(cur_skill_data["index"].toInt());
 
+                QJsonArray json_depends_arr = cur_skill_data["depends"].toArray();
+                if(json_depends_arr.size() != 0)
+                {
+                    depends.reserve(json_depends_arr.size());
+                    std::transform(json_depends_arr.begin(), json_depends_arr.end(),
+                                   std::back_inserter(depends),
+                                   [](const QJsonValue& value)
+                                    {return static_cast<short>(value.toInt());
+                                    });
+                }
                 Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
+
+                temp_skill_with_depends.skill = cur_skill;
+                temp_skill_with_depends.index = index;
+                temp_skill_with_depends.depends = depends;
+                temp_depends_struct->append(temp_skill_with_depends);
+
                 connect(cur_skill, SIGNAL(icon_selected(Skill*)),this, SLOT(selection_mode_on(Skill*)));
                 switch (circle_i)
                 {
@@ -117,6 +138,24 @@ void PageWidget::read_json()
         }
     }
     file.close();
+}
+
+void PageWidget::make_dependencies()
+{
+    for(temp_depends_struct_t skill_el : *temp_depends_struct)
+    {
+        for(int d = 0; d < skill_el.depends.size(); d++)
+        {
+            for(temp_depends_struct_t dependend_skill : *temp_depends_struct)
+            {
+                if(dependend_skill.index == skill_el.depends[d])
+                {
+                    skill_el.skill->depends.append(dependend_skill.skill);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 //! Обработчик события перерисовки
