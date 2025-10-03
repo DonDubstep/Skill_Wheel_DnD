@@ -1,5 +1,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
+#include <QStringList>
 
 enum icon_sizes
 {
@@ -23,6 +24,65 @@ enum pages
     NUM_OF_PAGES = 8
 };
 
+const QStringList json_pages
+{
+    "Mage",
+    "Demon_Lord",
+    "Knight",
+    "Necromancer",
+    "Ranger",
+    "Rune_Priest",
+    "Warlock",
+    "Barbarian"
+};
+
+const QStringList sector_names
+{
+    "Magic_of_chaos",
+    "Magic_of_darkness",
+    "Magic_of_light",
+    "Machine_management",
+    "Education",
+    "Logistics",
+    "Leadership",
+    "Luck",
+    "Protection",
+    "Attack",
+    "Sorcery",
+    "Summoning_magic",
+};
+
+const QStringList circle_names
+{
+    "Base_circle",
+    "Circle_1",
+    "Circle_2",
+    "Circle_3"
+};
+
+
+const QStringList pages
+{
+    "Маг",
+    "П. Демонов",
+    "Рыцарь",
+    "Некромант",
+    "Рейнджер",
+    "Рунный жрец",
+    "Чернокнижник",
+    "Варвар"
+};
+
+#warning Soon delete
+const QString icon_categories[]
+{
+    "Circle3",
+    "Circle2",
+    "Circle1",
+    "CircleBase",
+};
+
+
 
 #define RADUIS_KOEF 0.36f
 #define STEP_KOEF 0.16f
@@ -32,4 +92,5 @@ enum pages
 
 #define NUM_OF_CATEGORIES 4
 #define NUM_OF_DEPENDS 30
+#define NUM_OF_CIRCLES 4
 #endif // SETTINGS_H

@@ -1,924 +1,1234 @@
 {
-    "CircleBase":[
-        {
-            "icon_path" : "CircleBase/1_Chaos3.png",
-            "title" : "Искуная магия Хаоса",
-            "description" : "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/2_Chaos2.png",
-            "title" : "Сильная магия Хаоса",
-            "description" : "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/3_Chaos1.png",
-            "title" : "Основы магии Хаоса",
-            "description" : "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/4_Dark3.png",
-            "title" : "Искусная магия Тьмы",
-            "description" : "Вы получаете возможность изучать заклинания магии Тьмы, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Тьмы уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/5_Dark2.png",
-            "title" : "Сильная магия Тьмы",
-            "description" : "Вы получаете возможность изучать заклинания магии Тьмы, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Тьмы уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/6_Dark1.png",
-            "title" : "Основы магии Тьмы",
-            "description" : "Вы получаете возможность изучать заклинания магии Тьмы, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Тьмы уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/7_Bright3.png",
-            "title" : "Искусная магия Света",
-            "description" : "Вы получаете возможность изучать заклинания магии Света, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Света уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/8_Bright2.png",
-            "title" : "Сильная магия Света",
-            "description" : "Вы получаете возможность изучать заклинания магии Света, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Света уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/9_Bright1.png",
-            "title" : "Основы магии Света",
-            "description" : "Вы получаете возможность изучать заклинания магии Света, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Света уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/10_Machies3.png",
-            "title" : "Искусный снайпер",
-            "description" : "Вы получаете +3 к попаданию из стрелкового оружия (rwak), так же вы игнорируете укрытие на три четверти, а ваши попадания считаются критическими, если разница между вашим броском атаки и КД цели больше пяти"
-        },
-        {
-            "icon_path" : "CircleBase/11_Machies2.png",
-            "title" : "Опытный снайпер",
-            "description" : "Вы получаете +2 к попаданию из стрелкового оружия (rwak), когда вы совершаете rwak и промахиваетесь, вы можете использовать реакцию, чтобы перебросить бросок атаки, это не является преимуществом"
-        },
-        {
-            "icon_path" : "CircleBase/12_Machies1.png",
-            "title" : "Снайпер-новичок",
-            "description" : "Вы получаете +1 к попаданию из стрелкового оружия (rwak), так же вы игнорируете укрытие на половину"
-        },
-        {
-            "icon_path" : "CircleBase/13_Education3.png",
-            "title" : "Высшее образование",
-            "description" : "Вы можете выбрать одну способность другого класса, уровня не выше своего"
-        },
-        {
-            "icon_path" : "CircleBase/14_Education2.png",
-            "title" : "Среднее образование",
-            "description" : "Вы можете выбрать одну способность другого подкласса, уровня не выше своего"
-        },
-        {
-            "icon_path" : "CircleBase/15_Education1.png",
-            "title" : "Начальное образование",
-            "description" : "Вы можете выбрать одну черту, условиям для получения которой вы удовлетворяете"
-        },
-        {
-            "icon_path" : "CircleBase/16_Logistics3.png",
-            "title" : "Искусная логистика",
-            "description" : "Ваш отряд перемещается по глобальной карте быстрее на 18 миль/день, ваша скорость увеличивается на 30 футов"
-        },
-        {
-            "icon_path" : "CircleBase/17_Logistics2.png",
-            "title" : "Развитая логистика",
-            "description" : "Ваш отряд перемещается по глобальной карте быстрее на 12 миль/день, ваша скорость увеличивается на 20 футов"
-        },
-        {
-            "icon_path" : "CircleBase/18_Logistics1.png",
-            "title" : "Основы логистики",
-            "description" : "Ваш отряд перемещается по глобальной карте быстрее на 6 миль/день, ваша скорость увеличивается на 10 футов"
-        },
-        {
-            "icon_path" : "CircleBase/19_Leadership3.png",
-            "title" : "Прекрасный боевой дух",
-            "description" : "Вы получаете +4*(мод. ВЫН) врем. Хитов в начале каждого боя, а также + 3d4 к спасброскам от эффектов, оказывающих влияние на разум"
-        },
-        {
-            "icon_path" : "CircleBase/20_Leadership2.png",
-            "title" : "Сильный боевой дух лидерство",
-            "description" : "Вы получаете +3*(мод. ВЫН) врем. Хитов в начале каждого боя, а также +2d4 к спасброскам от эффектов, оказывающих влияние на разум"
-        },
-        {
-            "icon_path" : "CircleBase/21_Leadership1.png",
-            "title" : "Слабый боевой дух",
-            "description" : "Вы получаете +2*(мод. ВЫН) врем. Хитов в начале каждого боя, а также +1d4 к спасброскам от эффектов, оказывающих влияние на разум"
-        },
-        {
-            "icon_path" : "CircleBase/22_Luck3.png",
-            "title" : "Постоянная удача",
-            "description" : "Порог критического броска синжен до 17"
-        },
-        {
-            "icon_path" : "CircleBase/23_Luck2.png",
-            "title" : "Большая удача",
-            "description" : "Порог критического броска синжен до 18"
-        },
-        {
-            "icon_path" : "CircleBase/24_Luck1.png",
-            "title" : "Призрачная удача",
-            "description" : "Порог критического броска синжен до 19"
-        },
-        {
-            "icon_path" : "CircleBase/25_Protection3.png",
-            "title" : "Искусная защита",
-            "description" : "Вы получаете 9 зарядов защиты, позволяющие реакцией добавить себе +6 КБ, до своего следующего хода, заряды восстанавливаются на долгом отдыхе, также вы получаете владение тяжёлым доспехом"
-        },
-        {
-            "icon_path" : "CircleBase/26_Protection2.png",
-            "title" : "Развитая защита",
-            "description" : "Вы получаете 6 зарядов защиты, позволяющие реакцией добавить себе +4 КБ, до своего следующего хода, заряды восстанавливаются на долгом отдыхе, также вы получаете владение средним доспехом"
-        },
-        {
-            "icon_path" : "CircleBase/27_Protection1.png",
-            "title" : "Основы защиты",
-            "description" : "Вы получаете 3 заряда защиты, позволяющие реакцией добавить себе +2 КБ, до своего следующего хода, заряды восстанавливаются на долгом отдыхе, также вы получаете владение легким доспехом и щитом"
-        },
-        {
-            "icon_path" : "CircleBase/28_Attack3.png",
-            "title" : "Искусное нападение",
-            "description" : "Вы получаете +3d4 к броскам урона, +3 к броскам атаки оружием ближнего боя, и три мастерства в оружии на выбор"
-        },
-        {
-            "icon_path" : "CircleBase/29_Attack2.png",
-            "title" : "Развитое нападение",
-            "description" : "Вы получаете +2d4 к броскам урона, +2 к броскам атаки оружием ближнего боя, и два мастерства в оружии на выбор"
-        },
-        {
-            "icon_path" : "CircleBase/30_Attack1.png",
-            "title" : "Основы нападения",
-            "description" : "Вы получаете +1d4 к броскам урона, +1 к броскам атаки оружием ближнего боя, и одно мастерство в оружии на выбор"
-        },
-        {
-            "icon_path" : "CircleBase/31_Sorcery3.png",
-            "title" : "Искусное чародейство",
-            "description" : "Позволяет накапливать очки магии, при накоплении 4 вы можете их потратить и сходить вне очереди. Вы получаете 1 очко за 1 потраченную ячейку заклинаний.  Максимум очков магии - 24"
-        },
-        {
-            "icon_path" : "CircleBase/32_Sorcery2.png",
-            "title" : "Развитое чародейство",
-            "description" : "Позволяет накапливать очки магии, при накоплении 6 вы можете их потратить и сходить вне очереди. Вы получаете 1 очко за 1 потраченную ячейку заклинаний.  Максимум очков магии - 24"
-        },
-        {
-            "icon_path" : "CircleBase/33_Sorcery1.png",
-            "title" : "Основы чародейства",
-            "description" : "Позволяет накапливать очки магии, при накоплении 12 вы можете их потратить и сходить вне очереди. Вы получаете 1 очко за 1 потраченную ячейку заклинаний. Максимум очков магии - 24"
-        },
-        {
-            "icon_path" : "CircleBase/34_Summon3.png",
-            "title" : "Искусная магия Призыва",
-            "description" : "Вы получаете возможность изучать призывающие заклинания вне зависимости от класса, вплоть до 9 уровня,  также вы получаете три заклинания магии призыва уровня не выше доступных вам, которые может сотворить раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/35_Summon2.png",
-            "title" : "Сильная магия призыва",
-            "description" : "Вы получаете возможность изучать призывающие заклинания вне зависимости от класса, вплоть до 6 уровня,  также вы получаете три заклинания магии призыва уровня не выше доступных вам, которые может сотворить раз в долгий отдых"
-        },
-        {
-            "icon_path" : "CircleBase/36_Summon1.png",
-            "title" : "Основы магии Призыва",
-            "description" : "Вы получаете возможность изучать призывающие заклинания вне зависимости от класса, вплоть до 3 уровня,  также вы получаете три заклинания магии призыва уровня не выше доступных вам, которые может сотворить раз в долгий отдых"
-        }
-    ],
-    "Circle1":[
-        {
-            "icon_path" : "Circle1/1_ColdMaster.png",
-            "title" : "Повелитель холода",
-            "description" : "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения"
-        },
-        {
-            "icon_path" : "Circle1/2_FireMaster.png",
-            "title" : "Повелитель огня",
-            "description" : "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения"
-        },
-        {
-            "icon_path" : "Circle1/3_StormMaster.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/4_MindMaster.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/5_PainMaster.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/6_CurseMaster.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/7_GrantingBless.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/8_GrantingProtection.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/9_RighteousAnger.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/10_PenetratingShot.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/11_QuickFire.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/12_FirstAid.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/13_EagleEye.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/14_MagicAttraction.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/15_Scientist.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/16_PathSearch.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/17_TrapSearch.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/18_Exploring.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/19_Diplomacy.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/20_Recruiting.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/21_TreasuryManagement.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/22_LuckySorcerer.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/23_SoldierLuck.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/24_Trophies.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/25_Dodge.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/26_Endurance.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/27_Repulse.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle1/28_Shooting.png",
-            "title" : "Стрельба",
-            "description" : "+2 к попаданию из стрелкового оружия"
-        },
-        {
-            "icon_path" : "Circle1/29_BattleMadness.png",
-            "title" : "Боевое безумие",
-            "description" : "Меняет кость, используемую вашим оружием на кость большего размера (не больше d12)"
-        },
-        {
-            "icon_path" : "Circle1/30_Tactics.png",
-            "title" : "Тактика",
-            "description" : "В начале боя сразу после броска инициативы вы можете вне очереди переместиться куда-либо не расходуя скорость перемещения"
-        },
-        {
-            "icon_path" : "Circle1/31_Wisdom.png",
-            "title" : "Мудрость",
-            "description" : "Вы можете изучить 5 заклинаний любого класса вплоть до 5 круга. Эти заклинания считаются всегда подготовленными и используют вашу закл. характеристику (если у вас их несколько, то выбираете сами)"
-        },
-        {
-            "icon_path" : "Circle1/32_VolatileMana.png",
-            "title" : "Изменчивая мана",
-            "description" : "Вы можете потратить очки магии для восполнения соответствующей ячейки  в соотношении 4:1"
-        },
-        {
-            "icon_path" : "Circle1/33_SecretAdvantage.png",
-            "title" : "Тайное преимущество",
-            "description" : "Вы получаете по 1 ячейке заклинания уровня равного уровню вашей максимальной ячейки/2  и ниже (для чернокнижника это универсальные ячейки)<br><br>(Например, если у вас есть ячейка заклинаний 4 круга, вы получаете по 1 ячейке 1 и 2 круга)"
-        },
-        {
-            "icon_path" : "Circle1/34_CharmMaster.png",
-            "title" : "Повелитель чар",
-            "description" : "Призванные вами существа могут использовать одну из ваших заклинательных ячеек для каста одного из ваших известных заклинаний. Существо использует вашу характеристику заклинателя и действует так, как если бы заклинали вы. Этот эффект можно использовать раз за долгий отдых"
-        },
-        {
-            "icon_path" : "Circle1/35_EarthMaster.png",
-            "title" : "Хозяин земли",
-            "description" : "Когда вы наносите урон <span style='color: #2e805d;'>ядом</span> или <span style='color: #bbe100;'>кислотой</span>, на костях урона не может выпасть меньше их среднего значения. Так же вы можете бонусным действем создать вокруг себя <span style='color: #2e805d;'>ядовитую</span> или <span style='color: #bbe100;'>кислотную</span> (по вашему выбору) область радиусом 5 футов на 10 ходов.<br><span style='color: #2e805d;'>Ядовитая</span> область принуждает противников к спасброску ВЫН (СЛ ЗАК), в случае провала противник становится <span style='color: #2e805d;'>отравлен</span> на 3 хода.<br><span style='color: #bbe100;'>Кислотная</span> область принуждает противников к спасброску ЛВК (СЛ ЗАК), в случае провала КБ противника снижается на 2."
-        },
-        {
-            "icon_path" : "Circle1/36_ElementalsMaster.png",
-            "title" : "Повелитель элементалей",
-            "description" : "Вы получаете возможность 3 раза за долгий отдых использовать призыв элементалей, вызвав элементаля одной из стихий на выбор (<span style='color: #da6f00;'>огонь</span>, <span style='color: #2e75b5;'>вода</span>, <span style='color: #2e805d;'>яд</span>, <span style='color: #bbe100;'>кислота</span>, <span style='color: #0000ff;'>молния</span>, <span style='color: #980000;'>земля</span>) их статблок приведен ниже. Элементаль исчезает когда его Хиты снижаются до 0 или на долгом отдыхе. Одновременно может существовать только 1 элементаль"
-        }
-    ],
-    "Circle2":[
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/1_FireArrows.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle2/36_DeafDefense.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        }
-    ],
-    "Circle3":[
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/1_Retribution.png",
-            "title" : "Titl1",
-            "description" : "desc1"
-        },
-        {
-            "icon_path" : "Circle3/36_Ready.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        }
-    ],
-    "Basic_skills":[
-        {
-            "class_name" : "Маг",
-            "icon_path" : "Basic_skills/Mage/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Маг",
-            "icon_path" : "Basic_skills/Mage/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Маг",
-            "icon_path" : "Basic_skills/Mage/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Маг",
-            "icon_path" : "Basic_skills/Mage/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "П. Демонов",
-            "icon_path" : "Basic_skills/Demon_Lord/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "П. Демонов",
-            "icon_path" : "Basic_skills/Demon_Lord/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "П. Демонов",
-            "icon_path" : "Basic_skills/Demon_Lord/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "П. Демонов",
-            "icon_path" : "Basic_skills/Demon_Lord/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рыцарь",
-            "icon_path" : "Basic_skills/Knight/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рыцарь",
-            "icon_path" : "Basic_skills/Knight/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рыцарь",
-            "icon_path" : "Basic_skills/Knight/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рыцарь",
-            "icon_path" : "Basic_skills/Knight/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Некромант",
-            "icon_path" : "Basic_skills/Necromancer/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Некромант",
-            "icon_path" : "Basic_skills/Necromancer/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Некромант",
-            "icon_path" : "Basic_skills/Necromancer/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Некромант",
-            "icon_path" : "Basic_skills/Necromancer/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рейнджер",
-            "icon_path" : "Basic_skills/Ranger/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рейнджер",
-            "icon_path" : "Basic_skills/Ranger/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рейнджер",
-            "icon_path" : "Basic_skills/Ranger/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рейнджер",
-            "icon_path" : "Basic_skills/Ranger/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рунный жрец",
-            "icon_path" : "Basic_skills/Rune_Priest/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рунный жрец",
-            "icon_path" : "Basic_skills/Rune_Priest/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рунный жрец",
-            "icon_path" : "Basic_skills/Rune_Priest/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Рунный жрец",
-            "icon_path" : "Basic_skills/Rune_Priest/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Чернокнижник",
-            "icon_path" : "Basic_skills/Warlock/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Чернокнижник",
-            "icon_path" : "Basic_skills/Warlock/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Чернокнижник",
-            "icon_path" : "Basic_skills/Warlock/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Чернокнижник",
-            "icon_path" : "Basic_skills/Warlock/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Варвар",
-            "icon_path" : "Basic_skills/Barbarian/1.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Варвар",
-            "icon_path" : "Basic_skills/Barbarian/2.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Варвар",
-            "icon_path" : "Basic_skills/Barbarian/3.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        },
-        {
-            "class_name" : "Варвар",
-            "icon_path" : "Basic_skills/Barbarian/4.png",
-            "title" : "Titl2",
-            "description" : "desc2"
-        }
-    ]
+    "Magic_of_chaos":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуccная магия Хаоса",
+                "index":        0,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        1,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        2,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        3,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        4,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        5,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        6,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        7,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        8,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        9,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        10,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        11,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Magic_of_darkness":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        12,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        13,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        14,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        15,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        16,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        17,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        18,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        19,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        20,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        21,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        22,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        23,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Magic_of_light":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        24,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        25,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        26,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        27,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        28,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        29,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        30,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        31,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        32,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        33,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        34,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        35,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Machine_management":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        36,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        37,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        38,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        39,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        40,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        41,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        42,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        43,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        44,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        45,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        46,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        47,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Education":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        48,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        49,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        50,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        51,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        52,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        53,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        54,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        55,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        56,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        57,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        58,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        59,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Logistics":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        60,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        61,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        62,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        63,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        64,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        65,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        66,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        67,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        68,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        69,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        70,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        71,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Leadership":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        72,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        73,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        74,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        75,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        76,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        77,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        78,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        79,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        80,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        81,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        82,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        83,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Luck":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        84,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        85,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        86,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        87,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        88,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        89,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        90,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        91,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        92,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        93,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        94,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        95,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Protection":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        96,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        97,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        98,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        99,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        100,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        101,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        102,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        103,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        104,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        105,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        106,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        107,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Attack":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        108,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        109,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        110,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        111,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        112,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        113,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        114,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        115,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        116,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        117,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        118,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        119,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Sorcery":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        120,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        121,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        122,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        123,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        124,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        125,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        126,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        127,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        128,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        129,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        130,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        131,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Summoning_magic":
+    {
+        "Base_circle":
+        [
+            {
+                "title":        "Искуная магия Хаоса",
+                "index":        132,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 9 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/1_Chaos3.png"
+            },
+            {
+                "title":        "Сильная магия Хаоса",
+                "index":        133,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 6 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/2_Chaos2.png"
+            },
+            {
+                "title":        "Основы магии Хаоса",
+                "index":        134,
+                "description":  "Вы получаете возможность изучать заклинания магии Хаоса, вне зависимости от класса, вплоть до 3 круга, также вы получаете три заклинания магии Хаоса уровня не выше доступных вам, которые можете сотворить 1 раз в долгий отдых",
+                "icon_path":    "CircleBase/3_Chaos1.png"
+            }
+        ],
+        "Circle_1":
+        [
+            {
+                "title":        "Повелитель холода",
+                "index":        135,
+                "description":  "Когда вы наносите урон <span style='color: #3c78d8;'>холодом</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/1_ColdMaster.png"
+            },
+            {
+                "title":        "Повелитель огня",
+                "index":        136,
+                "description":  "Когда вы наносите урон <span style='color:#da6f00;'>огнем</span>, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/2_FireMaster.png"
+            },
+            {
+                "title":        "Повелитель бурь",
+                "index":        137,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle1/3_StormMaster.png"
+            }
+        ],
+        "Circle_2":
+        [
+            {
+                "title":        "Тайны хаоса",
+                "index":        138,
+                "description":  "При сотворении заклинаний магии хаоса вы можете изменить тип урона на холод. В этом случае вы покрываетесь ледяной коркой.",
+                "icon_path":    "Circle2/1_SecretsOfChaos.png"
+            },
+            {
+                "title":        "Огненная ярость",
+                "index":        139,
+                "description":  "Когда вы наносите огненный урон, то вы получаете заряд огненной ярости, каждый заряд увеличивает ваш урон огнем на 1 (но не более 10), когда вы накапливаете 10 зарядов вы можете преобразовать их в ячейку заклинания 1-го уровня, 20 для 2-го и так далее",
+                "icon_path":    "Circle2/2_FlameingFury.png"
+            },
+            {
+                "title":        "Истощение магии",
+                "index":        140,
+                "description":  "Когда вы наносите урон громом или молнией, на костях урона не может выпасть меньше их среднего значения",
+                "icon_path":    "Circle2/3_MagicDrain.png"
+            }
+        ],
+        "Circle_3":
+        [
+            {
+                "title":        "Смертельный холод",
+                "index":        141,
+                "description":  "Заклинания, наносящие урон холодом, так же наносят дополнительный урон равный количеству очков выносливости противника",
+                "icon_path":    "Circle3/1_DeadlyCold.png"
+            },
+            {
+                "title":        "Пирокинез",
+                "index":        142,
+                "description":  "Если вы наносите противнику урон огнём, он загорается (3d4 огн.) на 3 хода. Этот огонь нельзя потушить обычной водой или действием Помощь",
+                "icon_path":    "Circle3/2_Pyrokinesys.png"
+            },
+            {
+                "title":        "Взрыв маны",
+                "index":        143,
+                "description":  "Когда враг творит заклинание, вы можете реакцией нанести ему Xd6 молн., где X - модификатор вашей заклинательной характеристики",
+                "icon_path":    "Circle3/3_ManaBlast.png"
+            }
+        ]
+    },
+    "Basic_skills":
+    {
+        "Mage":
+        [
+            {
+                "icon_path" : "Basic_skills/Mage/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Mage/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Mage/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Mage/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Demon_Lord":
+        [
+            {
+                "icon_path" : "Basic_skills/Demon_Lord/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Demon_Lord/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Demon_Lord/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "class_name" : "П. Демонов",
+                "icon_path" : "Basic_skills/Demon_Lord/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Knight":
+        [
+            {
+                "icon_path" : "Basic_skills/Knight/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Knight/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Knight/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Knight/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Necromancer":
+        [
+            {
+                "icon_path" : "Basic_skills/Necromancer/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Necromancer/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Necromancer/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Necromancer/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Ranger":
+        [
+            {
+                "icon_path" : "Basic_skills/Ranger/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Ranger/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Ranger/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Ranger/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Rune_Priest":
+        [
+            {
+                "icon_path" : "Basic_skills/Rune_Priest/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Rune_Priest/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Rune_Priest/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Rune_Priest/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Warlock":
+        [
+            {
+                "icon_path" : "Basic_skills/Warlock/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Warlock/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Warlock/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Warlock/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ],
+        "Barbarian":
+        [
+            {
+                "icon_path" : "Basic_skills/Barbarian/1.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Barbarian/2.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Barbarian/3.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            },
+            {
+                "icon_path" : "Basic_skills/Barbarian/4.png",
+                "title" : "Titl2",
+                "description" : "desc2"
+            }
+        ]
+    }
 }

@@ -18,29 +18,31 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 //! Здесь читаем json
 void HeaderWidget::read_json()
 {
+    QString icon_path, title, description;
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
+    file.close();
     QByteArray raw_data = file.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(raw_data);
-    QJsonObject obj = doc.object();
-    skill_struct cur_skill;
-    QString cur_class_name = "Basic_skills";
-    const QJsonArray class_arr = obj[cur_class_name].toArray();
-    for (const QJsonValue& cur_val : class_arr) {
-        QJsonObject cur_obj = cur_val.toObject();
-        QString class_name = cur_val["class_name"].toString();
-        if(is_class_name_exists(class_name))
+    QJsonObject root = doc.object();
+    QJsonObject class_obj = root["Basic_skills"].toObject();
+    for(int class_i = 0; class_i < json_pages.size(); class_i++)
+    {
+        QString json_class_name = json_pages[class_i];
+        const QJsonArray class_arr = class_obj[json_class_name].toArray();
+        for(const QJsonValue& cur_val : class_arr)
         {
-            QString icon_path = PIC_PATH + cur_obj["icon_path"].toString();
-            QString title = cur_obj["title"].toString();
-            QString description = cur_obj["description"].toString();
+            QJsonObject cur_obj = cur_val.toObject();
+            icon_path = PIC_PATH + cur_obj["icon_path"].toString();
+            title = cur_obj["title"].toString();
+            description = cur_obj["description"].toString();
             Skill* cur_skill = new Skill(this, icon_path, title, description);
             cur_skill->hide();
+            QString class_name = pages[class_i];
             basic_skills[class_name].append(cur_skill);
         }
     }
-
 }
 int HeaderWidget::is_class_name_exists(QString name)
 {
@@ -129,7 +131,6 @@ void HeaderWidget::add_scores(int score)
 #define LABEL_PADDING_OF_SKILLS_K 0.03125
 #define FONT_SIZE_K 0.4
 
-
 void HeaderWidget::paint_combobox()
 {
     int x = static_cast<int>(this->width() * LEFT_PADDING_K);
@@ -155,7 +156,7 @@ void HeaderWidget::paint_basic_skills()
 void HeaderWidget::paint_scores()
 {
     int font_size = static_cast<int>(this->height() * FONT_SIZE_K);
-    QFont font = QFont("Bradley Hand ITC", font_size);
+    QFont font = QFont("Cambria", font_size);
     font.setBold(true);
     font.setItalic(true);
     scores->setFont(font);

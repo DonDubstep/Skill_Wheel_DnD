@@ -6,9 +6,10 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     installEventFilter(this);
 
     init_background_colors();
+    init_sector_pointers();
     read_json();
-    init_skills();
-    skill_dependencies.make_depends(&all_skills_data);
+
+//    skill_dependencies.make_depends(&all_skills_data);
 }
 
 //! Заносим данные цветов сегментов кругов
@@ -61,56 +62,59 @@ void PageWidget::init_background_colors()
     segment_colors[2][11] = "#E5FFCE";
 }
 
-//! Здесь читаем json
+void PageWidget::init_sector_pointers()
+{
+    for(int i = 0; i < 12; i++)
+    {
+        sector_ptrs[i] = &circle_skills.magic_of_chaos + i;
+    }
+}
+
+
 void PageWidget::read_json()
 {
+    QString title, description, icon_path;
+    short index;
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
     //! Читаем данные из файла
     QByteArray raw_data = file.readAll();
+    file.close();
     //! Преобразуем в формат Json
     QJsonDocument doc = QJsonDocument::fromJson(raw_data);
     //! Преобразуем в объект Json
-    QJsonObject obj = doc.object();
-    //! Сохранять текущий элемент будем сюда
-    skill_struct cur_skill;
-    //! Для каждой категории иконок
-    for (int dir_num = 0; dir_num < NUM_OF_CATEGORIES; ++dir_num)
+    QJsonObject root = doc.object();
+    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        //! Сохряняем имя категории
-        QString cur_dir_name = icon_categories[dir_num];
-        //! Берём массив по этому имени
-        const QJsonArray arr = obj[cur_dir_name].toArray();
-        //! Проходимся по массиву этой категории
-        for (const QJsonValue& cur_val : arr) {
-            QJsonObject cur_obj = cur_val.toObject();
-            //! Считываем данные из полей
-            cur_skill.icon_path = cur_obj["icon_path"].toString();
-            cur_skill.title = cur_obj["title"].toString();
-            cur_skill.description = cur_obj["description"].toString();
-            //! Сохраняем в единую структуру данных
-            all_skills_data[cur_dir_name].append(cur_skill);
-        }
-    }
-}
+        QString cur_sector = sector_names[sector_i];
+        QJsonObject sector_obj = root[cur_sector].toObject();
 
-//! Заполнение структуры всех скиллов
-void PageWidget::init_skills()
-{
-    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
-    {
-        QString circle_name = icon_categories[circle];
-        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+
+        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
-            QString icon_path = PIC_PATH + all_skills_data[circle_name][s].icon_path;
-            QString title = all_skills_data[circle_name][s].title;
-            QString description = all_skills_data[circle_name][s].description;
+            QString cur_cirlce = circle_names[circle_i];
+            const QJsonArray circle_arr = sector_obj[cur_cirlce].toArray();
+            for(int i = 0; i < 3; i++)
+            {
+                QJsonObject cur_skill_data = circle_arr[i].toObject();
+                title = cur_skill_data["title"].toString();
+                description = cur_skill_data["description"].toString();
+                icon_path = cur_skill_data["icon_path"].toString();
+                index = static_cast<short>(cur_skill_data["index"].toInt());
 
-            Skill *cur_skill = new Skill(this, icon_path, title, description);
-            all_skills_data[circle_name][s].skill = cur_skill;
+                Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
+                connect(cur_skill, SIGNAL(icon_selected(Skill*)),this, SLOT(selection_mode_on(Skill*)));
+                switch (circle_i)
+                {
+                case 0: cur_sector_ptr->base_circle[i] = cur_skill; break;
+                case 1: cur_sector_ptr->circle_1[i] = cur_skill;    break;
+                case 2: cur_sector_ptr->circle_2[i] = cur_skill;    break;
+                case 3: cur_sector_ptr->circle_3[i] = cur_skill;    break;
+                }
 
-            connect(all_skills_data[circle_name][s].skill, Skill::icon_selected,this, this->selection_mode_on);
+            }
         }
     }
 }
@@ -131,6 +135,12 @@ void PageWidget::paintEvent(QPaintEvent *e)
 
     delete painter;
     QWidget::paintEvent(e);
+}
+
+void PageWidget::resizeEvent(QResizeEvent *e)
+{
+
+    QWidget::resizeEvent(e);
 }
 
 //! Обработчик событий
@@ -193,7 +203,6 @@ void PageWidget::paint_small_circles()
     }
 }
 
-//! Отрисовка скиллов
 void PageWidget::paint_skills()
 {
     int icon_radius_1 = static_cast<int>(radius1 + (radius2-radius1)/2);
@@ -206,9 +215,9 @@ void PageWidget::paint_skills()
 
     int hidden_segments_count;
 
-    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
+    for (int circle = 0; circle < NUM_OF_CIRCLES; ++circle)
     {
-        if (circle == NUM_OF_CATEGORIES - 1)
+        if (circle == NUM_OF_CIRCLES - 1)
         {
             hidden_segments_count = 5;
         }
@@ -216,14 +225,14 @@ void PageWidget::paint_skills()
         {
             hidden_segments_count = 3;
         }
-        QString circle_name = icon_categories[circle];
         int skill_num = 0;
         int start_icon_offset = 9;
         int start_base_icon_offset = 5;
         for(int seg = 0; seg < 360/SEGMENT_ANGLE; seg++)
         {
+            sector_data_t* cur_sector_ptr = sector_ptrs[seg];
             int current_angle;
-            if (circle == NUM_OF_CATEGORIES - 1)
+            if (circle == NUM_OF_CIRCLES - 1)
             {
                 current_angle = seg*SEGMENT_ANGLE + start_icon_offset;
             }
@@ -235,16 +244,24 @@ void PageWidget::paint_skills()
             {
                 int x = centerX + static_cast<int>(icon_radiuses[circle] * cos(current_angle * M_PI / 180)) - cur_size / 2;
                 int y = centerY - static_cast<int>(icon_radiuses[circle] * sin(current_angle * M_PI / 180)) - cur_size / 2;
-                if(all_skills_data[circle_name][skill_num].skill->is_changed_size == 0)
+                Skill* cur_skill;
+                switch (circle)
                 {
-                    all_skills_data[circle_name][skill_num].skill->move(x,y);
-                    all_skills_data[circle_name][skill_num].skill->resize(cur_size, cur_size);
+                case 0: cur_skill = cur_sector_ptr->circle_3[c];    break;
+                case 1: cur_skill = cur_sector_ptr->circle_2[c];    break;
+                case 2: cur_skill = cur_sector_ptr->circle_1[c];    break;
+                default: cur_skill = cur_sector_ptr->base_circle[c];break;
+                }
+                if(cur_skill->is_changed_size == 0)
+                {
+                    cur_skill->move(x,y);
+                    cur_skill->resize(cur_size, cur_size);
                 }
                 else
                 {
-                    all_skills_data[circle_name][skill_num].skill->resize(cur_size*2, cur_size*2);
-                    all_skills_data[circle_name][skill_num].skill->move(x-cur_size / 2 , y - cur_size / 2);
-                    all_skills_data[circle_name][skill_num].skill->description->show();
+                    cur_skill->resize(cur_size*2, cur_size*2);
+                    cur_skill->move(x-cur_size / 2 , y - cur_size / 2);
+                    cur_skill->description->show();
                 }
 
                 current_angle += SEGMENT_ANGLE / hidden_segments_count;
@@ -270,30 +287,32 @@ int PageWidget::find_in_dependent_skills(QVector<Skill*> dependent_skills, Skill
 //! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void PageWidget::selection_mode_on(Skill* selected_skill)
 {
-    QVector<Skill*> dependent_skills = skill_dependencies.show_depends(selected_skill);
-    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
-    {
-        QString circle_name = icon_categories[circle];
-        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
-        {
-            if(find_in_dependent_skills(dependent_skills, all_skills_data[circle_name][s].skill))
-                continue;
-            all_skills_data[circle_name][s].skill->is_gray = 1;
-            all_skills_data[circle_name][s].skill->repaint();
-        }
-    }
+    qDebug() << "eveve";
+//    QVector<Skill*> dependent_skills = skill_dependencies.show_depends(selected_skill);
+//    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
+//    {
+//        QString circle_name = icon_categories[circle];
+//        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+//        {
+//            if(find_in_dependent_skills(dependent_skills, all_skills_data[circle_name][s].skill))
+//                continue;
+//            all_skills_data[circle_name][s].skill->is_gray = 1;
+//            all_skills_data[circle_name][s].skill->repaint();
+//        }
+//    }
 }
 
 //! Делает все скиллы цветными
 void PageWidget::selection_mode_off()
 {
-    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
-    {
-        QString circle_name = icon_categories[circle];
-        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
-        {
-            all_skills_data[circle_name][s].skill->is_gray = 0;
-            all_skills_data[circle_name][s].skill->repaint();
-        }
-    }
+    qDebug() << "eveve";
+//    for (int circle = 0; circle < NUM_OF_CATEGORIES; ++circle)
+//    {
+//        QString circle_name = icon_categories[circle];
+//        for(int s = 0; s < all_skills_data[circle_name].size(); s++)
+//        {
+//            all_skills_data[circle_name][s].skill->is_gray = 0;
+//            all_skills_data[circle_name][s].skill->repaint();
+//        }
+//    }
 }

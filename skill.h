@@ -39,23 +39,6 @@ struct skill_struct
     skill_struct* depends[NUM_OF_DEPENDS];
 };
 
-const QString icon_categories[]
-{
-    "Circle3",
-    "Circle2",
-    "Circle1",
-    "CircleBase",
-};
-const QStringList pages
-{
-    "Маг",
-    "П. Демонов",
-    "Рыцарь",
-    "Некромант",
-    "Рейнджер",
-    "Рунный жрец",
-    "Чернокнижник",
-    "Варвар"
-};
+
 
 #endif // SKILL_H

@@ -32,8 +32,7 @@ HEADERS += \
     pagewidget.h \
     settings.h \
     skill.h \
-    skills_data.h \
-    structs.h
+    skills_data.h
 
 FORMS += \
     mainwindow.ui
