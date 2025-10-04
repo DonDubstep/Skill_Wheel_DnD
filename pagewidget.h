@@ -40,7 +40,6 @@ struct circle_skill_data_t
 struct temp_depends_struct_t
 {
     Skill* skill;
-    short index;
     QVector<short> depends;
 };
 
@@ -84,6 +83,11 @@ private:
     void paint_concentric_circles();
     void paint_small_circles();
     void paint_skills();
+    void select_dependencies(Skill* selected_skill);
+    void select_base_skill(Skill* selected_skill);
+    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector);
+    void check_skills_availability();
+    void gray_unselected_skills();
 
 public slots:
     void selection_mode_on(Skill*);

@@ -24,6 +24,13 @@ enum pages
     NUM_OF_PAGES = 8
 };
 
+enum skill_state_e
+{
+    NONE,
+    SELECTED,
+    UNSELECTED
+};
+
 const QStringList json_pages
 {
     "Mage",

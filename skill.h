@@ -19,6 +19,9 @@ public:
     int dont_hide_description_flag = 0;
     int is_changed_size = 0;
     int is_gray = 0;
+    short state;
+    int index;
+    bool operator == (const Skill* skill) const;
 
 signals:
     void icon_selected(Skill*);
@@ -27,7 +30,6 @@ private slots:
     bool eventFilter(QObject* object, QEvent* event) override;
     void zoom_widget();
     void zoom_out_widget();
-
 };
 
 struct skill_struct

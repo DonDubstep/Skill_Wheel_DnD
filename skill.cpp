@@ -6,9 +6,15 @@ Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc
     this->installEventFilter(this);
     this->icon_path = icon_path;
     this->description = new Description(parent, this, name_text, desc_txt);
+    this->state = NONE;
     this->description->hide();
     this->show();
     this->setObjectName("Skill");
+}
+
+bool Skill::operator == (const Skill* skill) const
+{
+    return this->index == skill->index;
 }
 
 //! Отрисовываем иконку скилла
@@ -18,7 +24,7 @@ void Skill::paintEvent(QPaintEvent *event)
 
     QImage img(this->icon_path);
 
-    if(this->is_gray == 1)
+    if(this->state == UNSELECTED)
     {
         QImage alpha = img.alphaChannel();
         QImage gray = img.convertToFormat(QImage::Format_Grayscale8);
@@ -83,8 +89,8 @@ void Skill::zoom_widget()
     int offset = this->width() / 2;
     this->resize(this->width() * INCREACE_KOEF, this->height() * INCREACE_KOEF);
     this->move(this->x() - offset, this->y() - offset);
-    this->description->show();
-    this->description->raise();
+//    this->description->show();
+//    this->description->raise();
 }
 
 //! Функция возвращения иконки скилла в исходное положение и скрытие рамки
@@ -94,5 +100,5 @@ void Skill::zoom_out_widget()
     this->resize(this->width() / 2, this->height() / 2);
     int offset = this->width()  / 2;
     this->move(this->x() + offset, this->y() + offset);
-    this->description->hide();
+//    this->description->hide();
 }
