@@ -67,6 +67,7 @@ private:
     circle_skill_data_t circle_skills;
     sector_data_t* sector_ptrs[12];
     QVector<temp_depends_struct_t>* temp_depends_struct;
+    int num_of_available_basic_skills[12];
 
 
     SkillDependencies skill_dependencies;
@@ -84,10 +85,12 @@ private:
     void paint_small_circles();
     void paint_skills();
     void select_dependencies(Skill* selected_skill);
-    void select_base_skill(Skill* selected_skill);
-    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector);
+    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n);
+    int  is_skill_depends_selected(Skill* skill);
     void check_skills_availability();
+    int  calculate_required_base_skills(Skill* skill);
     void gray_unselected_skills();
+    void reset_sector_base();
 
 public slots:
     void selection_mode_on(Skill*);

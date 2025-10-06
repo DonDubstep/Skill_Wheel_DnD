@@ -6,7 +6,7 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
     temp_depends_struct = new QVector<temp_depends_struct_t>();
-
+    reset_sector_base();
     init_background_colors();
     init_sector_pointers();
     read_json();
@@ -323,41 +323,42 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
 
 void PageWidget::select_dependencies(Skill* selected_skill)
 {
-    selected_skill->state = SELECTED;
-    select_base_skill(selected_skill);
-    for(Skill* related_skill : selected_skill->depends)
-    {
-        related_skill->state = SELECTED;
-        select_dependencies(related_skill);
-    }
-}
+    sector_data_t *sector;
+    int sector_n, circle_n;
 
-void PageWidget::select_base_skill(Skill* selected_skill)
-{
-    sector_data_t *sector = &circle_skills.magic_of_chaos;
-    find_skill_in_struct(selected_skill, &sector);
-//    qDebug() << sector->base_circle[0]->icon_path;
-//    qDebug() << circle_i;
-    if(!(sector->base_circle[2] == selected_skill))
+    find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n);
+    if(selected_skill->state == SELECTED)
     {
-        int i = 2;
-        while(sector->base_circle[i]->state == SELECTED)
+        selected_skill->state = UNSELECTED;
+        num_of_available_basic_skills[sector_n]++;
+    }
+    else
+    {
+        selected_skill->state = SELECTED;
+        if(!(sector->base_circle[2] == selected_skill))
         {
-            i--;
-            // Пока не отладим логику скрытия скиллов
-            if(i < 0)
+            int base_skill_i = num_of_available_basic_skills[sector_n];
+
+            sector->base_circle[base_skill_i - 1]->state = SELECTED;
+            sector->base_circle[base_skill_i - 1]->repaint();
+            if(circle_n != 0)
             {
-                qDebug() << "Выход за границу базовых скиллов!!!";
-                i++;
-                break;
+                num_of_available_basic_skills[sector_n]--;
             }
         }
-        sector->base_circle[i]->state = SELECTED;
-        sector->base_circle[i]->repaint();
+
+        for(Skill* related_skill : selected_skill->depends)
+        {
+            if(related_skill->state != SELECTED)
+            {
+                select_dependencies(related_skill);
+            }
+        }
     }
+
 }
 
-void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_sector)
+void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_sector, int* ret_sector_n, int* ret_circle_n)
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -377,36 +378,84 @@ void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret
                 if(cur_circle_ptr[s] == selected_skill)
                 {
                     *ret_sector = cur_sector;
+                    *ret_sector_n = sector_i;
+                    *ret_circle_n = circle_i;
                     return;
                 }
             }
         }
     }
-    qDebug() << "not found";
 }
+
 
 void PageWidget::check_skills_availability()
 {
-    qDebug() << "****imagine that I hid unaviable skills****";
-//    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
-//    {
-//        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
-//        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
-//        {
-//            Skill** cur_circle_ptr;
-//            switch (circle_i)
-//            {
-//            case 0: cur_circle_ptr = cur_sector_ptr->base_circle;   break;
-//            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;      break;
-//            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;      break;
-//            default: cur_circle_ptr = cur_sector_ptr->circle_3;     break;
-//            }
-//            for(int s = 0; s < 3; s++)
-//            {
+    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
+    {
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
+        {
+            Skill** cur_circle_ptr;
+            switch (circle_i)
+            {
+            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;  break;
+            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;  break;
+            case 3: cur_circle_ptr = cur_sector_ptr->circle_3;  break;
+            default: continue;
+            }
+            for(int s = 0; s < 3; s++)
+            {
+                if(cur_circle_ptr[s]->state != SELECTED)
+                {
+                    int num_required_base_skill = calculate_required_base_skills(cur_circle_ptr[s]);
+                    if(num_required_base_skill > num_of_available_basic_skills[sector_i])
+                    {
+                        cur_circle_ptr[s]->hide();
+                    }
+                    else if(cur_circle_ptr[s]->isHidden())
+                    {
+                        cur_circle_ptr[s]->show();
+                        cur_circle_ptr[s]->repaint();
+                    }
+                }
+                else
+                {
+                    if(is_skill_depends_selected(cur_circle_ptr[s]) == 0)
+                    {
+                        cur_circle_ptr[s]->state = UNSELECTED;
+                    }
+                }
+            }
+        }
+    }
+}
 
-//            }
-//        }
-//    }
+
+int PageWidget::is_skill_depends_selected(Skill *skill)
+{
+    if(skill->state != SELECTED)
+        return 0;
+    for(Skill* related_skill : skill->depends)
+    {
+        if(is_skill_depends_selected(related_skill) == 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+
+}
+
+int PageWidget::calculate_required_base_skills(Skill* skill)
+{
+    int result = 1;
+    for(Skill* related_skill : skill->depends)
+    {
+        if(related_skill->state == SELECTED)
+            continue;
+        result += calculate_required_base_skills(related_skill);
+    }
+    return result;
 }
 
 void PageWidget::gray_unselected_skills()
@@ -436,6 +485,14 @@ void PageWidget::gray_unselected_skills()
     }
 }
 
+void PageWidget::reset_sector_base()
+{
+    for(int i = 0; i < sector_names.size(); i++)
+    {
+        num_of_available_basic_skills[i] = 3;
+    }
+}
+
 ////! Делает все скиллы цветными
 void PageWidget::selection_mode_off()
 {
@@ -444,30 +501,24 @@ void PageWidget::selection_mode_off()
         sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
-            cur_sector_ptr->base_circle[0]->state = NONE;
-            cur_sector_ptr->base_circle[1]->state = NONE;
-            cur_sector_ptr->base_circle[2]->state = NONE;
-            cur_sector_ptr->circle_1[0]->state = NONE;
-            cur_sector_ptr->circle_1[1]->state = NONE;
-            cur_sector_ptr->circle_1[2]->state = NONE;
-            cur_sector_ptr->circle_2[0]->state = NONE;
-            cur_sector_ptr->circle_2[1]->state = NONE;
-            cur_sector_ptr->circle_2[2]->state = NONE;
-            cur_sector_ptr->circle_3[0]->state = NONE;
-            cur_sector_ptr->circle_3[1]->state = NONE;
-            cur_sector_ptr->circle_3[2]->state = NONE;
-            cur_sector_ptr->base_circle[0]->repaint();
-            cur_sector_ptr->base_circle[1]->repaint();
-            cur_sector_ptr->base_circle[2]->repaint();
-            cur_sector_ptr->circle_1[0]->repaint();
-            cur_sector_ptr->circle_1[1]->repaint();
-            cur_sector_ptr->circle_1[2]->repaint();
-            cur_sector_ptr->circle_2[0]->repaint();
-            cur_sector_ptr->circle_2[1]->repaint();
-            cur_sector_ptr->circle_2[2]->repaint();
-            cur_sector_ptr->circle_3[0]->repaint();
-            cur_sector_ptr->circle_3[1]->repaint();
-            cur_sector_ptr->circle_3[2]->repaint();
+            Skill** cur_circle_ptr;
+            switch (circle_i)
+            {
+            case 0: cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            default: cur_circle_ptr = cur_sector_ptr->circle_3;     break;
+            }
+            for(int s = 0; s < 3; s++)
+            {
+                cur_circle_ptr[s]->state = NONE;
+                if(cur_circle_ptr[s]->isHidden())
+                {
+                    cur_circle_ptr[s]->show();
+                }
+                cur_circle_ptr[s]->repaint();
+            }
         }
     }
+    reset_sector_base();
 }
