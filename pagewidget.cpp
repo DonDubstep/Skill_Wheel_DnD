@@ -319,6 +319,8 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
     select_dependencies(selected_skill);
     check_skills_availability();
     gray_unselected_skills();
+    check_skills_availability();
+    gray_unselected_skills();
 }
 
 void PageWidget::select_dependencies(Skill* selected_skill)
@@ -422,6 +424,7 @@ void PageWidget::check_skills_availability()
                 {
                     if(is_skill_depends_selected(cur_circle_ptr[s]) == 0)
                     {
+                        num_of_available_basic_skills[sector_i]++;
                         cur_circle_ptr[s]->state = UNSELECTED;
                     }
                 }
