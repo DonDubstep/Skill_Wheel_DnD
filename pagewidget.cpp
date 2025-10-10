@@ -7,6 +7,7 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     installEventFilter(this);
     temp_depends_struct = new QVector<temp_depends_struct_t>();
     reset_sector_base();
+    reset_active_sectors();
     init_background_colors();
     init_sector_pointers();
     read_json();
@@ -333,16 +334,19 @@ void PageWidget::select_dependencies(Skill* selected_skill)
     {
         selected_skill->state = UNSELECTED;
         num_of_available_basic_skills[sector_n]++;
+        num_of_skills_in_sector_active[sector_n]--;
     }
     else
     {
         selected_skill->state = SELECTED;
-        if(!(sector->base_circle[2] == selected_skill))
+        num_of_skills_in_sector_active[sector_n]++;
+        if(sector->base_circle[2] != selected_skill)
         {
             int base_skill_i = num_of_available_basic_skills[sector_n];
 
             sector->base_circle[base_skill_i - 1]->state = SELECTED;
             sector->base_circle[base_skill_i - 1]->repaint();
+            num_of_skills_in_sector_active[sector_n]++;
             if(circle_n != 0)
             {
                 num_of_available_basic_skills[sector_n]--;
@@ -400,17 +404,21 @@ void PageWidget::check_skills_availability()
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;  break;
-            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;  break;
-            case 3: cur_circle_ptr = cur_sector_ptr->circle_3;  break;
-            default: continue;
+            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case 3: cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default: cur_circle_ptr = cur_sector_ptr->base_circle;  break;
             }
             for(int s = 0; s < 3; s++)
             {
                 if(cur_circle_ptr[s]->state != SELECTED)
                 {
                     int num_required_base_skill = calculate_required_base_skills(cur_circle_ptr[s]);
-                    if(num_required_base_skill > num_of_available_basic_skills[sector_i])
+                    if(num_required_base_skill > num_of_available_basic_skills[sector_i] && circle_i != 4)
+                    {
+                        cur_circle_ptr[s]->hide();
+                    }
+                    else if(num_of_skills_in_sector_active[sector_i] == 0 && calculate_num_of_selected_sectors() == 5)
                     {
                         cur_circle_ptr[s]->hide();
                     }
@@ -461,6 +469,17 @@ int PageWidget::calculate_required_base_skills(Skill* skill)
     return result;
 }
 
+int PageWidget::calculate_num_of_selected_sectors()
+{
+    int counter_of_active_sectors = 0;
+    for(int i = 0; i < sector_names.size(); i++)
+    {
+        if(num_of_skills_in_sector_active[i] != 0)
+            counter_of_active_sectors++;
+    }
+    return counter_of_active_sectors;
+}
+
 void PageWidget::gray_unselected_skills()
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
@@ -496,6 +515,14 @@ void PageWidget::reset_sector_base()
     }
 }
 
+void PageWidget::reset_active_sectors()
+{
+    for(int i = 0; i < sector_names.size(); i++)
+    {
+        num_of_skills_in_sector_active[i] = 0;
+    }
+}
+
 ////! Делает все скиллы цветными
 void PageWidget::selection_mode_off()
 {
@@ -524,4 +551,5 @@ void PageWidget::selection_mode_off()
         }
     }
     reset_sector_base();
+    reset_active_sectors();
 }
