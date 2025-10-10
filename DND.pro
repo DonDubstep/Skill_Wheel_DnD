@@ -39,13 +39,13 @@ FORMS += \
     mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+qnx: target.path = /tmp/$${TARGET}/Skill_Wheel_app
+else: unix:!android: target.path = /opt/$${TARGET}/Skill_Wheel_app
 !isEmpty(target.path): INSTALLS += target
 win64
 {
 
-    DESTDIR = $$PWD/bin
+    DESTDIR = $$PWD/Skill_Wheel_app
     QMAKE_POST_LINK = windeployqt $$shell_path($$DESTDIR/$${TARGET}.exe)
 
 #    message($$shell_path($$DESTDIR/$${TARGET}.exe))
