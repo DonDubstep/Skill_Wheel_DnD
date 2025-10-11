@@ -322,34 +322,44 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
     gray_unselected_skills();
     check_skills_availability();
     gray_unselected_skills();
+    qDebug() << "num_of_skills_in_sector_active = " << num_of_skills_in_sector_active[0];
 }
 
 void PageWidget::select_dependencies(Skill* selected_skill)
 {
     sector_data_t *sector;
-    int sector_n, circle_n;
+    int sector_n, circle_n, skill_n;
 
-    find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n);
+    find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
     if(selected_skill->state == SELECTED)
     {
         selected_skill->state = UNSELECTED;
-        num_of_available_basic_skills[sector_n]++;
         num_of_skills_in_sector_active[sector_n]--;
+        if(circle_n != 0)
+        {
+            num_of_available_basic_skills[sector_n]++;
+        }
     }
     else
     {
         selected_skill->state = SELECTED;
         num_of_skills_in_sector_active[sector_n]++;
-        if(sector->base_circle[2] != selected_skill)
+        if(circle_n != 0)
         {
             int base_skill_i = num_of_available_basic_skills[sector_n];
 
             sector->base_circle[base_skill_i - 1]->state = SELECTED;
             sector->base_circle[base_skill_i - 1]->repaint();
             num_of_skills_in_sector_active[sector_n]++;
-            if(circle_n != 0)
+            num_of_available_basic_skills[sector_n]--;
+
+        }
+        else
+        {
+            for(int i = 2; i > skill_n; i--)
             {
-                num_of_available_basic_skills[sector_n]--;
+                sector->base_circle[i]->state = SELECTED;
+                num_of_skills_in_sector_active[sector_n]++;
             }
         }
 
@@ -364,7 +374,7 @@ void PageWidget::select_dependencies(Skill* selected_skill)
 
 }
 
-void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_sector, int* ret_sector_n, int* ret_circle_n)
+void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i)
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -386,6 +396,7 @@ void PageWidget::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret
                     *ret_sector = cur_sector;
                     *ret_sector_n = sector_i;
                     *ret_circle_n = circle_i;
+                    *ret_skill_i = s;
                     return;
                 }
             }
@@ -413,8 +424,8 @@ void PageWidget::check_skills_availability()
             {
                 if(cur_circle_ptr[s]->state != SELECTED)
                 {
-                    int num_required_base_skill = calculate_required_base_skills(cur_circle_ptr[s]);
-                    if(num_required_base_skill > num_of_available_basic_skills[sector_i] && circle_i != 4)
+                    int num_required_base_skill = calculate_required_base_skills_in_cur_situation(cur_circle_ptr[s]);
+                    if(num_required_base_skill > num_of_available_basic_skills[sector_i] && circle_i != 0)
                     {
                         cur_circle_ptr[s]->hide();
                     }
@@ -430,9 +441,27 @@ void PageWidget::check_skills_availability()
                 }
                 else
                 {
-                    if(is_skill_depends_selected(cur_circle_ptr[s]) == 0)
+                    if(circle_i == 0)
+                    {
+                        for(int i = 2; i > s; i--)
+                        {
+                            if(cur_circle_ptr[i]->state == UNSELECTED)
+                            {
+                                cur_circle_ptr[s]->state = UNSELECTED;
+                                num_of_skills_in_sector_active[sector_i]--;
+                            }
+                        }
+                    }
+                    else if(calculate_required_base_skills(cur_circle_ptr[s]) > count_of_active_basic_skills(cur_sector_ptr))
                     {
                         num_of_available_basic_skills[sector_i]++;
+                        num_of_skills_in_sector_active[sector_i]--;
+                        cur_circle_ptr[s]->state = UNSELECTED;
+                    }
+                    else if(is_skill_depends_selected(cur_circle_ptr[s]) == 0)
+                    {
+                        num_of_available_basic_skills[sector_i]++;
+                        num_of_skills_in_sector_active[sector_i]--;
                         cur_circle_ptr[s]->state = UNSELECTED;
                     }
                 }
@@ -457,13 +486,34 @@ int PageWidget::is_skill_depends_selected(Skill *skill)
 
 }
 
-int PageWidget::calculate_required_base_skills(Skill* skill)
+int PageWidget::calculate_required_base_skills_in_cur_situation(Skill* skill)
 {
     int result = 1;
     for(Skill* related_skill : skill->depends)
     {
         if(related_skill->state == SELECTED)
             continue;
+        result += calculate_required_base_skills(related_skill);
+    }
+    return result;
+}
+
+int PageWidget::count_of_active_basic_skills(sector_data_t *sector)
+{
+    int i;
+    for(i = 0; i < 3; i++)
+    {
+        if(sector->base_circle[i]->state == SELECTED)
+            break;
+    }
+    return 3-i;
+}
+
+int PageWidget::calculate_required_base_skills(Skill* skill)
+{
+    int result = 1;
+    for(Skill* related_skill : skill->depends)
+    {
         result += calculate_required_base_skills(related_skill);
     }
     return result;

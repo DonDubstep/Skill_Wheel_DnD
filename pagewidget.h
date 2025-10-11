@@ -86,10 +86,12 @@ private:
     void paint_small_circles();
     void paint_skills();
     void select_dependencies(Skill* selected_skill);
-    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n);
+    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i);
     int  is_skill_depends_selected(Skill* skill);
     void check_skills_availability();
     int  calculate_required_base_skills(Skill* skill);
+    int  calculate_required_base_skills_in_cur_situation(Skill* skill);
+    int  count_of_active_basic_skills(sector_data_t* sector);
     int  calculate_num_of_selected_sectors();
     void gray_unselected_skills();
     void reset_sector_base();
