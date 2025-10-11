@@ -92,6 +92,7 @@ private:
     int  calculate_required_base_skills(Skill* skill);
     int  calculate_required_base_skills_in_cur_situation(Skill* skill);
     int  count_of_active_basic_skills(sector_data_t* sector);
+    void count_skills_in_sectors();
     int  calculate_num_of_selected_sectors();
     void gray_unselected_skills();
     void reset_sector_base();
