@@ -324,7 +324,6 @@ void PageWidget::selection_mode_on(Skill* selected_skill)
     count_skills_in_sectors();
     check_skills_availability();
     gray_unselected_skills();
-    qDebug() << "num_of_skills_in_sector_active = " << num_of_skills_in_sector_active[0];
 }
 
 void PageWidget::select_dependencies(Skill* selected_skill)
@@ -335,11 +334,19 @@ void PageWidget::select_dependencies(Skill* selected_skill)
     find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
     if(selected_skill->state == SELECTED)
     {
-        selected_skill->state = UNSELECTED;
         if(circle_n != 0)
         {
             num_of_available_basic_skills[sector_n]++;
+            selected_skill->state = UNSELECTED;
         }
+        else
+        {
+            if(skill_n < num_of_available_basic_skills[sector_n])
+            {
+                selected_skill->state = UNSELECTED;
+            }
+        }
+
     }
     else
     {
@@ -448,11 +455,6 @@ void PageWidget::check_skills_availability()
                                 cur_circle_ptr[s]->state = UNSELECTED;
                             }
                         }
-                    }
-                    else if(calculate_required_base_skills(cur_circle_ptr[s]) > count_of_active_basic_skills(cur_sector_ptr))
-                    {
-                        num_of_available_basic_skills[sector_i]++;
-                        cur_circle_ptr[s]->state = UNSELECTED;
                     }
                     else if(is_skill_depends_selected(cur_circle_ptr[s]) == 0)
                     {
