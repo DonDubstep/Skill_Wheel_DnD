@@ -10,7 +10,6 @@ PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
     selection = new Selection(sector_ptrs);
     read_json();
     selection->make_dependencies();
-//    skill_dependencies.make_depends(&all_skills_data);
 }
 
 //! Заносим данные цветов сегментов кругов

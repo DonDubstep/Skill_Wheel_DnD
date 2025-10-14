@@ -22,6 +22,8 @@ private:
     void paintEvent(QPaintEvent *e) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
     void resizeEvent(QResizeEvent* e) override;
+public slots:
+    void set_scores(int score);
 
 private slots:
     void combobox_changed(int page_num);

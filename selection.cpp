@@ -39,6 +39,7 @@ void Selection::selection_mode_on(Skill* selected_skill)
     count_skills_in_sectors();
     check_skills_availability();
     gray_unselected_skills();
+    calculate_scores();
 }
 
 void Selection::select_dependencies(Skill* selected_skill)
@@ -246,6 +247,16 @@ void Selection::count_skills_in_sectors()
     }
 }
 
+void Selection::calculate_scores()
+{
+    int result = 0;
+    for(int num_of_active_skills : num_of_skills_in_sector_active)
+    {
+        result += num_of_active_skills;
+    }
+    emit set_scores_signal(result);
+}
+
 int Selection::calculate_required_base_skills(Skill* skill)
 {
     int result = 1;
@@ -340,5 +351,6 @@ void Selection::selection_mode_off()
     }
     reset_sector_base();
     reset_active_sectors();
+    emit set_scores_signal(0);
 }
 

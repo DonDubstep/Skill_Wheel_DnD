@@ -96,6 +96,11 @@ void HeaderWidget::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
+void HeaderWidget::set_scores(int score)
+{
+    scores->setText(QString::number(score));
+}
+
 void HeaderWidget::add_combobox()
 {
     combo_pages = new QComboBox(this);
@@ -164,6 +169,6 @@ void HeaderWidget::paint_scores()
     int x = static_cast<int>(x_end_of_prev_elements + this->width() * LABEL_PADDING_OF_SKILLS_K);
     int y = static_cast<int>(this->height() * TOP_PADDING_K);
     scores->move(x, y);
-    scores->resize(font_size, font_size);
+    scores->resize(font_size * 2, font_size);
 }
 

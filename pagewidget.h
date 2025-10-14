@@ -17,6 +17,9 @@ class PageWidget : public QWidget
     Q_OBJECT
 public:
     PageWidget(QWidget *parent = nullptr);
+    Selection* selection;
+
+
 
 private:
     int centerX;
@@ -29,7 +32,6 @@ private:
     int radius5;
     int radius_small_circles;
 
-    Selection* selection;
 
     QPainter* painter;
     QString** segment_colors;
