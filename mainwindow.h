@@ -5,8 +5,6 @@
 #include <QMainWindow>
 #include <QEvent>
 #include <QKeyEvent>
-#include "skill.h"
-#include "settings.h"
 #include <pagewidget.h>
 #include "headerwidget.h"
 

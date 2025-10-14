@@ -2,6 +2,8 @@
 #define SETTINGS_H
 #include <QStringList>
 
+class Skill;
+
 enum icon_sizes
 {
     BASE_SIZE = 32,         //! Размер иконки
@@ -80,15 +82,29 @@ const QStringList pages
     "Варвар"
 };
 
-#warning Soon delete
-const QString icon_categories[]
+struct sector_data_t
 {
-    "Circle3",
-    "Circle2",
-    "Circle1",
-    "CircleBase",
+    Skill* base_circle[3];
+    Skill* circle_1[3];
+    Skill* circle_2[3];
+    Skill* circle_3[3];
 };
 
+struct circle_skill_data_t
+{
+    sector_data_t magic_of_chaos;
+    sector_data_t magic_of_darkness;
+    sector_data_t magic_of_light;
+    sector_data_t machine_management;
+    sector_data_t education;
+    sector_data_t logistics;
+    sector_data_t leadership;
+    sector_data_t luck;
+    sector_data_t protection;
+    sector_data_t attack;
+    sector_data_t sorcery;
+    sector_data_t summoning_magic;
+};
 
 
 #define RADUIS_KOEF 0.36f

@@ -4,7 +4,6 @@
 #include <QEvent>
 #include <QPainter>
 #include <QKeyEvent>
-#include "settings.h"
 
 //! Класс иконки навыка
 class Skill : public QWidget

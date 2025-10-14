@@ -22,17 +22,17 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     pagewidget.cpp \
-    skill.cpp \
-    skills_data.cpp
+    selection.cpp \
+    skill.cpp
 
 HEADERS += \
     description.h \
     headerwidget.h \
     mainwindow.h \
     pagewidget.h \
+    selection.h \
     settings.h \
-    skill.h \
-    skills_data.h
+    skill.h
 
 FORMS += \
     mainwindow.ui
