@@ -24,6 +24,7 @@ public slots:
 
 signals:
     void set_scores_signal(int scores);
+    void null_scores_signal();
 
 private:
     sector_data_t* sector_ptrs[12];

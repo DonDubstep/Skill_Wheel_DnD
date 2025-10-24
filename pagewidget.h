@@ -19,7 +19,8 @@ public:
     PageWidget(QWidget *parent = nullptr);
     Selection* selection;
 
-
+signals:
+    void selection_off();
 
 private:
     int centerX;

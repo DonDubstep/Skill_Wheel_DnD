@@ -169,6 +169,7 @@ bool PageWidget::eventFilter(QObject *watched, QEvent *event)
     if(event->type() == QEvent::MouseButtonPress)
     {
         selection->selection_mode_off();
+        emit selection_off();
         return true;
     }
     return QWidget::eventFilter(watched, event);

@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     description.cpp \
+    header_selection.cpp \
     headerwidget.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     description.h \
+    header_selection.h \
     headerwidget.h \
     mainwindow.h \
     pagewidget.h \

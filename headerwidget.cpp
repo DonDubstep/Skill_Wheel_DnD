@@ -9,6 +9,8 @@
 HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
+    header_selection = new HeaderSelection(&basic_skills);
+    connect(header_selection, SIGNAL(set_header_scores(int)), this, SLOT(set_header_scores(int)));
     read_json();
     add_combobox();
     add_basic_skills(0);
@@ -39,6 +41,7 @@ void HeaderWidget::read_json()
             Skill* cur_skill = new Skill(this, icon_path, title, description);
             cur_skill->hide();
             QString class_name = pages[class_i];
+            connect(cur_skill, SIGNAL(icon_selected(Skill*)), header_selection, SLOT(selection_header_on(Skill*)));
             basic_skills[class_name].append(cur_skill);
         }
     }
@@ -60,6 +63,8 @@ void HeaderWidget::combobox_changed(int page_num)
 {
     remove_basic_skills();
     add_basic_skills(page_num);
+    header_selection->set_cur_page(page_num);
+    emit switch_page(page_num);
 }
 
 void HeaderWidget::remove_basic_skills()
@@ -96,9 +101,23 @@ void HeaderWidget::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
-void HeaderWidget::set_scores(int score)
+void HeaderWidget::set_scores_page(int score)
 {
-    scores->setText(QString::number(score));
+    scores_page = score;
+    paint_scores();
+}
+
+void HeaderWidget::set_header_scores(int score)
+{
+    scores_header = score;
+    paint_scores();
+}
+
+void HeaderWidget::null_scores()
+{
+    scores_header = 0;
+    scores_page = 0;
+    paint_scores();
 }
 
 void HeaderWidget::add_combobox()
@@ -106,6 +125,7 @@ void HeaderWidget::add_combobox()
     combo_pages = new QComboBox(this);
     combo_pages->addItems(pages);
     connect(combo_pages, SIGNAL(currentIndexChanged(int)), this, SLOT(combobox_changed(int)));
+    header_selection->set_cur_page(0);
     paint_combobox();
 }
 void HeaderWidget::add_basic_skills(int page_num)
@@ -170,5 +190,7 @@ void HeaderWidget::paint_scores()
     int y = static_cast<int>(this->height() * TOP_PADDING_K);
     scores->move(x, y);
     scores->resize(font_size * 2, font_size);
+    int total_scores = scores_page + scores_header;
+    scores->setText(QString::number(total_scores));
 }
 

@@ -351,6 +351,6 @@ void Selection::selection_mode_off()
     }
     reset_sector_base();
     reset_active_sectors();
-    emit set_scores_signal(0);
+    emit null_scores_signal();
 }
 

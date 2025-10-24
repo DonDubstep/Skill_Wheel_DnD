@@ -26,7 +26,9 @@ void MainWindow::addTabs()
     {
         PageWidget *page = new PageWidget();
         ui->tabWidget->addTab(page, QString::number(i+1));
-        connect(page->selection, SIGNAL(set_scores_signal(int)), ui->header_widget, SLOT(set_scores(int)));
+        connect(page->selection, SIGNAL(set_scores_signal(int)), ui->header_widget, SLOT(set_scores_page(int)));
+        connect(page->selection, SIGNAL(null_scores_signal()), ui->header_widget, SLOT(null_scores()));
+        connect(page, SIGNAL(selection_off()), ui->header_widget->header_selection, SLOT(selection_header_off()));
     }
 }
 
