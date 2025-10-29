@@ -15,6 +15,8 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
     add_combobox();
     add_basic_skills(0);
     add_scores(0);
+    scores_page = 0;
+    scores_header = 0;
 }
 
 //! Здесь читаем json

@@ -100,7 +100,7 @@ struct circle_skill_data_t
     sector_data_t logistics;
     sector_data_t leadership;
     sector_data_t luck;
-    sector_data_t protection;
+    sector_data_t defence;
     sector_data_t attack;
     sector_data_t sorcery;
     sector_data_t summoning_magic;

@@ -135,6 +135,23 @@ void PageWidget::read_json()
             }
         }
     }
+    QJsonObject center_skills_obj = root["Center_skills"].toObject();
+    for(int page_i = 0; page_i < json_pages.size(); page_i++)
+    {
+        QString page_name = json_pages[page_i];
+        const QJsonArray page_arr = center_skills_obj[page_name].toArray();
+        for(int i = 0; i < 4; i++)
+        {
+            QJsonObject cur_skill_data = page_arr[i].toObject();
+            title = cur_skill_data["title"].toString();
+            description = cur_skill_data["description"].toString();
+            icon_path = cur_skill_data["icon_path"].toString();
+            Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
+            cur_skill->hide();
+            class_skills[page_name].append(cur_skill);
+        }
+    }
+
     file.close();
 }
 
@@ -151,6 +168,7 @@ void PageWidget::paintEvent(QPaintEvent *e)
     paint_concentric_circles();
     paint_small_circles();
     paint_skills();
+    paint_center_skills();
 
     delete painter;
     QWidget::paintEvent(e);
@@ -291,4 +309,27 @@ void PageWidget::paint_skills()
             }
         }
     }
+}
+
+void PageWidget::paint_center_skills()
+{
+    // @Fixme
+//    int radius = static_cast<int>(half_min_window_size * 0.16f);           // малый круг
+//    int cur_size = static_cast<int>(half_min_window_size * ICON_KOEF);
+//    QString class_name = "Barbarian";
+//    int x;
+//    int y;
+//    x = centerX + -radius;
+//    y = centerY;
+//    class_skills[class_name][0]->resize(cur_size, cur_size);
+//    class_skills[class_name][0]->move(x,y);
+//    class_skills[class_name][0]->show();
+//    x = centerX;
+//    class_skills[class_name][1]->move(x,y);
+//    class_skills[class_name][1]->resize(cur_size, cur_size);
+//    class_skills[class_name][1]->show();
+//    x = centerX + radius;
+//    class_skills[class_name][2]->move(x,y);
+//    class_skills[class_name][2]->resize(cur_size, cur_size);
+//    class_skills[class_name][2]->show();
 }

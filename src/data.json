@@ -1374,5 +1374,256 @@
                 "description" : "desc2"
             }
         ]
+    },
+    "Center_skills":
+    {
+        "Mage":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        143,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Mage/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        144,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Mage/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        145,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Mage/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        146,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Mage/8.png",
+                "depends":      []
+            }
+        ],
+        "Demon_Lord":
+        [
+           {
+                "title":        "Центр 1",
+                "index":        147,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Demon_Lord/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        148,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Demon_Lord/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        149,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Demon_Lord/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        1450,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Demon_Lord/8.png",
+                "depends":      []
+            }
+        ],
+        "Knight":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        151,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Knight/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        152,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Knight/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        153,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Knight/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        154,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Knight/8.png",
+                "depends":      []
+            }
+        ],
+        "Necromancer":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        155,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Necromancer/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        156,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Necromancer/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        157,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Necromancer/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        158,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Necromancer/8.png",
+                "depends":      []
+            }
+        ],
+        "Ranger":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        159,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Ranger/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        160,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Ranger/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        161,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Ranger/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        162,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Ranger/8.png",
+                "depends":      []
+            }
+        ],
+        "Rune_Priest":
+        [
+           {
+                "title":        "Центр 1",
+                "index":        163,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Rune_Priest/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        164,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Rune_Priest/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        165,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Rune_Priest/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        166,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Rune_Priest/8.png",
+                "depends":      []
+            }
+        ],
+        "Warlock":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        167,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Warlock/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        168,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Warlock/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        169,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Warlock/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        170,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Warlock/8.png",
+                "depends":      []
+            }
+        ],
+        "Barbarian":
+        [
+            {
+                "title":        "Центр 1",
+                "index":        171,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Barbarian/5.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 2",
+                "index":        172,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Barbarian/6.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 3",
+                "index":        173,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Barbarian/7.png",
+                "depends":      []
+            },
+            {
+                "title":        "Центр 4",
+                "index":        174,
+                "description":  "desc1",
+                "icon_path":    "Basic_skills/Barbarian/8.png",
+                "depends":      []
+            }
+        ]
     }
 }
