@@ -147,6 +147,7 @@ void PageWidget::read_json()
             description = cur_skill_data["description"].toString();
             icon_path = cur_skill_data["icon_path"].toString();
             Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
+            connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
             cur_skill->hide();
             class_skills[page_name].append(cur_skill);
         }
@@ -313,23 +314,53 @@ void PageWidget::paint_skills()
 
 void PageWidget::paint_center_skills()
 {
-    // @Fixme
-//    int radius = static_cast<int>(half_min_window_size * 0.16f);           // малый круг
-//    int cur_size = static_cast<int>(half_min_window_size * ICON_KOEF);
-//    QString class_name = "Barbarian";
-//    int x;
-//    int y;
-//    x = centerX + -radius;
-//    y = centerY;
-//    class_skills[class_name][0]->resize(cur_size, cur_size);
-//    class_skills[class_name][0]->move(x,y);
-//    class_skills[class_name][0]->show();
-//    x = centerX;
-//    class_skills[class_name][1]->move(x,y);
-//    class_skills[class_name][1]->resize(cur_size, cur_size);
-//    class_skills[class_name][1]->show();
-//    x = centerX + radius;
-//    class_skills[class_name][2]->move(x,y);
-//    class_skills[class_name][2]->resize(cur_size, cur_size);
-//    class_skills[class_name][2]->show();
+    enum
+    {
+        INIT_ANGLE = 90,
+        ANGLE_STEP = 120
+    };
+    int x, y;
+    Skill* cur_skill;
+    double angle = INIT_ANGLE;
+    int radius = static_cast<int>(half_min_window_size * CENTER_SKILL_RADIUS_KOEF);
+    int skill_size = static_cast<int>(half_min_window_size * ICON_KOEF);
+    QString class_name = "Barbarian";
+    for(int s = 0; s < 3; s++)
+    {
+        cur_skill = class_skills[class_name][s];
+        cur_skill->show(); //@Fixme
+        x = static_cast<int>(centerX + radius * cos(angle * M_PI / 180)) - skill_size / 2;
+        y = static_cast<int>(centerY - radius * sin(angle * M_PI / 180)) - skill_size / 2;
+        if(cur_skill->is_changed_size == 0)
+        {
+            cur_skill->move(x,y);
+            cur_skill->resize(skill_size, skill_size);
+            cur_skill->description->hide();
+        }
+        else
+        {
+            cur_skill->move(x - skill_size /2 , y - skill_size / 2);
+            cur_skill->resize(skill_size * 2, skill_size * 2);
+            cur_skill->description->show();
+            cur_skill->description->raise();
+        }
+        angle += ANGLE_STEP;
+    }
+    cur_skill = class_skills[class_name][3];
+    cur_skill->show(); //@Fixme
+    x = centerX - skill_size / 2;
+    y = centerY - skill_size / 2;
+    if(cur_skill->is_changed_size == 0)
+    {
+        cur_skill->move(x,y);
+        cur_skill->resize(skill_size, skill_size);
+        cur_skill->description->hide();
+    }
+    else
+    {
+        cur_skill->move(x - skill_size /2 , y - skill_size / 2);
+        cur_skill->resize(skill_size * 2, skill_size * 2);
+        cur_skill->description->show();
+        cur_skill->description->raise();
+    }
 }

@@ -112,6 +112,7 @@ struct circle_skill_data_t
 #define SMALL_CIRCLE_KOEF 0.05f
 #define SEGMENT_ANGLE 30
 #define ICON_KOEF 0.08f
+#define CENTER_SKILL_RADIUS_KOEF 0.25f
 
 #define NUM_OF_CATEGORIES 4
 #define NUM_OF_DEPENDS 30
