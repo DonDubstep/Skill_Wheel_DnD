@@ -2,8 +2,9 @@
 #include <math.h>
 #include <QDebug>
 
-PageWidget::PageWidget(QWidget *parent) : QWidget(parent)
+PageWidget::PageWidget(int page_number, QWidget *parent) : QWidget(parent)
 {
+    this->page_number = page_number;
     installEventFilter(this);
     init_background_colors();
     init_sector_pointers();
@@ -319,12 +320,13 @@ void PageWidget::paint_center_skills()
         INIT_ANGLE = 90,
         ANGLE_STEP = 120
     };
+
     int x, y;
     Skill* cur_skill;
     double angle = INIT_ANGLE;
     int radius = static_cast<int>(half_min_window_size * CENTER_SKILL_RADIUS_KOEF);
     int skill_size = static_cast<int>(half_min_window_size * ICON_KOEF);
-    QString class_name = "Barbarian";
+    QString class_name = json_pages[page_number];
     for(int s = 0; s < 3; s++)
     {
         cur_skill = class_skills[class_name][s];

@@ -16,13 +16,14 @@ class PageWidget : public QWidget
 {
     Q_OBJECT
 public:
-    PageWidget(QWidget *parent = nullptr);
+    PageWidget(int page_number, QWidget *parent = nullptr);
     Selection* selection;
 
 signals:
     void selection_off();
 
 private:
+    int page_number;
     int centerX;
     int centerY;
     float half_min_window_size;
