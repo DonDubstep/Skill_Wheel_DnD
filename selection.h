@@ -3,10 +3,10 @@
 
 #include <skill.h>
 
-struct temp_depends_struct_t
+enum depends_e
 {
-    Skill* skill;
-    QVector<short> depends;
+    OR,
+    AND
 };
 
 
@@ -16,7 +16,10 @@ class Selection : public QObject
 public:
     Selection(sector_data_t* sector_ptrs[]);
     void make_dependencies();
-    QVector<temp_depends_struct_t>* temp_depends_struct;
+    int parse_depend_type(Skill* skill);
+    QVector<Skill*> parse_depends(Skill* skill);
+    void add_skill_in_list(QString* cur_string_index, QVector<Skill *>* depends_list);
+    Skill* find_skill_ptr_by_index(int index);
 
 public slots:
     void selection_mode_on(Skill*);

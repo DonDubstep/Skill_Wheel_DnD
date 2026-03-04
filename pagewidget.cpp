@@ -74,9 +74,8 @@ void PageWidget::init_sector_pointers()
 
 void PageWidget::read_json()
 {
-    QString title, description, icon_path;
+    QString title, description, icon_path , depends;
     short index;
-    temp_depends_struct_t temp_skill_with_depends;
 
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -105,24 +104,10 @@ void PageWidget::read_json()
                 description = cur_skill_data["description"].toString();
                 icon_path = cur_skill_data["icon_path"].toString();
                 index = static_cast<short>(cur_skill_data["index"].toInt());
-
-                QJsonArray json_depends_arr = cur_skill_data["depends"].toArray();
-                QVector<short> depends;
-                if(json_depends_arr.size() != 0)
-                {
-                    depends.reserve(json_depends_arr.size());
-                    std::transform(json_depends_arr.begin(), json_depends_arr.end(),
-                                   std::back_inserter(depends),
-                                   [](const QJsonValue& value)
-                                    {return static_cast<short>(value.toInt());
-                                    });
-                }
+                depends = cur_skill_data["depends"].toString();
                 Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
                 cur_skill->index = index;
-
-                temp_skill_with_depends.skill = cur_skill;
-                temp_skill_with_depends.depends = depends;
-                selection->temp_depends_struct->append(temp_skill_with_depends);
+                cur_skill->parsed_depends = depends;
 
                 connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
                 switch (circle_i)

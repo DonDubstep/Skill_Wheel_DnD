@@ -1,4 +1,5 @@
 #include "selection.h"
+#include <QDebug>
 
 Selection::Selection(sector_data_t *sector_ptrs[])
 {
@@ -6,28 +7,125 @@ Selection::Selection(sector_data_t *sector_ptrs[])
     {
         this->sector_ptrs[i] = sector_ptrs[i];
     }
-    temp_depends_struct = new QVector<temp_depends_struct_t>();
     reset_sector_base();
     reset_active_sectors();
 }
 
 void Selection::make_dependencies()
 {
-    for(temp_depends_struct_t skill_el : *temp_depends_struct)
+    Skill* cur_skill;
+    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        for(int d = 0; d < skill_el.depends.size(); d++)
+        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
-            for(temp_depends_struct_t dependend_skill : *temp_depends_struct)
+            Skill** cur_circle_ptr;
+            switch (circle_i)
             {
-                if(dependend_skill.skill->index == skill_el.depends[d])
-                {
-                    skill_el.skill->depends.append(dependend_skill.skill);
-                    break;
-                }
+            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
+            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
+            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
+            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            }
+            for(int s = 0; s < 3; s++)
+            {
+                cur_skill = cur_circle_ptr[s];
+                cur_skill->depend_type = parse_depend_type(cur_skill);
+                cur_skill->depends = parse_depends(cur_skill);
             }
         }
     }
 }
+
+int Selection::parse_depend_type(Skill* skill)
+{
+    QString parsed_depends = skill->parsed_depends;
+    if(parsed_depends.contains("&"))
+    {
+        return AND;
+    }
+    else if (parsed_depends.contains("|"))
+    {
+        return OR;
+    }
+    else
+    {
+        return NONE;
+    }
+}
+
+QVector<Skill *> Selection::parse_depends(Skill* skill)
+{
+    QString cur_string_index = "";
+    QVector<Skill *>* ret_depends_list = new QVector<Skill *>();
+    if(skill->parsed_depends == "")
+        return *ret_depends_list;
+
+    QChar last_letter;
+    for(QChar letter : skill->parsed_depends)
+    {
+        if(letter == " ")
+        {
+            add_skill_in_list(&cur_string_index, ret_depends_list);
+            continue;
+        }
+        else if(letter.isDigit())
+        {
+            cur_string_index += letter;
+        }
+        else if(letter == "|" || letter == "&")
+        {
+            add_skill_in_list(&cur_string_index, ret_depends_list);
+        }
+        last_letter = letter;
+    }
+    add_skill_in_list(&cur_string_index, ret_depends_list);
+    return *ret_depends_list;
+}
+
+
+void Selection::add_skill_in_list(QString* cur_string_index, QVector<Skill *>* ret_depends_list)
+{
+    if(*cur_string_index != "")
+    {
+        int cur_skill_index = cur_string_index->toInt();
+        Skill* cur_skill = find_skill_ptr_by_index(cur_skill_index);
+        ret_depends_list->append(cur_skill);
+        *cur_string_index = "";
+    }
+}
+
+
+Skill *Selection::find_skill_ptr_by_index(int index)
+{
+    Skill* cur_skill;
+    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
+    {
+        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
+        {
+            Skill** cur_circle_ptr;
+            switch (circle_i)
+            {
+            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
+            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
+            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
+            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            }
+            for(int s = 0; s < 3; s++)
+            {
+                cur_skill = cur_circle_ptr[s];
+                if(cur_skill->index == index)
+                {
+                    return cur_skill;
+                }
+            }
+        }
+    }
+    qDebug() << "Не найден скилл по индексу " << index;
+    return nullptr;
+}
+
 
 //! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void Selection::selection_mode_on(Skill* selected_skill)
@@ -46,7 +144,6 @@ void Selection::select_dependencies(Skill* selected_skill)
 {
     sector_data_t *sector;
     int sector_n, circle_n, skill_n;
-
     find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
     if(selected_skill->state == SELECTED)
     {
@@ -62,7 +159,6 @@ void Selection::select_dependencies(Skill* selected_skill)
                 selected_skill->state = UNSELECTED;
             }
         }
-
     }
     else
     {
@@ -74,7 +170,6 @@ void Selection::select_dependencies(Skill* selected_skill)
             sector->base_circle[base_skill_i - 1]->state = SELECTED;
             sector->base_circle[base_skill_i - 1]->repaint();
             num_of_available_basic_skills[sector_n]--;
-
         }
         else
         {
@@ -89,6 +184,10 @@ void Selection::select_dependencies(Skill* selected_skill)
             if(related_skill->state != SELECTED)
             {
                 select_dependencies(related_skill);
+            }
+            if(selected_skill->depend_type != AND)
+            {
+                break;
             }
         }
     }
@@ -192,6 +291,10 @@ int Selection::is_skill_depends_selected(Skill *skill)
         {
             return 0;
         }
+        if(skill->depend_type != AND)
+        {
+            break;
+        }
     }
     return 1;
 
@@ -205,6 +308,10 @@ int Selection::calculate_required_base_skills_in_cur_situation(Skill* skill)
         if(related_skill->state == SELECTED)
             continue;
         result += calculate_required_base_skills(related_skill);
+        if(skill->depend_type != AND)
+        {
+            break;
+        }
     }
     return result;
 }
@@ -353,4 +460,3 @@ void Selection::selection_mode_off()
     reset_active_sectors();
     emit null_scores_signal();
 }
-
