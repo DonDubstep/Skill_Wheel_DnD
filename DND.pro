@@ -17,27 +17,35 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    description.cpp \
-    header_selection.cpp \
-    headerwidget.cpp \
+    description/description.cpp \
+    headerwidget/header_selection/header_selection.cpp \
+    headerwidget/headerwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    pagewidget.cpp \
-    selection.cpp \
-    skill.cpp
+    pagewidget/pagewidget.cpp \
+    pagewidget/selection/selection.cpp \
+    skill/skill.cpp
 
 HEADERS += \
-    description.h \
-    header_selection.h \
-    headerwidget.h \
+    description/description.h \
+    headerwidget/header_selection/header_selection.h \
+    headerwidget/headerwidget.h \
     mainwindow.h \
-    pagewidget.h \
-    selection.h \
+    pagewidget/pagewidget.h \
+    pagewidget/selection/selection.h \
     settings.h \
-    skill.h
+    skill/skill.h
 
 FORMS += \
     mainwindow.ui
+
+INCLUDEPATH += \
+    $$PWD/description \
+    $$PWD/headerwidget \
+    $$PWD/headerwidget/header_selection \
+    $$PWD/pagewidget \
+    $$PWD/pagewidget/selection \
+    $$PWD/skill \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/Skill_Wheel_app
