@@ -20,6 +20,8 @@ public:
     QVector<Skill*> parse_depends(Skill* skill);
     void add_skill_in_list(QString* cur_string_index, QVector<Skill *>* depends_list);
     Skill* find_skill_ptr_by_index(int index);
+    void hide_of_unselect_unavailable_skills();
+    void reset_skills_and_hide_unavailable_skills();
 
 public slots:
     void selection_mode_on(Skill*);
@@ -33,22 +35,32 @@ private:
     sector_data_t* sector_ptrs[12];
 
     int num_of_available_basic_skills[12];
+    int num_of_available_but_not_used_basic_skills[12];
     int num_of_skills_in_sector_active[12];
 
 
     void select_dependencies(Skill* selected_skill);
+    void unselect_dependens_skills(Skill* selected_skill);
+    int  check_is_there_still_an_active_skill(Skill* related_active_skill_should_be_unselect, Skill* cur_skill);
+    void select_depends_base_circle_skills(int skill_n, int sector_n);
+    void unselect_depends_base_circle_skills(int skill_n, int sector_n);
     void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i);
     int  is_skill_depends_selected(Skill* skill);
-    void check_skills_availability();
     int  calculate_required_base_skills(Skill* skill);
     int  calculate_required_base_skills_in_cur_situation(Skill* skill);
     int  count_of_active_basic_skills(sector_data_t* sector);
-    void count_skills_in_sectors();
+    void count_available_but_not_used_basic_skills_in_sectors();
+    void count_selected_skills_in_sectors();
     void calculate_scores();
     int  calculate_num_of_selected_sectors();
     void gray_unselected_skills();
     void reset_sector_base();
     void reset_active_sectors();
+    void reset_hidden_skill();
+    void reset_not_used_basic_skills();
+
+    void debug_num_of_available_basic_skills();
+    void debug_who_selected();
 };
 
 #endif // SELECTION_H

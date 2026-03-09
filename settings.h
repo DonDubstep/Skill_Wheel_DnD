@@ -30,7 +30,8 @@ enum skill_state_e
 {
     NONE,
     SELECTED,
-    UNSELECTED
+    UNSELECTED,
+    HIDDEN
 };
 
 const QStringList json_pages

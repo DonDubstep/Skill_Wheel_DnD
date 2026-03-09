@@ -11,6 +11,7 @@ PageWidget::PageWidget(int page_number, QWidget *parent) : QWidget(parent)
     selection = new Selection(sector_ptrs);
     read_json();
     selection->make_dependencies();
+    selection->reset_skills_and_hide_unavailable_skills();
 }
 
 //! Заносим данные цветов сегментов кругов
