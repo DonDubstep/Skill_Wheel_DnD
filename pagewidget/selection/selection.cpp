@@ -16,16 +16,16 @@ void Selection::make_dependencies()
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
@@ -101,16 +101,16 @@ Skill *Selection::find_skill_ptr_by_index(int index)
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
@@ -148,7 +148,7 @@ void Selection::select_dependencies(Skill* selected_skill)
     find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
     if(selected_skill->state == SELECTED)
     {
-        if(circle_n != 0)
+        if(circle_n != BASE_CIRCLE)
         {
             selected_skill->state = UNSELECTED;
             selected_skill->repaint();
@@ -161,7 +161,7 @@ void Selection::select_dependencies(Skill* selected_skill)
     }
     else
     {
-        if(circle_n != 0)
+        if(circle_n != BASE_CIRCLE)
         {
             selected_skill->state = SELECTED;
             selected_skill->repaint();
@@ -198,16 +198,16 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
@@ -311,22 +311,22 @@ void Selection::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
                 if(cur_circle_ptr[s] == selected_skill)
                 {
-                    *ret_sector = cur_sector;
+                    *ret_sector = cur_sector_ptr;
                     *ret_sector_n = sector_i;
                     *ret_circle_n = circle_i;
                     *ret_skill_i = s;
@@ -348,10 +348,10 @@ void Selection::hide_of_unselect_unavailable_skills()
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;      break;
-            case 3: cur_circle_ptr = cur_sector_ptr->circle_3;      break;
-            default: cur_circle_ptr = cur_sector_ptr->base_circle;  break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
@@ -365,7 +365,7 @@ void Selection::hide_of_unselect_unavailable_skills()
                         qDebug() << "num of available basic skills = " << num_of_available_basic_skills[sector_i] - num_of_available_but_not_used_basic_skills[sector_i];
                     }
                     if(num_required_base_skill > (num_of_available_basic_skills[sector_i] + num_of_available_but_not_used_basic_skills[sector_i]) &&
-                       circle_i != 0)
+                       circle_i != BASE_CIRCLE)
                     {
                         cur_skill->state = HIDDEN;
                         cur_skill->hide();
@@ -401,16 +401,16 @@ void Selection::reset_skills_and_hide_unavailable_skills()
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 1: cur_circle_ptr = cur_sector_ptr->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector_ptr->circle_2;      break;
-            case 3: cur_circle_ptr = cur_sector_ptr->circle_3;      break;
-            default: cur_circle_ptr = cur_sector_ptr->base_circle;  break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;  break;
             }
             for(int s = 0; s < 3; s++)
             {
                 cur_skill = cur_circle_ptr[s];
                 int num_required_base_skill = calculate_required_base_skills_in_cur_situation(cur_skill);
-                if(num_required_base_skill > num_of_available_basic_skills[sector_i] && circle_i != 0)
+                if(num_required_base_skill > num_of_available_basic_skills[sector_i] && circle_i != BASE_CIRCLE)
                 {
                     cur_skill->state = HIDDEN;
                     cur_skill->hide();
@@ -525,16 +525,16 @@ void Selection::count_selected_skills_in_sectors()
     reset_active_sectors();
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
@@ -600,16 +600,16 @@ void Selection::reset_hidden_skill()
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case 0: cur_circle_ptr = cur_sector->base_circle;   break;
-            case 1: cur_circle_ptr = cur_sector->circle_1;      break;
-            case 2: cur_circle_ptr = cur_sector->circle_2;      break;
-            default: cur_circle_ptr = cur_sector->circle_3;     break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
             }
             for(int s = 0; s < 3; s++)
             {
