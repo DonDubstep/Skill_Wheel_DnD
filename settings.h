@@ -34,6 +34,14 @@ enum skill_state_e
     HIDDEN
 };
 
+enum circle_e
+{
+    BASE_CIRCLE,
+    CIRCLE_1,
+    CIRCLE_2,
+    CIRCLE_3
+};
+
 const QStringList json_pages
 {
     "Mage",

@@ -142,7 +142,6 @@ void Selection::selection_mode_on(Skill* selected_skill)
 
 void Selection::select_dependencies(Skill* selected_skill)
 {
-//    qDebug() << "SELECT DEPENDENCIES";
     sector_data_t *sector;
     int sector_n = 0, circle_n = 0, skill_n = 0;
     find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
@@ -165,11 +164,19 @@ void Selection::select_dependencies(Skill* selected_skill)
         {
             selected_skill->state = SELECTED;
             selected_skill->repaint();
-            int base_skill_i = num_of_available_basic_skills[sector_n] - 1;
+            if(num_of_available_but_not_used_basic_skills[sector_n] > 0)
+            {
+                num_of_available_but_not_used_basic_skills[sector_n]--;
+            }
+            else
+            {
+                int base_skill_i = num_of_available_basic_skills[sector_n] - 1;
 
-            sector->base_circle[base_skill_i]->state = SELECTED;
-            sector->base_circle[base_skill_i]->repaint();
-            num_of_available_basic_skills[sector_n]--;
+                sector->base_circle[base_skill_i]->state = SELECTED;
+                sector->base_circle[base_skill_i]->repaint();
+                num_of_available_basic_skills[sector_n]--;
+            }
+
         }
         else
         {
@@ -222,8 +229,6 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
                             qDebug() << "unselect_dependens_skills для скилла" << selected_skill->index;
                             cur_skill->state = UNSELECTED;
                             cur_skill->repaint();
-//                            num_of_available_basic_skills[sector_i]++;
-                            unselect_depends_base_circle_skills(num_of_available_basic_skills[sector_i], sector_i);
                             new_unselected_skills.append(cur_skill);
                         }
                     }
@@ -240,8 +245,6 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
                             {
                                 cur_skill->state = UNSELECTED;
                                 cur_skill->repaint();
-//                                num_of_available_basic_skills[sector_i]++;
-                                unselect_depends_base_circle_skills(num_of_available_basic_skills[sector_i], sector_i);
                                 new_unselected_skills.append(cur_skill);
                             }
                         }
@@ -359,10 +362,11 @@ void Selection::hide_of_unselect_unavailable_skills()
                 if(cur_skill->state != SELECTED)
                 {
                     int num_required_base_skill = calculate_required_base_skills_in_cur_situation(cur_skill);
-                    if(cur_skill->index < 10)
+                    if(cur_skill->index == 9 || cur_skill->index == 11 || cur_skill->index == 6)
                     {
                         qDebug() << "for skill " << cur_skill->index << "requires = " << num_required_base_skill << "base skills";
-                        qDebug() << "num of available basic skills = " << num_of_available_basic_skills[sector_i] - num_of_available_but_not_used_basic_skills[sector_i];
+                        qDebug() << "num of available basic skills = " << num_of_available_basic_skills[sector_i];
+                        qDebug() << "num_of_available_but_not_used_basic_skills = " << num_of_available_but_not_used_basic_skills[sector_i];
                     }
                     if(num_required_base_skill > (num_of_available_basic_skills[sector_i] + num_of_available_but_not_used_basic_skills[sector_i]) &&
                        circle_i != BASE_CIRCLE)
@@ -478,14 +482,26 @@ int Selection::is_skill_depends_selected(Skill *skill)
 int Selection::calculate_required_base_skills_in_cur_situation(Skill* skill)
 {
     int result = 1;
-    for(Skill* related_skill : skill->depends)
+    if(skill->index == 9)
     {
-        if(related_skill->state == SELECTED)
-            continue;
-        result += calculate_required_base_skills_in_cur_situation(related_skill);
-        if(skill->depend_type == OR)
+        qDebug() << "";
+    }
+    if(skill->depend_type == OR)
+    {
+        bool selected = false;
+//        find_shortest_way_in_depends_type_or();
+        // Здесь нужна функция которая будет искать в глубину наименьшее количество требуемых скиллов
+        // Если скиллов нет, то к результату ничего не прибавляем
+    }
+    else if(skill->depend_type == AND)
+    {
+        for(Skill* related_skill : skill->depends)
         {
-            break;
+            if(related_skill->state == SELECTED)
+            {
+                continue;
+            }
+            result += calculate_required_base_skills_in_cur_situation(related_skill);
         }
     }
     return result;
