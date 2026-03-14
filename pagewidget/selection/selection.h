@@ -48,6 +48,7 @@ private:
     int  is_skill_depends_selected(Skill* skill);
     int  calculate_required_base_skills(Skill* skill);
     int  calculate_required_base_skills_in_cur_situation(Skill* skill);
+    int  find_minimum_required_base_skills(Skill* skill);
     int  count_of_active_basic_skills(sector_data_t* sector);
     void count_available_but_not_used_basic_skills_in_sectors();
     void count_selected_skills_in_sectors();
