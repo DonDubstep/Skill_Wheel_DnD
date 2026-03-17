@@ -547,16 +547,6 @@ void Selection::calculate_scores()
     emit set_scores_signal(result);
 }
 
-int Selection::calculate_required_base_skills(Skill* skill)
-{
-    int result = 1;
-    for(Skill* related_skill : skill->depends)
-    {
-        result += calculate_required_base_skills(related_skill);
-    }
-    return result;
-}
-
 int Selection::find_minimum_required_base_skills(Skill *skill)
 {
     int result = 1;
