@@ -251,7 +251,6 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
                     {
                         if(related_skill == selected_skill)
                         {
-                            qDebug() << "unselect_dependens_skills для скилла" << selected_skill->index;
                             cur_skill->state = UNSELECTED;
                             cur_skill->repaint();
                             new_unselected_skills.append(cur_skill);
@@ -280,7 +279,6 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
     }
     if(new_unselected_skills.size() != 0)
     {
-        qDebug() << "new_unselected_skills =" << new_unselected_skills.last()->index;
         Skill* new_unseleted_skill = new_unselected_skills.last();
         new_unselected_skills.pop_back();
         unselect_dependens_skills(new_unseleted_skill);
@@ -655,10 +653,6 @@ void Selection::select_first_header_skill_from_page_selection()
         emit activate_first_header_skill();
         state_of_selection_mode = 1;
     }
-    else
-    {
-        state_of_selection_mode = 0;
-    }
 }
 
 void Selection::debug_num_of_available_basic_skills()
@@ -679,4 +673,5 @@ void Selection::selection_mode_off()
     reset_skills_and_hide_unavailable_skills();
     emit set_page_skills_selected_0_in_header_selection();
     emit null_scores_signal();
+    state_of_selection_mode = 0;
 }
