@@ -106,6 +106,10 @@ void HeaderWidget::resizeEvent(QResizeEvent *e)
 void HeaderWidget::set_scores_page(int score)
 {
     scores_page = score;
+    if(scores_page == 0)
+    {
+        emit set_page_skills_selected_0_in_header_selection();
+    }
     paint_scores();
 }
 

@@ -12,9 +12,12 @@ public:
     QMap<QString, QVector<Skill*>> *basic_skills;
     QString cur_page;
     void set_cur_page(int cur_page);
+    int page_skills_selected = 0;
 public slots:
     void selection_header_on(Skill*);
     void selection_header_off();
+    void select_first_header_skill();
+    void set_page_skills_selected_0();
 
 signals:
     void set_header_scores(int scores);

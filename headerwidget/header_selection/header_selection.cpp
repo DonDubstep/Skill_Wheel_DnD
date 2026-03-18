@@ -21,6 +21,17 @@ void HeaderSelection::selection_header_off()
     }
 }
 
+void HeaderSelection::select_first_header_skill()
+{
+    page_skills_selected = 1;
+    selection_header_on((*basic_skills)[cur_page][0]);
+}
+
+void HeaderSelection::set_page_skills_selected_0()
+{
+    page_skills_selected = 0;
+}
+
 void HeaderSelection::set_cur_page(int cur_page)
 {
     this->cur_page = pages[cur_page];
@@ -38,6 +49,10 @@ void HeaderSelection::select_header_dependencies(Skill *selected_skill)
     }
     else
     {
+        if(page_skills_selected)
+        {
+            selected_skill_index += 1;
+        }
         for(int i = (*basic_skills)[cur_page].size()-1; i >= selected_skill_index; i--)
         {
             (*basic_skills)[cur_page][i]->state = UNSELECTED;

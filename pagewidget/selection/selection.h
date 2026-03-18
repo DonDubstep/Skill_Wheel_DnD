@@ -15,6 +15,7 @@ class Selection : public QObject
     Q_OBJECT
 public:
     Selection(sector_data_t* sector_ptrs[]);
+    int state_of_selection_mode = 0;
     void make_dependencies();
     void reset_skills_and_hide_unavailable_skills();
 
@@ -25,6 +26,8 @@ public slots:
 signals:
     void set_scores_signal(int scores);
     void null_scores_signal();
+    void activate_first_header_skill();
+    void set_page_skills_selected_0_in_header_selection();
 
 private:
     sector_data_t* sector_ptrs[12];
@@ -55,6 +58,7 @@ private:
     void reset_active_sectors();
     void reset_hidden_skill();
     void reset_not_used_basic_skills();
+    void select_first_header_skill_from_page_selection();
 
     void debug_num_of_available_basic_skills();
 };

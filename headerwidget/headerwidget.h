@@ -49,6 +49,7 @@ public:
 
 signals:
     void switch_page(int);
+    void set_page_skills_selected_0_in_header_selection();
 
 };
 

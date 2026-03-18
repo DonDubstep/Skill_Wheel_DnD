@@ -131,6 +131,7 @@ Skill *Selection::find_skill_ptr_by_index(int index)
 void Selection::selection_mode_on(Skill* selected_skill)
 {
     select_dependencies(selected_skill);
+    select_first_header_skill_from_page_selection();
     reset_hidden_skill();
     count_selected_skills_in_sectors();
     count_available_but_not_used_basic_skills_in_sectors();
@@ -153,10 +154,7 @@ void Selection::select_dependencies(Skill* selected_skill)
         }
         else
         {
-            if(num_of_available_but_not_used_basic_skills[sector_n] != 0)
-            {
-                unselect_depends_base_circle_skills(skill_n, sector_n);
-            }
+            unselect_depends_base_circle_skills(skill_n, sector_n);
         }
     }
     else
@@ -324,14 +322,17 @@ void Selection::select_depends_base_circle_skills(int skill_n, int sector_n)
 void Selection::unselect_depends_base_circle_skills(int skill_n, int sector_n)
 {
     //! Порядок базовых скиллов следующий: первый базовый скилл 2, второй базовый скилл - 1, третий - 0
-    for(int s = skill_n; s >=0; s--)
+    for(int s = 0; s <= skill_n; s++)
     {
+        if(num_of_available_but_not_used_basic_skills[sector_n] == 0)
+            break;
         Skill* cur_skill = sector_ptrs[sector_n]->base_circle[s];
         if(cur_skill->state == SELECTED)
         {
             cur_skill->state = UNSELECTED;
             cur_skill->repaint();
             num_of_available_basic_skills[sector_n]++;
+            num_of_available_but_not_used_basic_skills[sector_n]--;
         }
     }
 }
@@ -647,6 +648,19 @@ void Selection::reset_not_used_basic_skills()
     }
 }
 
+void Selection::select_first_header_skill_from_page_selection()
+{
+    if(state_of_selection_mode == 0)
+    {
+        emit activate_first_header_skill();
+        state_of_selection_mode = 1;
+    }
+    else
+    {
+        state_of_selection_mode = 0;
+    }
+}
+
 void Selection::debug_num_of_available_basic_skills()
 {
     for(int str_i = 0; str_i < 3; str_i++)
@@ -663,5 +677,6 @@ void Selection::selection_mode_off()
     reset_active_sectors();
     reset_not_used_basic_skills();
     reset_skills_and_hide_unavailable_skills();
+    emit set_page_skills_selected_0_in_header_selection();
     emit null_scores_signal();
 }
