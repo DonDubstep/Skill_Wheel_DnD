@@ -115,6 +115,12 @@ struct circle_skill_data_t
     sector_data_t summoning_magic;
 };
 
+struct page_skills_data_t
+{
+    Skill* center_skills[4];
+    sector_data_t* sector_ptrs[12];
+
+};
 
 #define RADUIS_KOEF 0.36f
 #define STEP_KOEF 0.16f

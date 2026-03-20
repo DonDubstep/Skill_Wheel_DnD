@@ -1447,28 +1447,28 @@
                 "index":        176,
                 "description":  "desc1",
                 "icon_path":    "Basic_skills/Mage/5.png",
-                "depends":      ""
+                "depends":      "11"
             },
             {
                 "title":        "Центр 2",
                 "index":        177,
                 "description":  "desc1",
                 "icon_path":    "Basic_skills/Mage/6.png",
-                "depends":      ""
+                "depends":      "9"
             },
             {
                 "title":        "Центр 3",
                 "index":        178,
                 "description":  "desc1",
                 "icon_path":    "Basic_skills/Mage/7.png",
-                "depends":      ""
+                "depends":      "8"
             },
             {
                 "title":        "Центр 4",
                 "index":        179,
                 "description":  "desc1",
                 "icon_path":    "Basic_skills/Mage/8.png",
-                "depends":      ""
+                "depends":      "176 & 177 & 178"
             }
         ],
         "Demon_Lord":

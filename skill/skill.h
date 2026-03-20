@@ -5,6 +5,13 @@
 #include <QPainter>
 #include <QKeyEvent>
 
+enum skill_type_t
+{
+    SECTOR_SKILL,
+    BASE_SKILL,
+    CENTER_SKILL
+};
+
 //! Класс иконки навыка
 class Skill : public QWidget
 {
@@ -24,6 +31,7 @@ public:
     int is_gray = 0;
     short state;
     int index;
+    short skill_type;
     bool operator == (const Skill* skill) const;
 
 signals:

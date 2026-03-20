@@ -1,22 +1,26 @@
 #include "selection.h"
 #include <QDebug>
 
-Selection::Selection(sector_data_t *sector_ptrs[])
+Selection::Selection(page_skills_data_t* page_skills_data)
 {
-    for(int i = 0; i < 12; i++)
-    {
-        this->sector_ptrs[i] = sector_ptrs[i];
-    }
+    this->page_skills_data = page_skills_data;
+
     reset_sector_base();
     reset_active_sectors();
 }
 
 void Selection::make_dependencies()
 {
+    make_dependencies_regular_skills();
+    make_dependencies_center_skills();
+}
+
+void Selection::make_dependencies_regular_skills()
+{
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -37,6 +41,17 @@ void Selection::make_dependencies()
     }
 }
 
+void Selection::make_dependencies_center_skills()
+{
+    Skill* cur_skill;
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        cur_skill->depend_type = parse_depend_type(cur_skill);
+        cur_skill->depends = parse_depends(cur_skill);
+    }
+
+}
 int Selection::parse_depend_type(Skill* skill)
 {
     QString parsed_depends = skill->parsed_depends;
@@ -99,9 +114,25 @@ void Selection::add_skill_in_list(QString* cur_string_index, QVector<Skill *>* r
 Skill *Selection::find_skill_ptr_by_index(int index)
 {
     Skill* cur_skill;
+    cur_skill = find_regular_skill_ptr_by_index(index);
+    if(cur_skill == nullptr)
+    {
+        cur_skill = find_center_skill_ptr_by_index(index);
+        if(cur_skill == nullptr)
+        {
+            qDebug() << "Не найден скилл по индексу " << index;
+        }
+    }
+    return cur_skill;
+}
+
+
+Skill *Selection::find_regular_skill_ptr_by_index(int index)
+{
+    Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -122,7 +153,20 @@ Skill *Selection::find_skill_ptr_by_index(int index)
             }
         }
     }
-    qDebug() << "Не найден скилл по индексу " << index;
+    return nullptr;
+}
+
+Skill *Selection::find_center_skill_ptr_by_index(int index)
+{
+    Skill* cur_skill;
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        if(cur_skill->index == index)
+        {
+            return cur_skill;
+        }
+    }
     return nullptr;
 }
 
@@ -130,7 +174,14 @@ Skill *Selection::find_skill_ptr_by_index(int index)
 //! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void Selection::selection_mode_on(Skill* selected_skill)
 {
-    select_dependencies(selected_skill);
+    if(selected_skill->skill_type == SECTOR_SKILL || selected_skill->skill_type == BASE_SKILL)
+    {
+        select_dependencies(selected_skill);
+    }
+    else
+    {
+        select_dependencies_center_skill(selected_skill);
+    }
     select_first_header_skill_from_page_selection();
     reset_hidden_skill();
     count_selected_skills_in_sectors();
@@ -204,7 +255,7 @@ void Selection::select_dependencies(Skill* selected_skill)
             }
             if(!found_selected_related_skill)
             {
-                Skill* chosen_related_skill;
+                Skill* chosen_related_skill = nullptr;
                 int min_distance = -1;
                 int required_distance = -1;
                 for(Skill* related_skill : selected_skill->depends)
@@ -223,6 +274,72 @@ void Selection::select_dependencies(Skill* selected_skill)
 
 }
 
+void Selection::select_dependencies_center_skill(Skill* selected_skill)
+{
+    if(selected_skill->state == SELECTED)
+    {
+        selected_skill->state = UNSELECTED;
+        selected_skill->repaint();
+    }
+    else
+    {
+        selected_skill->state = SELECTED;
+        selected_skill->repaint();
+        if(selected_skill->depend_type == AND)
+        {
+            for(Skill* related_skill : selected_skill->depends)
+            {
+                if(related_skill->state != SELECTED)
+                {
+                    if (related_skill->skill_type == CENTER_SKILL)
+                    {
+                        select_dependencies_center_skill(related_skill);
+                    }
+                    else
+                    {
+                        select_dependencies(related_skill);
+                    }
+                }
+            }
+        }
+        else
+        {
+            bool found_selected_related_skill = false;
+            for(Skill* related_skill : selected_skill->depends)
+            {
+                if (related_skill->state == SELECTED)
+                {
+                    found_selected_related_skill = true;
+                    break;
+                }
+            }
+            if(!found_selected_related_skill)
+            {
+                Skill* chosen_related_skill = nullptr;
+                int min_distance = -1;
+                int required_distance = -1;
+                for(Skill* related_skill : selected_skill->depends)
+                {
+                    required_distance = find_minimum_required_base_skills(related_skill);
+                    if(required_distance < min_distance || min_distance == -1)
+                    {
+                        min_distance = required_distance;
+                        chosen_related_skill = related_skill;
+                    }
+                }
+                if(chosen_related_skill->skill_type == CENTER_SKILL)
+                {
+                    select_dependencies_center_skill(chosen_related_skill);
+                }
+                else
+                {
+                    select_dependencies(chosen_related_skill);
+                }
+            }
+        }
+    }
+}
+
 //! Здесь выбираем серым все скиллы, в зависимостях у которых есть наш скилл
 void Selection::unselect_dependens_skills(Skill *selected_skill)
 {
@@ -230,7 +347,7 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
     Skill* cur_skill;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -307,7 +424,7 @@ void Selection::select_depends_base_circle_skills(int skill_n, int sector_n)
 {
     for(;skill_n < 3; skill_n++)
     {
-        Skill* cur_skill = sector_ptrs[sector_n]->base_circle[skill_n];
+        Skill* cur_skill = page_skills_data->sector_ptrs[sector_n]->base_circle[skill_n];
         if(cur_skill->state != SELECTED)
         {
             cur_skill->state = SELECTED;
@@ -324,7 +441,7 @@ void Selection::unselect_depends_base_circle_skills(int skill_n, int sector_n)
     {
         if(num_of_available_but_not_used_basic_skills[sector_n] == 0)
             break;
-        Skill* cur_skill = sector_ptrs[sector_n]->base_circle[s];
+        Skill* cur_skill = page_skills_data->sector_ptrs[sector_n]->base_circle[s];
         if(cur_skill->state == SELECTED)
         {
             cur_skill->state = UNSELECTED;
@@ -339,7 +456,7 @@ void Selection::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -368,9 +485,10 @@ void Selection::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_
 void Selection::hide_of_unselect_unavailable_skills()
 {
     Skill* cur_skill;
+    //! Проверка всех секторных скилов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -398,27 +516,53 @@ void Selection::hide_of_unselect_unavailable_skills()
                         cur_skill->state = HIDDEN;
                         cur_skill->hide();
                     }
-                    else if(is_skill_depends_selected(cur_skill) == 0)
-                    {
-                        cur_skill->state = UNSELECTED;
-                        cur_skill->repaint();
-                    }
                     else
                     {
-                        qDebug() << "Где я?" << cur_skill->index;
+                        short is_skill_depends_selected_val = is_skill_depends_selected(cur_skill);
+                        if(is_skill_depends_selected_val == 0)
+                        {
+                            cur_skill->state = UNSELECTED;
+                            cur_skill->repaint();
+                        }
+                        else if(is_skill_depends_selected_val == HIDDEN)
+                        {
+                            cur_skill->state = HIDDEN;
+                            cur_skill->hide();
+                        }
+                        else
+                        {
+                            qDebug() << "Где я?" << cur_skill->index;
+                        }
                     }
                 }
             }
         }
+    }
+    //! Проверка всех центральных скиллов
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        short is_skill_depends_selected_val = is_skill_depends_selected(cur_skill);
+        if(is_skill_depends_selected_val == 0)
+        {
+            cur_skill->state = UNSELECTED;
+        }
+        else if(is_skill_depends_selected_val == HIDDEN)
+        {
+            cur_skill->state = HIDDEN;
+            cur_skill->hide();
+        }
+        cur_skill->repaint();
     }
 }
 
 void Selection::reset_skills_and_hide_unavailable_skills()
 {
     Skill* cur_skill;
+    //! Проверка всех секторных скилов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -455,21 +599,48 @@ void Selection::reset_skills_and_hide_unavailable_skills()
             }
         }
     }
+    //! Проверка всех центральных скиллов
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        short is_skill_depends_selected_val = is_skill_depends_selected(cur_skill);
+        if(is_skill_depends_selected_val == 0 || is_skill_depends_selected_val == HIDDEN)
+        {
+            cur_skill->state = HIDDEN;
+            cur_skill->hide();
+        }
+        else
+        {
+            cur_skill->state = NONE;
+            cur_skill->show();
+        }
+        cur_skill->repaint();
+    }
 }
 
 //! Проверка все ли зависимые скиллы уже выбраны
-int Selection::is_skill_depends_selected(Skill *skill)
+short Selection::is_skill_depends_selected(Skill *skill)
 {
     if(skill->state != SELECTED)
         return 0;
+    if(skill->state == HIDDEN)
+    {
+        return HIDDEN;
+    }
+    bool all_depends_hidden = true;
     for(int s = 0; s < skill->depends.size(); s++)
     {
         Skill* related_skill = skill->depends[s];
         if(skill->depend_type == AND)
         {
-            if(is_skill_depends_selected(related_skill) == 0)
+            short is_skill_depends_selected_val = is_skill_depends_selected(related_skill);
+            if(is_skill_depends_selected_val == 0)
             {
                 return 0;
+            }
+            else if(is_skill_depends_selected_val == HIDDEN)
+            {
+                return HIDDEN;
             }
             else
             {
@@ -485,7 +656,13 @@ int Selection::is_skill_depends_selected(Skill *skill)
         }
         else if(skill->depend_type == OR)
         {
-            if(is_skill_depends_selected(related_skill) == 0)
+            short is_skill_depends_selected_val = is_skill_depends_selected(related_skill);
+            if(is_skill_depends_selected_val == 0)
+            {
+                all_depends_hidden = false;
+                continue;
+            }
+            else if(is_skill_depends_selected_val == HIDDEN)
             {
                 continue;
             }
@@ -495,6 +672,8 @@ int Selection::is_skill_depends_selected(Skill *skill)
             }
         }
     }
+    if(all_depends_hidden && skill->depends.size() > 0)
+        return HIDDEN;
     return 1;
 }
 
@@ -514,7 +693,7 @@ void Selection::count_selected_skills_in_sectors()
     reset_active_sectors();
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -539,9 +718,20 @@ void Selection::count_selected_skills_in_sectors()
 void Selection::calculate_scores()
 {
     int result = 0;
+    //! Проходимся по всем секторам
     for(int num_of_active_skills : num_of_skills_in_sector_active)
     {
         result += num_of_active_skills;
+    }
+    //! Проходимся по всем цетральным скиллам
+    Skill* cur_skill;
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        if(cur_skill->state == SELECTED)
+        {
+            result++;
+        }
     }
     emit set_scores_signal(result);
 }
@@ -612,9 +802,10 @@ void Selection::reset_active_sectors()
 void Selection::reset_hidden_skill()
 {
     Skill* cur_skill;
+    //! Для всех секторных скиллов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
             Skill** cur_circle_ptr;
@@ -634,6 +825,16 @@ void Selection::reset_hidden_skill()
                     cur_skill->show();
                 }
             }
+        }
+    }
+    //! Для всех центральных скиллов
+    for(int s = 0; s < 4; s++)
+    {
+        cur_skill = page_skills_data->center_skills[s];
+        if(cur_skill->state == HIDDEN)
+        {
+            cur_skill->state = NONE;
+            cur_skill->show();
         }
     }
 }

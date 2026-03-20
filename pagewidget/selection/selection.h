@@ -14,7 +14,7 @@ class Selection : public QObject
 {
     Q_OBJECT
 public:
-    Selection(sector_data_t* sector_ptrs[]);
+    Selection(page_skills_data_t* page_skills_data);
     int state_of_selection_mode = 0;
     void make_dependencies();
     void reset_skills_and_hide_unavailable_skills();
@@ -30,16 +30,21 @@ signals:
     void set_page_skills_selected_0_in_header_selection();
 
 private:
-    sector_data_t* sector_ptrs[12];
+    page_skills_data_t* page_skills_data;
 
     int num_of_available_basic_skills[12];
     int num_of_available_but_not_used_basic_skills[12];
     int num_of_skills_in_sector_active[12];
 
+    void make_dependencies_regular_skills();
+    void make_dependencies_center_skills();
     int parse_depend_type(Skill* skill);
     QVector<Skill*> parse_depends(Skill* skill);
     void add_skill_in_list(QString* cur_string_index, QVector<Skill *>* depends_list);
     Skill* find_skill_ptr_by_index(int index);
+    Skill* find_regular_skill_ptr_by_index(int index);
+    Skill* find_center_skill_ptr_by_index(int index);
+
 
     void select_dependencies(Skill* selected_skill);
     void unselect_dependens_skills(Skill* selected_skill);
@@ -48,7 +53,7 @@ private:
     void unselect_depends_base_circle_skills(int skill_n, int sector_n);
     void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i);
     void hide_of_unselect_unavailable_skills();
-    int  is_skill_depends_selected(Skill* skill);
+    short  is_skill_depends_selected(Skill* skill);
     void count_available_but_not_used_basic_skills_in_sectors();
     void count_selected_skills_in_sectors();
     void calculate_scores();
@@ -59,6 +64,8 @@ private:
     void reset_hidden_skill();
     void reset_not_used_basic_skills();
     void select_first_header_skill_from_page_selection();
+
+    void select_dependencies_center_skill(Skill* selected_skill);
 
     void debug_num_of_available_basic_skills();
 };

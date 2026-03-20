@@ -39,8 +39,7 @@ private:
     QString** segment_colors;
 
     circle_skill_data_t circle_skills;
-    sector_data_t* sector_ptrs[12];
-    QMap<QString, QVector<Skill*>> class_skills;
+    page_skills_data_t* page_skills_data;
 
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
 

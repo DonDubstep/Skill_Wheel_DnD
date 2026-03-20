@@ -8,7 +8,7 @@ PageWidget::PageWidget(int page_number, QWidget *parent) : QWidget(parent)
     installEventFilter(this);
     init_background_colors();
     init_sector_pointers();
-    selection = new Selection(sector_ptrs);
+    selection = new Selection(page_skills_data);
     read_json();
     selection->make_dependencies();
     selection->reset_skills_and_hide_unavailable_skills();
@@ -66,9 +66,10 @@ void PageWidget::init_background_colors()
 
 void PageWidget::init_sector_pointers()
 {
+    page_skills_data = new page_skills_data_t();
     for(int i = 0; i < 12; i++)
     {
-        sector_ptrs[i] = &circle_skills.magic_of_chaos + i;
+        page_skills_data->sector_ptrs[i] = &circle_skills.magic_of_chaos + i;
     }
 }
 
@@ -92,7 +93,7 @@ void PageWidget::read_json()
         QString cur_sector = sector_names[sector_i];
         QJsonObject sector_obj = root[cur_sector].toObject();
 
-        sector_data_t* cur_sector_ptr = sector_ptrs[sector_i];
+        sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
 
         for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
         {
@@ -109,6 +110,7 @@ void PageWidget::read_json()
                 Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
                 cur_skill->index = index;
                 cur_skill->parsed_depends = depends;
+                cur_skill->skill_type = SECTOR_SKILL;
 
                 connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
                 switch (circle_i)
@@ -118,28 +120,34 @@ void PageWidget::read_json()
                 case 2: cur_sector_ptr->circle_2[i] = cur_skill;    break;
                 case 3: cur_sector_ptr->circle_3[i] = cur_skill;    break;
                 }
-
             }
         }
     }
     QJsonObject center_skills_obj = root["Center_skills"].toObject();
     for(int page_i = 0; page_i < json_pages.size(); page_i++)
     {
+        if(page_i != this->page_number)
+            continue;
         QString page_name = json_pages[page_i];
         const QJsonArray page_arr = center_skills_obj[page_name].toArray();
-        for(int i = 0; i < 4; i++)
+        for(int s = 0; s < 4; s++)
         {
-            QJsonObject cur_skill_data = page_arr[i].toObject();
+            QJsonObject cur_skill_data = page_arr[s].toObject();
             title = cur_skill_data["title"].toString();
             description = cur_skill_data["description"].toString();
             icon_path = cur_skill_data["icon_path"].toString();
+            index = static_cast<short>(cur_skill_data["index"].toInt());
+            depends = cur_skill_data["depends"].toString();
+
             Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
+            cur_skill->index = index;
+            cur_skill->parsed_depends = depends;
+            cur_skill->skill_type = CENTER_SKILL;
             connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
-            cur_skill->hide();
-            class_skills[page_name].append(cur_skill);
+            cur_skill->hide(); //@fixme Неправильно, что они добавляются на все страницы
+            page_skills_data->center_skills[s] = cur_skill;
         }
     }
-
     file.close();
 }
 
@@ -256,7 +264,7 @@ void PageWidget::paint_skills()
         int start_base_icon_offset = 5;
         for(int seg = 0; seg < 360/SEGMENT_ANGLE; seg++)
         {
-            sector_data_t* cur_sector_ptr = sector_ptrs[seg];
+            sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[seg];
             int current_angle;
             if (circle == NUM_OF_CIRCLES - 1)
             {
@@ -315,7 +323,7 @@ void PageWidget::paint_center_skills()
     QString class_name = json_pages[page_number];
     for(int s = 0; s < 3; s++)
     {
-        cur_skill = class_skills[class_name][s];
+        cur_skill = page_skills_data->center_skills[s];
         cur_skill->show(); //@Fixme
         x = static_cast<int>(centerX + radius * cos(angle * M_PI / 180)) - skill_size / 2;
         y = static_cast<int>(centerY - radius * sin(angle * M_PI / 180)) - skill_size / 2;
@@ -334,7 +342,7 @@ void PageWidget::paint_center_skills()
         }
         angle += ANGLE_STEP;
     }
-    cur_skill = class_skills[class_name][3];
+    cur_skill = page_skills_data->center_skills[3];
     cur_skill->show(); //@Fixme
     x = centerX - skill_size / 2;
     y = centerY - skill_size / 2;
