@@ -144,7 +144,6 @@ void PageWidget::read_json()
             cur_skill->parsed_depends = depends;
             cur_skill->skill_type = CENTER_SKILL;
             connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
-            cur_skill->hide(); //@fixme Неправильно, что они добавляются на все страницы
             page_skills_data->center_skills[s] = cur_skill;
         }
     }
@@ -324,7 +323,6 @@ void PageWidget::paint_center_skills()
     for(int s = 0; s < 3; s++)
     {
         cur_skill = page_skills_data->center_skills[s];
-        cur_skill->show(); //@Fixme
         x = static_cast<int>(centerX + radius * cos(angle * M_PI / 180)) - skill_size / 2;
         y = static_cast<int>(centerY - radius * sin(angle * M_PI / 180)) - skill_size / 2;
         if(cur_skill->is_changed_size == 0)
@@ -343,7 +341,6 @@ void PageWidget::paint_center_skills()
         angle += ANGLE_STEP;
     }
     cur_skill = page_skills_data->center_skills[3];
-    cur_skill->show(); //@Fixme
     x = centerX - skill_size / 2;
     y = centerY - skill_size / 2;
     if(cur_skill->is_changed_size == 0)

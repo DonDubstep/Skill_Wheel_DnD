@@ -51,13 +51,15 @@ private:
     int  check_is_there_still_an_active_skill(Skill* related_active_skill_should_be_unselect, Skill* cur_skill);
     void select_depends_base_circle_skills(int skill_n, int sector_n);
     void unselect_depends_base_circle_skills(int skill_n, int sector_n);
-    void find_skill_in_struct(Skill* selected_skill, sector_data_t** ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i);
+    void find_skill_in_struct(Skill *selected_skill, int* ret_sector_n, sector_data_t **ret_sector,  int* ret_circle_n, int* ret_skill_i);
     void hide_of_unselect_unavailable_skills();
     short  is_skill_depends_selected(Skill* skill);
     void count_available_but_not_used_basic_skills_in_sectors();
     void count_selected_skills_in_sectors();
     void calculate_scores();
     int  find_minimum_required_base_skills(Skill* skill);
+    int is_center_skill_available(Skill *skill);
+    QMap<int, int> find_minimum_required_base_skills_for_center_skill(Skill* skill);
     int  calculate_num_of_selected_sectors();
     void reset_sector_base();
     void reset_active_sectors();

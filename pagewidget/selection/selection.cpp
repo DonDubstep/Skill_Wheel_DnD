@@ -194,7 +194,7 @@ void Selection::select_dependencies(Skill* selected_skill)
 {
     sector_data_t *sector;
     int sector_n = 0, circle_n = 0, skill_n = 0;
-    find_skill_in_struct(selected_skill, &sector, &sector_n, &circle_n, &skill_n);
+    find_skill_in_struct(selected_skill, &sector_n, &sector, &circle_n, &skill_n);
     if(selected_skill->state == SELECTED)
     {
         if(circle_n != BASE_CIRCLE)
@@ -452,7 +452,7 @@ void Selection::unselect_depends_base_circle_skills(int skill_n, int sector_n)
     }
 }
 
-void Selection::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_sector, int* ret_sector_n, int* ret_circle_n, int* ret_skill_i)
+void Selection::find_skill_in_struct(Skill *selected_skill, int* ret_sector_n, sector_data_t **ret_sector = nullptr,  int* ret_circle_n = nullptr, int* ret_skill_i = nullptr)
 {
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -471,10 +471,13 @@ void Selection::find_skill_in_struct(Skill *selected_skill, sector_data_t **ret_
             {
                 if(cur_circle_ptr[s] == selected_skill)
                 {
-                    *ret_sector = cur_sector_ptr;
                     *ret_sector_n = sector_i;
-                    *ret_circle_n = circle_i;
-                    *ret_skill_i = s;
+                    if(ret_sector)
+                        *ret_sector = cur_sector_ptr;
+                    if(ret_circle_n)
+                        *ret_circle_n = circle_i;
+                    if(ret_skill_i)
+                        *ret_skill_i = s;
                     return;
                 }
             }
@@ -603,18 +606,11 @@ void Selection::reset_skills_and_hide_unavailable_skills()
     for(int s = 0; s < 4; s++)
     {
         cur_skill = page_skills_data->center_skills[s];
-        short is_skill_depends_selected_val = is_skill_depends_selected(cur_skill);
-        if(is_skill_depends_selected_val == 0 || is_skill_depends_selected_val == HIDDEN)
+        if(!is_center_skill_available(cur_skill))
         {
             cur_skill->state = HIDDEN;
             cur_skill->hide();
         }
-        else
-        {
-            cur_skill->state = NONE;
-            cur_skill->show();
-        }
-        cur_skill->repaint();
     }
 }
 
@@ -675,6 +671,99 @@ short Selection::is_skill_depends_selected(Skill *skill)
     if(all_depends_hidden && skill->depends.size() > 0)
         return HIDDEN;
     return 1;
+}
+
+int Selection::is_center_skill_available(Skill *skill)
+{
+    if(skill->skill_type == CENTER_SKILL && skill->depends.size() == 0)
+        return 1;
+    QMap<int, int> required_base_skill_in_sector_map = find_minimum_required_base_skills_for_center_skill(skill);
+    qDebug() << "skill = " << skill->index << "num = "<< required_base_skill_in_sector_map[0];
+    for(int sector : required_base_skill_in_sector_map.keys())
+    {
+        if(required_base_skill_in_sector_map[sector] > 3)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Skill *skill)
+{
+    QMap<int, int> required_base_skill_in_sector_map;
+    for(int s = 0; s < 12; s++)
+    {
+        required_base_skill_in_sector_map[s] = 0;
+    }
+
+    int sector_n = 0;
+    int num_of_required_base_skills = 0;
+    QMap<int, int> required_base_skill_in_sector_for_related_skill_map;
+    if(skill->depend_type == AND)
+    {
+        for(Skill* related_skill : skill->depends)
+        {
+            for(int s = 0; s < 12; s++)
+            {
+                required_base_skill_in_sector_for_related_skill_map[s] = 0;
+            }
+
+            if(related_skill->skill_type == CENTER_SKILL)
+            {
+                required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
+                for(int s = 0; s < 12; s++)
+                {
+                    required_base_skill_in_sector_map[s] += required_base_skill_in_sector_for_related_skill_map[s];
+                }
+            }
+            else
+            {
+                num_of_required_base_skills = find_minimum_required_base_skills(related_skill);
+                find_skill_in_struct(related_skill, &sector_n);
+                required_base_skill_in_sector_map[sector_n] += num_of_required_base_skills;
+            }
+        }
+    }
+    else
+    {
+        int required_base_skill = 0;
+        int min_distance = -1;
+        for(Skill* related_skill : skill->depends)
+        {
+            if(related_skill->skill_type == CENTER_SKILL)
+            {
+                required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
+                for(int s = 0; s < 12; s++)
+                {
+                    required_base_skill_in_sector_map[s] += required_base_skill_in_sector_for_related_skill_map[s];
+                }
+            }
+            else
+            {
+                num_of_required_base_skills = find_minimum_required_base_skills(related_skill);
+                if(num_of_required_base_skills < min_distance || min_distance == -1)
+                {
+                    min_distance = required_base_skill;
+                    find_skill_in_struct(related_skill, &sector_n);
+                }
+            }
+        }
+        required_base_skill_in_sector_map[sector_n] += min_distance;
+    }
+    return required_base_skill_in_sector_map;
+}
+
+int Selection::calculate_num_of_selected_sectors()
+{
+    int counter_of_active_sectors = 0;
+    for(int i = 0; i < sector_names.size(); i++)
+    {
+        if(num_of_skills_in_sector_active[i] != 0)
+            counter_of_active_sectors++;
+    }
+    return counter_of_active_sectors;
 }
 
 void Selection::count_available_but_not_used_basic_skills_in_sectors()
@@ -769,17 +858,6 @@ int Selection::find_minimum_required_base_skills(Skill *skill)
         }
         return min_distance;
     }
-}
-
-int Selection::calculate_num_of_selected_sectors()
-{
-    int counter_of_active_sectors = 0;
-    for(int i = 0; i < sector_names.size(); i++)
-    {
-        if(num_of_skills_in_sector_active[i] != 0)
-            counter_of_active_sectors++;
-    }
-    return counter_of_active_sectors;
 }
 
 
