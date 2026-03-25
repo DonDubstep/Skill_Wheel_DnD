@@ -66,6 +66,7 @@ private:
     void reset_hidden_skill();
     void reset_not_used_basic_skills();
     void select_first_header_skill_from_page_selection();
+    void null_map(QMap<int, int>* map, int len);
 
     void select_dependencies_center_skill(Skill* selected_skill);
 

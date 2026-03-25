@@ -7,6 +7,7 @@ Selection::Selection(page_skills_data_t* page_skills_data)
 
     reset_sector_base();
     reset_active_sectors();
+    reset_not_used_basic_skills();
 }
 
 void Selection::make_dependencies()
@@ -546,7 +547,12 @@ void Selection::hide_of_unselect_unavailable_skills()
     {
         cur_skill = page_skills_data->center_skills[s];
         short is_skill_depends_selected_val = is_skill_depends_selected(cur_skill);
-        if(is_skill_depends_selected_val == 0)
+        if(!is_center_skill_available(cur_skill))
+        {
+            cur_skill->state = HIDDEN;
+            cur_skill->hide();
+        }
+        else if(is_skill_depends_selected_val == 0)
         {
             cur_skill->state = UNSELECTED;
         }
@@ -610,6 +616,15 @@ void Selection::reset_skills_and_hide_unavailable_skills()
         {
             cur_skill->state = HIDDEN;
             cur_skill->hide();
+        }
+        else
+        {
+            cur_skill->state = NONE;
+            if(cur_skill->isHidden())
+            {
+                cur_skill->show();
+            }
+            cur_skill->repaint();
         }
     }
 }
@@ -678,10 +693,9 @@ int Selection::is_center_skill_available(Skill *skill)
     if(skill->skill_type == CENTER_SKILL && skill->depends.size() == 0)
         return 1;
     QMap<int, int> required_base_skill_in_sector_map = find_minimum_required_base_skills_for_center_skill(skill);
-    qDebug() << "skill = " << skill->index << "num = "<< required_base_skill_in_sector_map[0];
     for(int sector : required_base_skill_in_sector_map.keys())
     {
-        if(required_base_skill_in_sector_map[sector] > 3)
+        if(required_base_skill_in_sector_map[sector] > (num_of_available_basic_skills[sector] + num_of_available_but_not_used_basic_skills[sector]))
         {
             return 0;
         }
@@ -693,10 +707,7 @@ int Selection::is_center_skill_available(Skill *skill)
 QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Skill *skill)
 {
     QMap<int, int> required_base_skill_in_sector_map;
-    for(int s = 0; s < 12; s++)
-    {
-        required_base_skill_in_sector_map[s] = 0;
-    }
+    null_map(&required_base_skill_in_sector_map, 12);
 
     int sector_n = 0;
     int num_of_required_base_skills = 0;
@@ -705,11 +716,11 @@ QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Ski
     {
         for(Skill* related_skill : skill->depends)
         {
-            for(int s = 0; s < 12; s++)
+            if(related_skill->state == SELECTED)
             {
-                required_base_skill_in_sector_for_related_skill_map[s] = 0;
+                continue;
             }
-
+            null_map(&required_base_skill_in_sector_for_related_skill_map, 12);
             if(related_skill->skill_type == CENTER_SKILL)
             {
                 required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
@@ -732,6 +743,11 @@ QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Ski
         int min_distance = -1;
         for(Skill* related_skill : skill->depends)
         {
+            if(related_skill->state == SELECTED)
+            {
+                null_map(&required_base_skill_in_sector_map, 12);
+                return required_base_skill_in_sector_map;
+            }
             if(related_skill->skill_type == CENTER_SKILL)
             {
                 required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
@@ -931,6 +947,14 @@ void Selection::select_first_header_skill_from_page_selection()
     {
         emit activate_first_header_skill();
         state_of_selection_mode = 1;
+    }
+}
+
+void Selection::null_map(QMap<int, int>* map, int len)
+{
+    for(int s = 0; s < len; s++)
+    {
+        (*map)[s] = 0;
     }
 }
 
