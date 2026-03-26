@@ -49,11 +49,17 @@ void HeaderSelection::select_header_dependencies(Skill *selected_skill)
     }
     else
     {
-        if(page_skills_selected)
+        int until_skill_index;
+        // Если селекция страницы включена, то запрещаем анселектить первый скилл
+        if(page_skills_selected && selected_skill_index == 0)
         {
-            selected_skill_index += 1;
+            until_skill_index = selected_skill_index+1;
         }
-        for(int i = (*basic_skills)[cur_page].size()-1; i >= selected_skill_index; i--)
+        else
+        {
+            until_skill_index = selected_skill_index;
+        }
+        for(int i = (*basic_skills)[cur_page].size()-1; i >= until_skill_index; i--)
         {
             (*basic_skills)[cur_page][i]->state = UNSELECTED;
         }
