@@ -106,7 +106,7 @@ void PageWidget::read_json()
                 description = cur_skill_data["description"].toString();
                 icon_path = cur_skill_data["icon_path"].toString();
                 index = static_cast<short>(cur_skill_data["index"].toInt());
-                depends = cur_skill_data["depends"].toString();
+                depends = cur_skill_data["dependencies"].toString();
                 Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
                 cur_skill->index = index;
                 cur_skill->parsed_depends = depends;
@@ -137,7 +137,7 @@ void PageWidget::read_json()
             description = cur_skill_data["description"].toString();
             icon_path = cur_skill_data["icon_path"].toString();
             index = static_cast<short>(cur_skill_data["index"].toInt());
-            depends = cur_skill_data["depends"].toString();
+            depends = cur_skill_data["dependencies"].toString();
 
             Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
             cur_skill->index = index;
