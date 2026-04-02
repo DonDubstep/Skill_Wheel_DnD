@@ -23,9 +23,11 @@ MainWindow::~MainWindow()
 //! Добавляет страницы в виджет QTabWidget
 void MainWindow::addTabs()
 {
+    PageWidget* pages[NUM_OF_PAGES];
     for(int i = 0; i < NUM_OF_PAGES; i++)
     {
         PageWidget *page = new PageWidget(i);
+        pages[i] = page;
         ui->tabWidget->addTab(page, QString::number(i+1));
         connect(page->selection, SIGNAL(set_scores_signal(int)), ui->header_widget, SLOT(set_scores_page(int)));
         connect(page->selection, SIGNAL(null_scores_signal()), ui->header_widget, SLOT(null_scores()));
@@ -34,6 +36,12 @@ void MainWindow::addTabs()
         connect(page->selection, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
         connect(ui->header_widget, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
     }
+    preset_saver = new PresetHandler(pages, &ui->header_widget->basic_skills);
+
+    QAction *saveAction = new QAction("Save", this);
+    saveAction->setShortcut(QKeySequence::Save);
+    this->addAction(saveAction);
+    connect(saveAction, SIGNAL(triggered()), preset_saver, SLOT(save_preset()));
 }
 
 //! Функция смены вкладки для перехода между классами

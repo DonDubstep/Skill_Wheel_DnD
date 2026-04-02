@@ -17,6 +17,7 @@ class PageWidget : public QWidget
     Q_OBJECT
 public:
     PageWidget(int page_number, QWidget *parent = nullptr);
+    page_skills_data_t* get_page_skill_data();
     Selection* selection;
 
 signals:

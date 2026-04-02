@@ -23,6 +23,7 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 void HeaderWidget::read_json()
 {
     QString icon_path, title, description;
+    int index;
     QFile file(QCoreApplication::applicationDirPath() + "/src/data.json");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning("Не открыть файл");
@@ -40,7 +41,9 @@ void HeaderWidget::read_json()
             icon_path = PIC_PATH + cur_obj["icon_path"].toString();
             title = cur_obj["title"].toString();
             description = cur_obj["description"].toString();
+            index = cur_obj["index"].toInt();
             Skill* cur_skill = new Skill(this, icon_path, title, description);
+            cur_skill->index = index;
             cur_skill->hide();
             QString class_name = pages[class_i];
             connect(cur_skill, SIGNAL(icon_selected(Skill*)), header_selection, SLOT(selection_header_on(Skill*)));

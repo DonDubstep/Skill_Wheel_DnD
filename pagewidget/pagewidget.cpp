@@ -357,3 +357,8 @@ void PageWidget::paint_center_skills()
         cur_skill->description->raise();
     }
 }
+
+page_skills_data_t *PageWidget::get_page_skill_data()
+{
+    return this->page_skills_data;
+}

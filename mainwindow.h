@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <pagewidget.h>
 #include "headerwidget.h"
+#include "preset_handler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    PresetHandler* preset_saver;
 
 private slots:
     void change_page(int index);
