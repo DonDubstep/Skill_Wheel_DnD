@@ -14,7 +14,7 @@ public slots:
     void save_preset();
     void get_active_skills();
 //    void create_record();
-//    void save_to_file();
+    void save_to_file();
 
     void print_active_skills();
 
@@ -23,6 +23,9 @@ private:
     QMap<QString, QVector<Skill*>> *basic_skills;
     QVector<int> active_page_skills[NUM_OF_PAGES];
     QVector<int> active_basic_skills[NUM_OF_PAGES];
+
+    QString make_active_skills_to_str(QVector<int>* active_basic_skills);
+    QString createNextSaveFile();
 };
 
 #endif // PRESETSAVER_H
