@@ -362,3 +362,13 @@ page_skills_data_t *PageWidget::get_page_skill_data()
 {
     return this->page_skills_data;
 }
+
+void PageWidget::activate_read_page_skills(QVector<int> *active_page_skills)
+{
+
+}
+
+void PageWidget::activate_read_basic_skills(QVector<int> *active_basic_skills)
+{
+
+}

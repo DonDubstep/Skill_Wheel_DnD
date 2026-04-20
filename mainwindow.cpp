@@ -23,7 +23,6 @@ MainWindow::~MainWindow()
 //! Добавляет страницы в виджет QTabWidget
 void MainWindow::addTabs()
 {
-    PageWidget* pages[NUM_OF_PAGES];
     for(int i = 0; i < NUM_OF_PAGES; i++)
     {
         PageWidget *page = new PageWidget(i);
@@ -36,12 +35,26 @@ void MainWindow::addTabs()
         connect(page->selection, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
         connect(ui->header_widget, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
     }
-    preset_saver = new PresetHandler(pages, &ui->header_widget->basic_skills);
+    preset_handler = new PresetHandler(pages, &ui->header_widget->basic_skills);
 
-    QAction *saveAction = new QAction("Save", this);
+    QAction* saveAction = new QAction("Save", this);
+    QAction* openAction = new QAction("Open", this);
     saveAction->setShortcut(QKeySequence::Save);
+    openAction->setShortcut(QKeySequence::Open);
     this->addAction(saveAction);
-    connect(saveAction, SIGNAL(triggered()), preset_saver, SLOT(save_preset()));
+    this->addAction(openAction);
+    connect(saveAction, SIGNAL(triggered()), preset_handler, SLOT(save_preset()));
+    connect(openAction, SIGNAL(triggered()), preset_handler, SLOT(open_preset()));
+    connect(preset_handler, SIGNAL(activate_read_skills(QVector<int>*, QVector<int>*)), this, SLOT(activate_skills_in_pages(QVector<int>*,QVector<int>*)));
+}
+
+void MainWindow::activate_skills_in_pages(QVector<int>* active_basic_skills, QVector<int>* active_page_skills)
+{
+    for(int p = 0; p < NUM_OF_PAGES; p++)
+    {
+        pages[p]->activate_read_basic_skills(&active_basic_skills[p]);
+        pages[p]->activate_read_page_skills(&active_page_skills[p]);
+    }
 }
 
 //! Функция смены вкладки для перехода между классами

@@ -23,11 +23,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    PresetHandler* preset_saver;
+    PresetHandler* preset_handler;
+    PageWidget* pages[NUM_OF_PAGES];
 
 private slots:
     void change_page(int index);
     void addTabs();
+    void activate_skills_in_pages(QVector<int>* active_basic_skills, QVector<int>* active_page_skills);
 
 
 };

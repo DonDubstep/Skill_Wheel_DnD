@@ -1,5 +1,6 @@
  #include "preset_handler.h"
 #include <QDebug>
+#include <QFileDialog>
 #include <QDir>
 
 PresetHandler::PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> *basic_skills)
@@ -114,6 +115,12 @@ void PresetHandler::print_active_skills()
     }
 }
 
+void PresetHandler::open_preset()
+{
+    read_save();
+    activate_saved_skills();
+}
+
 //! Формируем строку из массива для записи в save-файл
 QString PresetHandler::make_active_skills_to_str(QVector<int> *active_skills)
 {
@@ -170,4 +177,57 @@ QString PresetHandler::createNextSaveFile()
         qDebug() << "Ошибка создания файла:" << filePath;
         return QString();
     }
+}
+
+void PresetHandler::read_save()
+{
+    QString file_name = QFileDialog::getOpenFileName(
+                nullptr,
+                "Выберите сохранённый пресет",
+                "",
+                "JSON files (*.json)"
+                );
+
+    if(file_name.isEmpty())
+        return;
+
+    QFile file(file_name);
+    if(!file.open(QIODevice::ReadOnly))
+        return;
+
+    QByteArray data = file.readAll();
+    file.close();
+    QJsonParseError parse_error;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parse_error);
+
+    if(parse_error.error != QJsonParseError::NoError || !doc.isObject())
+        return;
+
+    QJsonObject root = doc.object();
+    for(int p = 0; p < NUM_OF_PAGES; p++)
+    {
+        QString class_name = json_pages[p];
+        QJsonObject class_obj = root[class_name].toObject();
+        QString cur_basic_skills = class_obj["basic_skills"].toString();
+        QString cur_page_skills  = class_obj["page_skills"].toString();
+        read_basic_skills[p] = parse_skills_from_str(cur_basic_skills);
+        read_page_skills[p] = parse_skills_from_str(cur_page_skills);
+    }
+}
+
+void PresetHandler::activate_saved_skills()
+{
+    emit activate_read_skills(read_basic_skills, read_page_skills);
+}
+
+
+QVector<int> PresetHandler::parse_skills_from_str(QString active_skills_str)
+{
+    QVector<int> result;
+    QStringList active_skills_strlist = active_skills_str.split(" ");
+    for(QString skill_index_str : active_skills_strlist)
+    {
+        result.append(skill_index_str.toInt());
+    }
+    return result;
 }
