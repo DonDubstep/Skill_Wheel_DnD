@@ -19,8 +19,6 @@ public:
     PageWidget(int page_number, QWidget *parent = nullptr);
     page_skills_data_t* get_page_skill_data();
     Selection* selection;
-    void activate_read_page_skills(QVector<int>* active_page_skills);
-    void activate_read_basic_skills(QVector<int>* active_basic_skills);
 
 signals:
     void selection_off();

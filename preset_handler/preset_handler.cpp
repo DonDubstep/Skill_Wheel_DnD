@@ -59,7 +59,7 @@ void PresetHandler::get_active_skills()
         {
             if((*basic_skills)[class_name][i]->state == SELECTED)
             {
-                index = (*basic_skills)[class_name][i]->index;
+                index = i;
                 active_basic_skills[page_i].append(index);
             }
         }

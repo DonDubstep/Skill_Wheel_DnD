@@ -1,10 +1,11 @@
 #include "header_selection.h"
+#include <QDebug>
 
 HeaderSelection::HeaderSelection(QMap<QString, QVector<Skill*>>* basic_skills)
 {
     this->basic_skills = basic_skills;
 }
-#include <QDebug>
+
 void HeaderSelection::selection_header_on(Skill * selected_skill)
 {
     select_header_dependencies(selected_skill);
@@ -101,4 +102,22 @@ void HeaderSelection::calculate_scores()
         }
     }
     emit set_header_scores(count);
+}
+
+void HeaderSelection::activate_read_basic_skills(QVector<int> *active_basic_skills)
+{
+    // @nextfix Нужно исправить. селектится лишь на текцщей странице, а надо на всех
+    QVector<int>* active_basic_skills_in_cur_page;
+    for(int page_i = 0; page_i < active_basic_skills->size(); page_i++)
+    {
+        active_basic_skills_in_cur_page = &active_basic_skills[page_i];
+        QString cur_page_name = pages[page_i];
+        for(int s = 0; s < active_basic_skills_in_cur_page->size(); s++)
+        {
+            int cur_index = active_basic_skills_in_cur_page->at(s);
+            (*basic_skills)[cur_page_name][cur_index]->state = SELECTED;
+        }
+    }
+    gray_unselected_header_skills();
+    calculate_scores();
 }

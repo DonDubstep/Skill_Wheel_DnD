@@ -18,6 +18,7 @@ public:
     int state_of_selection_mode = 0;
     void make_dependencies();
     void reset_skills_and_hide_unavailable_skills();
+    void activate_read_page_skills(QVector<int>* active_page_skills);
 
 public slots:
     void selection_mode_on(Skill*);

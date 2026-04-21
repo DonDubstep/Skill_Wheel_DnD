@@ -11,8 +11,11 @@ public:
     HeaderSelection(QMap<QString, QVector<Skill*>>* basic_skills);
     QMap<QString, QVector<Skill*>> *basic_skills;
     QString cur_page;
-    void set_cur_page(int cur_page);
     int page_skills_selected = 0;
+
+    void set_cur_page(int cur_page);
+    void activate_read_basic_skills(QVector<int> *active_basic_skills);
+
 public slots:
     void selection_header_on(Skill*);
     void selection_header_off();

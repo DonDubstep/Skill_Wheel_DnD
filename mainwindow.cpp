@@ -52,9 +52,9 @@ void MainWindow::activate_skills_in_pages(QVector<int>* active_basic_skills, QVe
 {
     for(int p = 0; p < NUM_OF_PAGES; p++)
     {
-        pages[p]->activate_read_basic_skills(&active_basic_skills[p]);
-        pages[p]->activate_read_page_skills(&active_page_skills[p]);
+        pages[p]->selection->activate_read_page_skills(&active_page_skills[p]);
     }
+    ui->header_widget->header_selection->activate_read_basic_skills(active_basic_skills);
 }
 
 //! Функция смены вкладки для перехода между классами

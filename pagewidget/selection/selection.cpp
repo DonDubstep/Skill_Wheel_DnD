@@ -967,7 +967,23 @@ void Selection::debug_num_of_available_basic_skills()
 }
 
 
-////! Делает все скиллы цветными
+void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
+{
+    // @nextfix Надо доделать, а то на невыбранных страницах выбираются нулевые скиллы, а на выбранной скрыты не те скиллы
+    selection_mode_off();
+    for(int s = 0; s < active_page_skills->size(); s++)
+    {
+        Skill* cur_skill = find_skill_ptr_by_index(active_page_skills->at(s));
+        cur_skill->state = SELECTED;
+    }
+    reset_hidden_skill();
+    count_selected_skills_in_sectors();
+    count_available_but_not_used_basic_skills_in_sectors();
+    hide_of_unselect_unavailable_skills();
+    calculate_scores();
+}
+
+//! Делает все скиллы цветными
 void Selection::selection_mode_off()
 {
     reset_sector_base();
