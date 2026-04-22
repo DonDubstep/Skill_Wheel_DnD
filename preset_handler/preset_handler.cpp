@@ -224,10 +224,13 @@ void PresetHandler::activate_saved_skills()
 QVector<int> PresetHandler::parse_skills_from_str(QString active_skills_str)
 {
     QVector<int> result;
-    QStringList active_skills_strlist = active_skills_str.split(" ");
-    for(QString skill_index_str : active_skills_strlist)
+    if(active_skills_str != "")
     {
-        result.append(skill_index_str.toInt());
+        QStringList active_skills_strlist = active_skills_str.split(" ");
+        for(QString skill_index_str : active_skills_strlist)
+        {
+            result.append(skill_index_str.toInt());
+        }
     }
     return result;
 }

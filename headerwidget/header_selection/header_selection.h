@@ -31,6 +31,7 @@ private:
     void gray_unselected_header_skills();
     int find_skill_in_header(Skill* selected_skill);
     void calculate_scores();
+    bool is_skill_in_read_skills(int index, QVector<int>* active_basic_skills_in_cur_page);
 
 };
 

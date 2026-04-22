@@ -104,18 +104,34 @@ void HeaderSelection::calculate_scores()
     emit set_header_scores(count);
 }
 
+bool HeaderSelection::is_skill_in_read_skills(int index, QVector<int>* active_basic_skills_in_cur_page)
+{
+    for(int read_s = 0; read_s < active_basic_skills_in_cur_page->size(); read_s++)
+    {
+        if(active_basic_skills_in_cur_page->at(read_s) == index)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void HeaderSelection::activate_read_basic_skills(QVector<int> *active_basic_skills)
 {
-    // @nextfix Нужно исправить. селектится лишь на текцщей странице, а надо на всех
     QVector<int>* active_basic_skills_in_cur_page;
-    for(int page_i = 0; page_i < active_basic_skills->size(); page_i++)
+    for(int page_i = 0; page_i < pages.size(); page_i++)
     {
+        if(active_basic_skills[page_i].size() == 0)
+            continue;
         active_basic_skills_in_cur_page = &active_basic_skills[page_i];
         QString cur_page_name = pages[page_i];
-        for(int s = 0; s < active_basic_skills_in_cur_page->size(); s++)
+        for(int s = 0; s < 4; s++)
         {
-            int cur_index = active_basic_skills_in_cur_page->at(s);
-            (*basic_skills)[cur_page_name][cur_index]->state = SELECTED;
+            (*basic_skills)[cur_page_name][s]->state = UNSELECTED;
+            if(is_skill_in_read_skills(s, active_basic_skills_in_cur_page))
+            {
+                (*basic_skills)[cur_page_name][s]->state = SELECTED;
+            }
         }
     }
     gray_unselected_header_skills();
