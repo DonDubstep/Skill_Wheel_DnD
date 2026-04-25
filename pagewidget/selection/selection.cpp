@@ -127,10 +127,11 @@ Skill *Selection::find_skill_ptr_by_index(int index)
     return cur_skill;
 }
 
-
+//! Нахождение скилла на странице по индексу (не центрального)
 Skill *Selection::find_regular_skill_ptr_by_index(int index)
 {
     Skill* cur_skill;
+    short skill_type;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
         sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
@@ -139,16 +140,17 @@ Skill *Selection::find_regular_skill_ptr_by_index(int index)
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
-            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
-            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
-            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      skill_type = SECTOR_SKILL; break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      skill_type = SECTOR_SKILL; break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      skill_type = SECTOR_SKILL; break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   skill_type = BASE_SKILL;   break;
             }
             for(int s = 0; s < 3; s++)
             {
                 cur_skill = cur_circle_ptr[s];
                 if(cur_skill->index == index)
                 {
+                    cur_skill->skill_type = skill_type;
                     return cur_skill;
                 }
             }
@@ -157,6 +159,7 @@ Skill *Selection::find_regular_skill_ptr_by_index(int index)
     return nullptr;
 }
 
+//! Нахождение центрального скилла по индексу
 Skill *Selection::find_center_skill_ptr_by_index(int index)
 {
     Skill* cur_skill;
@@ -165,6 +168,7 @@ Skill *Selection::find_center_skill_ptr_by_index(int index)
         cur_skill = page_skills_data->center_skills[s];
         if(cur_skill->index == index)
         {
+            cur_skill->skill_type = CENTER_SKILL;
             return cur_skill;
         }
     }
@@ -789,7 +793,7 @@ void Selection::count_available_but_not_used_basic_skills_in_sectors()
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
         num_of_active_skills = 3 - num_of_available_basic_skills[sector_i];
-        num_of_available_but_not_used_basic_skills[sector_i] = num_of_active_skills*2 - num_of_skills_in_sector_active[sector_i] ;
+        num_of_available_but_not_used_basic_skills[sector_i] = num_of_active_skills*2 - num_of_skills_in_sector_active[sector_i];
     }
 }
 
@@ -966,21 +970,43 @@ void Selection::debug_num_of_available_basic_skills()
     }
 }
 
-
+//! Селекция прочитанных скиллов из пресета
+//! Сбрасываем селекцию, читаем индексы скиллов и сопоставляем с их типом (базовым, цетральным или остальными)
 void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
 {
-    // @nextfix Надо доделать, а то на невыбранных страницах выбираются нулевые скиллы, а на выбранной скрыты не те скиллы
     selection_mode_off();
-    for(int s = 0; s < active_page_skills->size(); s++)
+    sector_data_t *sector;
+    int sector_n = 0, circle_n = 0, skill_n = 0;
+    if(active_page_skills->size() != 0)
     {
-        Skill* cur_skill = find_skill_ptr_by_index(active_page_skills->at(s));
-        cur_skill->state = SELECTED;
+        for(int read_s = 0; read_s <  active_page_skills->size(); read_s++)
+        {
+            Skill* cur_skill = find_skill_ptr_by_index(active_page_skills->at(read_s));
+            find_skill_in_struct(cur_skill, &sector_n, &sector, &circle_n, &skill_n);
+            if(cur_skill->skill_type == SECTOR_SKILL)
+            {
+                cur_skill->state = SELECTED;
+                cur_skill->repaint();
+                if(num_of_available_but_not_used_basic_skills[sector_n] > 0)
+                {
+                    num_of_available_but_not_used_basic_skills[sector_n]--;
+                }
+            }
+            else if(cur_skill->skill_type == CENTER_SKILL)
+            {
+                cur_skill->state = SELECTED;
+                cur_skill->repaint();
+            }
+            else
+            {
+                select_depends_base_circle_skills(skill_n, sector_n);
+            }
+        }
+        reset_hidden_skill();
+        count_selected_skills_in_sectors();
+        hide_of_unselect_unavailable_skills();
+        calculate_scores();
     }
-    reset_hidden_skill();
-    count_selected_skills_in_sectors();
-    count_available_but_not_used_basic_skills_in_sectors();
-    hide_of_unselect_unavailable_skills();
-    calculate_scores();
 }
 
 //! Делает все скиллы цветными

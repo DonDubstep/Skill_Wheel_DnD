@@ -5,11 +5,11 @@
 #include <QPainter>
 #include <QKeyEvent>
 
-enum skill_type_t
+enum page_skill_type_t
 {
-    SECTOR_SKILL,
-    BASE_SKILL,
-    CENTER_SKILL
+    BASE_SKILL,         //! Базовый скилл (в маленьких кружочках на внешнем радиусе)
+    SECTOR_SKILL,       //! Основные скиллы страницы (на 1, 2 и 3 кругах)
+    CENTER_SKILL        //! Центральные скиллы (которые в центре, как ты понял)
 };
 
 //! Класс иконки навыка

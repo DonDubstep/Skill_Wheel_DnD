@@ -53,6 +53,16 @@ void PresetHandler::get_active_skills()
             }
         }
 
+        // Проверяем какие скиллы в центре активны
+        for(int s = 0; s < 4; s++)
+        {
+            cur_skill = page_skills_data[page_i]->center_skills[s];
+            if(cur_skill->state == SELECTED)
+            {
+                active_page_skills[page_i].append(cur_skill->index);
+            }
+        }
+
         // Проверяем, какие скиллы в заголовке активны
         class_name = pages[page_i];
         for(int i = 0; i < (*basic_skills)[class_name].size(); i++)
@@ -115,6 +125,7 @@ void PresetHandler::print_active_skills()
     }
 }
 
+//! Общая функция для открытия готовых пресетов
 void PresetHandler::open_preset()
 {
     read_save();
@@ -179,6 +190,7 @@ QString PresetHandler::createNextSaveFile()
     }
 }
 
+//! Чтение пресета из файла и формирование в 2 вектора
 void PresetHandler::read_save()
 {
     QString file_name = QFileDialog::getOpenFileName(
@@ -215,12 +227,14 @@ void PresetHandler::read_save()
     }
 }
 
+//! Передача сигнала для активации скиллов в хэдере и на странице
 void PresetHandler::activate_saved_skills()
 {
     emit activate_read_skills(read_basic_skills, read_page_skills);
 }
 
 
+//! Преобразование строки индексов в вектор int
 QVector<int> PresetHandler::parse_skills_from_str(QString active_skills_str)
 {
     QVector<int> result;
