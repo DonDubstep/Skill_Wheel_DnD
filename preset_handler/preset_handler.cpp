@@ -1,10 +1,11 @@
- #include "preset_handler.h"
+#include "preset_handler.h"
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
 
-PresetHandler::PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> *basic_skills)
+PresetHandler::PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> *basic_skills, QWidget* parent)
 {
+    this->parent = parent;
     for(int p = 0; p < NUM_OF_PAGES; p++)
     {
         this->page_skills_data[p] = pages[p]->get_page_skill_data();
@@ -12,11 +13,22 @@ PresetHandler::PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> 
     this->basic_skills = basic_skills;
 }
 
+//! Сохраняем пресет, автоматически генерируя имя
 //! Вызывается по событию "Ctrl+S"
 void PresetHandler::save_preset()
 {
     get_active_skills();
-    save_to_file();
+    QString filePath = createNextSaveFile();
+    save_to_file(filePath);
+}
+
+//! Сохраняем пресет, предоставляя пользователю ввести имя самостоятельно
+//! Вызывается по событию "Ctrl+Shift+S"
+void PresetHandler::save_as_preset()
+{
+    QString filePath = chose_save_file_name();
+    get_active_skills();
+    save_to_file(filePath);
 }
 
 //! Формирование вектора активных скиллов
@@ -77,7 +89,7 @@ void PresetHandler::get_active_skills()
 }
 
 //! Главная функция сохранения в файл
-void PresetHandler::save_to_file()
+void PresetHandler::save_to_file(QString filePath = "")
 {
     QJsonObject root_obj;
     for(int page_i = 0; page_i < NUM_OF_PAGES; page_i++)
@@ -91,11 +103,13 @@ void PresetHandler::save_to_file()
         root_obj[class_name] = class_obj;
     }
     QJsonDocument json_doc(root_obj);
-    QString file_path = createNextSaveFile();
-    QFile file(file_path);
-    if (!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "Ошибка создания файла:" << file_path;
+    QFile file(filePath);
+    const char* filePathChar = filePath.toLocal8Bit().data();
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        show_text_message(parent, 2, "Ошибка создания файла:", filePathChar);
     }
+    show_text_message(parent, 2, "Файл сохранён: ", filePathChar);
     file.write(json_doc.toJson((QJsonDocument::Indented)));
     file.close();
 }
@@ -175,28 +189,38 @@ QString PresetHandler::createNextSaveFile()
         dir.mkpath("src/saves");
     }
 
-    // Создаём и открываем файл
-    QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "Создан файл:" << filePath;
-        file.close();
-        return filePath;
-    }
-    else
-    {
-        qDebug() << "Ошибка создания файла:" << filePath;
-        return QString();
-    }
+    return filePath;
+}
+
+QString PresetHandler::chose_save_file_name()
+{
+    QString generated_file_name = createNextSaveFile();
+    QString filePath = QFileDialog::getSaveFileName(
+        nullptr,
+        "Выберите куда сохранить пресет",
+        generated_file_name,
+        "JSON files (*.json)"
+        );
+    if(filePath.isEmpty())
+        return "";
+
+    return filePath;
 }
 
 //! Чтение пресета из файла и формирование в 2 вектора
 void PresetHandler::read_save()
 {
+    // Создаём директорию если её нет
+    QDir dir;
+    if (!dir.exists("src/saves"))
+    {
+        dir.mkpath("src/saves");
+    }
+    // Выбираем файл
     QString file_name = QFileDialog::getOpenFileName(
                 nullptr,
                 "Выберите сохранённый пресет",
-                "",
+                "src/saves/",
                 "JSON files (*.json)"
                 );
 

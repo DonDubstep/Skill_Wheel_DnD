@@ -16,7 +16,7 @@ class PageWidget : public QWidget
 {
     Q_OBJECT
 public:
-    PageWidget(int page_number, QWidget *parent = nullptr);
+    PageWidget(int page_number, QWidget *parent);
     page_skills_data_t* get_page_skill_data();
     Selection* selection;
 
@@ -24,6 +24,7 @@ signals:
     void selection_off();
 
 private:
+    QWidget* parent;
     int page_number;
     int centerX;
     int centerY;

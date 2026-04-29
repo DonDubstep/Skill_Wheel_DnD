@@ -109,8 +109,35 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="open_action"/>
+    <addaction name="save_action"/>
+    <addaction name="save_as_action"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="open_action">
+   <property name="text">
+    <string>Открыть (Ctrl+O)</string>
+   </property>
+   <property name="font">
+    <font/>
+   </property>
+  </action>
+  <action name="save_action">
+   <property name="text">
+    <string>Сохранить(Ctrl+S)</string>
+   </property>
+  </action>
+  <action name="save_as_action">
+   <property name="text">
+    <string>Сохранить как(Ctrl+Shift+S)</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

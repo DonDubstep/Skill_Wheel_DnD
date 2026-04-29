@@ -25,7 +25,7 @@ void MainWindow::addTabs()
 {
     for(int i = 0; i < NUM_OF_PAGES; i++)
     {
-        PageWidget *page = new PageWidget(i);
+        PageWidget *page = new PageWidget(i, this);
         pages[i] = page;
         ui->tabWidget->addTab(page, QString::number(i+1));
         connect(page->selection, SIGNAL(set_scores_signal(int)), ui->header_widget, SLOT(set_scores_page(int)));
@@ -35,16 +35,23 @@ void MainWindow::addTabs()
         connect(page->selection, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
         connect(ui->header_widget, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
     }
-    preset_handler = new PresetHandler(pages, &ui->header_widget->basic_skills);
+    preset_handler = new PresetHandler(pages, &ui->header_widget->basic_skills,this);
 
-    QAction* saveAction = new QAction("Save", this);
     QAction* openAction = new QAction("Open", this);
-    saveAction->setShortcut(QKeySequence::Save);
+    QAction* saveAction = new QAction("Save", this);
+    QAction* saveAsAction = new QAction("SaveAs...", this);
     openAction->setShortcut(QKeySequence::Open);
-    this->addAction(saveAction);
+    saveAction->setShortcut(QKeySequence::Save);
+    saveAsAction->setShortcut(QKeySequence("Ctrl+Shift+S"));
     this->addAction(openAction);
-    connect(saveAction, SIGNAL(triggered()), preset_handler, SLOT(save_preset()));
+    this->addAction(saveAction);
+    this->addAction(saveAsAction);
     connect(openAction, SIGNAL(triggered()), preset_handler, SLOT(open_preset()));
+    connect(saveAction, SIGNAL(triggered()), preset_handler, SLOT(save_preset()));
+    connect(saveAsAction, SIGNAL(triggered()), preset_handler, SLOT(save_as_preset()));
+    connect(ui->open_action, SIGNAL(triggered()), preset_handler, SLOT(open_preset()));
+    connect(ui->save_action, SIGNAL(triggered()), preset_handler, SLOT(save_preset()));
+    connect(ui->save_as_action, SIGNAL(triggered()), preset_handler, SLOT(save_as_preset()));
     connect(preset_handler, SIGNAL(activate_read_skills(QVector<int>*, QVector<int>*)), this, SLOT(activate_skills_in_pages(QVector<int>*,QVector<int>*)));
 }
 

@@ -14,7 +14,7 @@ class Selection : public QObject
 {
     Q_OBJECT
 public:
-    Selection(page_skills_data_t* page_skills_data);
+    Selection(page_skills_data_t* page_skills_data, QWidget* parent);
     int state_of_selection_mode = 0;
     void make_dependencies();
     void reset_skills_and_hide_unavailable_skills();
@@ -31,6 +31,7 @@ signals:
     void set_page_skills_selected_0_in_header_selection();
 
 private:
+    QWidget* parent;
     page_skills_data_t* page_skills_data;
 
     int num_of_available_basic_skills[12];

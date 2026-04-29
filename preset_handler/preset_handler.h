@@ -8,13 +8,14 @@ class PresetHandler: public QObject
 {
     Q_OBJECT
 public:
-    PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> *basic_skills);
+    PresetHandler(PageWidget** pages, QMap<QString, QVector<Skill*>> *basic_skills, QWidget* parent);
 
 public slots:
     // Функции сохранения пресетов
     void save_preset();
+    void save_as_preset();
     void get_active_skills();
-    void save_to_file();
+    void save_to_file(QString filePath);
     void print_active_skills();
 
     // Функции открытия пресетов
@@ -23,6 +24,7 @@ public slots:
 signals:
     void activate_read_skills(QVector<int>*, QVector<int>*);
 private:
+    QWidget* parent;
     // Функции сохранения пресетов
     page_skills_data_t* page_skills_data[8];
     QMap<QString, QVector<Skill*>> *basic_skills;
@@ -31,6 +33,7 @@ private:
 
     QString make_active_skills_to_str(QVector<int>* active_basic_skills);
     QString createNextSaveFile();
+    QString chose_save_file_name();
 
     // Функции открытия пресетов
     void read_save();

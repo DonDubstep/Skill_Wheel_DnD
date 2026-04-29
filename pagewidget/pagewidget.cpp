@@ -2,13 +2,14 @@
 #include <math.h>
 #include <QDebug>
 
-PageWidget::PageWidget(int page_number, QWidget *parent) : QWidget(parent)
+PageWidget::PageWidget(int page_number, QWidget *parent)
 {
+    this->parent = parent;
     this->page_number = page_number;
     installEventFilter(this);
     init_background_colors();
     init_sector_pointers();
-    selection = new Selection(page_skills_data);
+    selection = new Selection(page_skills_data, parent);
     read_json();
     selection->make_dependencies();
     selection->reset_skills_and_hide_unavailable_skills();

@@ -1,8 +1,9 @@
 #include "selection.h"
 #include <QDebug>
 
-Selection::Selection(page_skills_data_t* page_skills_data)
+Selection::Selection(page_skills_data_t* page_skills_data, QWidget* parent)
 {
+    this->parent = parent;
     this->page_skills_data = page_skills_data;
 
     reset_sector_base();
@@ -121,7 +122,8 @@ Skill *Selection::find_skill_ptr_by_index(int index)
         cur_skill = find_center_skill_ptr_by_index(index);
         if(cur_skill == nullptr)
         {
-            qDebug() << "Не найден скилл по индексу " << index;
+            const char* index_c = std::to_string(index).c_str();
+            show_text_message(parent, 2, "Не найден скилл по индексу ", index_c);
         }
     }
     return cur_skill;
