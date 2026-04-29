@@ -13,14 +13,19 @@ void HeaderSelection::selection_header_on(Skill * selected_skill)
     calculate_scores();
 }
 
-void HeaderSelection::selection_header_off()
+void HeaderSelection::selection_header_off(QString page_name)
 {
-    for(int i = 0; i < (*basic_skills)[cur_page].size(); i++)
+    if(page_name == "")
     {
-        (*basic_skills)[cur_page][i]->state = NONE;
-        (*basic_skills)[cur_page][i]->repaint();
+        page_name = cur_page;
+    }
+    for(int i = 0; i < (*basic_skills)[page_name].size(); i++)
+    {
+        (*basic_skills)[page_name][i]->state = NONE;
+        (*basic_skills)[page_name][i]->repaint();
     }
 }
+
 
 void HeaderSelection::select_first_header_skill()
 {
@@ -121,10 +126,11 @@ void HeaderSelection::activate_read_basic_skills(QVector<int> *active_basic_skil
     QVector<int>* active_basic_skills_in_cur_page;
     for(int page_i = 0; page_i < pages.size(); page_i++)
     {
-        if(active_basic_skills[page_i].size() == 0)
-            continue;
         active_basic_skills_in_cur_page = &active_basic_skills[page_i];
         QString cur_page_name = pages[page_i];
+        selection_header_off(cur_page_name);
+        if(active_basic_skills_in_cur_page->size() == 0)
+            continue;
         for(int s = 0; s < 4; s++)
         {
             (*basic_skills)[cur_page_name][s]->state = UNSELECTED;
@@ -133,7 +139,8 @@ void HeaderSelection::activate_read_basic_skills(QVector<int> *active_basic_skil
                 (*basic_skills)[cur_page_name][s]->state = SELECTED;
             }
         }
+        gray_unselected_header_skills();
+        calculate_scores();
     }
-    gray_unselected_header_skills();
-    calculate_scores();
+
 }

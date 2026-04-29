@@ -18,7 +18,7 @@ public:
 
 public slots:
     void selection_header_on(Skill*);
-    void selection_header_off();
+    void selection_header_off(QString page_name="");
     void select_first_header_skill();
     void set_page_skills_selected_0();
 
