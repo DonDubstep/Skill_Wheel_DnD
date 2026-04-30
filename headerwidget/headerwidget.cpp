@@ -10,13 +10,17 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
     header_selection = new HeaderSelection(&basic_skills);
-    connect(header_selection, SIGNAL(set_header_scores(int)), this, SLOT(set_header_scores(int)));
+    connect(header_selection, SIGNAL(set_header_scores(int, int)), this, SLOT(set_header_scores(int, int)));
     read_json();
     add_combobox();
     add_basic_skills(0);
     add_scores(0);
-    scores_page = 0;
-    scores_header = 0;
+    this->current_page = 0;
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        scores_page[page_i] = 0;
+        scores_header[page_i] = 0;
+    }
 }
 
 //! Здесь читаем json
@@ -68,6 +72,8 @@ void HeaderWidget::combobox_changed(int page_num)
 {
     remove_basic_skills();
     add_basic_skills(page_num);
+    this->current_page = page_num;
+    paint_scores();
     header_selection->set_cur_page(page_num);
     emit switch_page(page_num);
 }
@@ -86,17 +92,6 @@ void HeaderWidget::paintEvent(QPaintEvent *e)
 
     QWidget::paintEvent(e);
 }
-//! Обработчик событий
-bool HeaderWidget::eventFilter(QObject *watched, QEvent *event)
-{
-    // Если нажимаем мышкой в свободном месте
-//    if(event->type() == QEvent::MouseButtonPress)
-//    {
-//        selection_mode_off();
-//        return true;
-//    }
-    return QWidget::eventFilter(watched, event);
-}
 
 void HeaderWidget::resizeEvent(QResizeEvent *e)
 {
@@ -106,27 +101,29 @@ void HeaderWidget::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
-void HeaderWidget::set_scores_page(int score)
+void HeaderWidget::set_scores_page(int score, int page_index)
 {
-    scores_page = score;
-    if(scores_page == 0)
+    scores_page[page_index] = score;
+    if(scores_page[page_index] == 0)
     {
         emit set_page_skills_selected_0_in_header_selection();
     }
     paint_scores();
 }
 
-void HeaderWidget::set_header_scores(int score)
+void HeaderWidget::set_header_scores(int score, int page_index)
 {
-    scores_header = score;
-    paint_scores();
+    scores_header[page_index] = score;
+    if(page_index == current_page)
+        paint_scores();
 }
 
-void HeaderWidget::null_scores()
+void HeaderWidget::null_scores(int page_index)
 {
-    scores_header = 0;
-    scores_page = 0;
-    paint_scores();
+    scores_header[page_index] = 0;
+    scores_page[page_index] = 0;
+    if(page_index == current_page)
+        paint_scores();
 }
 
 void HeaderWidget::add_combobox()
@@ -199,7 +196,7 @@ void HeaderWidget::paint_scores()
     int y = static_cast<int>(this->height() * TOP_PADDING_K);
     scores->move(x, y);
     scores->resize(font_size * 2, font_size);
-    int total_scores = scores_page + scores_header;
+    int total_scores = scores_page[current_page] + scores_header[current_page];
     scores->setText(QString::number(total_scores));
 }
 

@@ -10,7 +10,7 @@ void HeaderSelection::selection_header_on(Skill * selected_skill)
 {
     select_header_dependencies(selected_skill);
     gray_unselected_header_skills();
-    calculate_scores();
+    calculate_scores(cur_page_index);
 }
 
 void HeaderSelection::selection_header_off(QString page_name)
@@ -41,6 +41,7 @@ void HeaderSelection::set_page_skills_selected_0()
 void HeaderSelection::set_cur_page(int cur_page)
 {
     this->cur_page = pages[cur_page];
+    this->cur_page_index = cur_page;
 }
 
 void HeaderSelection::select_header_dependencies(Skill *selected_skill)
@@ -96,18 +97,20 @@ int HeaderSelection::find_skill_in_header(Skill *selected_skill)
     }
 }
 
-void HeaderSelection::calculate_scores()
+void HeaderSelection::calculate_scores(int page_index)
 {
     int count = 0;
-    for(int i = 0; i < (*basic_skills)[cur_page].size(); i++)
+    QString page_name = pages[page_index];
+    for(int i = 0; i < (*basic_skills)[page_name].size(); i++)
     {
-        if((*basic_skills)[cur_page][i]->state == SELECTED)
+        if((*basic_skills)[page_name][i]->state == SELECTED)
         {
             count++;
         }
     }
-    emit set_header_scores(count);
+    emit set_header_scores(count, page_index);
 }
+
 
 bool HeaderSelection::is_skill_in_read_skills(int index, QVector<int>* active_basic_skills_in_cur_page)
 {
@@ -140,7 +143,7 @@ void HeaderSelection::activate_read_basic_skills(QVector<int> *active_basic_skil
             }
         }
         gray_unselected_header_skills();
-        calculate_scores();
+        calculate_scores(page_i);
     }
 
 }

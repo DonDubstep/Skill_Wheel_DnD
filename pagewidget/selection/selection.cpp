@@ -1,10 +1,11 @@
 #include "selection.h"
 #include <QDebug>
 
-Selection::Selection(page_skills_data_t* page_skills_data, QWidget* parent)
+Selection::Selection(page_skills_data_t* page_skills_data, int page_number, QWidget* parent)
 {
     this->parent = parent;
     this->page_skills_data = page_skills_data;
+    this->page_number = page_number;
 
     reset_sector_base();
     reset_active_sectors();
@@ -844,7 +845,7 @@ void Selection::calculate_scores()
             result++;
         }
     }
-    emit set_scores_signal(result);
+    emit set_scores_signal(result, page_number);
 }
 
 int Selection::find_minimum_required_base_skills(Skill *skill)
@@ -1019,6 +1020,6 @@ void Selection::selection_mode_off()
     reset_not_used_basic_skills();
     reset_skills_and_hide_unavailable_skills();
     emit set_page_skills_selected_0_in_header_selection();
-    emit null_scores_signal();
+    emit null_scores_signal(page_number);
     state_of_selection_mode = 0;
 }

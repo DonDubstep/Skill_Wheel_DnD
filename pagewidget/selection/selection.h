@@ -14,8 +14,9 @@ class Selection : public QObject
 {
     Q_OBJECT
 public:
-    Selection(page_skills_data_t* page_skills_data, QWidget* parent);
+    Selection(page_skills_data_t* page_skills_data, int page_number, QWidget* parent);
     int state_of_selection_mode = 0;
+    int page_number;
     void make_dependencies();
     void reset_skills_and_hide_unavailable_skills();
     void activate_read_page_skills(QVector<int>* active_page_skills);
@@ -25,8 +26,8 @@ public slots:
     void selection_mode_off();
 
 signals:
-    void set_scores_signal(int scores);
-    void null_scores_signal();
+    void set_scores_signal(int scores, int page_number);
+    void null_scores_signal(int page_number);
     void activate_first_header_skill();
     void set_page_skills_selected_0_in_header_selection();
 

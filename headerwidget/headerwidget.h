@@ -19,15 +19,15 @@ private:
     QLabel* scores;
     const QString PIC_PATH = QCoreApplication::applicationDirPath() + "/src/HoMM5_Skills/";
     QHBoxLayout* layout;
-    int scores_page;
-    int scores_header;
+    int scores_page[NUM_OF_PAGES];
+    int scores_header[NUM_OF_PAGES];
+    int current_page;
     void paintEvent(QPaintEvent *e) override;
-    bool eventFilter(QObject *watched, QEvent *event) override;
     void resizeEvent(QResizeEvent* e) override;
 public slots:
-    void set_scores_page(int score);
-    void set_header_scores(int score);
-    void null_scores();
+    void set_scores_page(int score, int page_index);
+    void set_header_scores(int score, int page_index);
+    void null_scores(int page_index);
 
 private slots:
     void combobox_changed(int page_num);

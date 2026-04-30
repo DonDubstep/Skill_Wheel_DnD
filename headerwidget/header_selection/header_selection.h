@@ -11,6 +11,7 @@ public:
     HeaderSelection(QMap<QString, QVector<Skill*>>* basic_skills);
     QMap<QString, QVector<Skill*>> *basic_skills;
     QString cur_page;
+    int cur_page_index;
     int page_skills_selected = 0;
 
     void set_cur_page(int cur_page);
@@ -23,14 +24,14 @@ public slots:
     void set_page_skills_selected_0();
 
 signals:
-    void set_header_scores(int scores);
+    void set_header_scores(int scores, int page_index);
 
 private:
     void select_header_dependencies(Skill* selected_skill);
     void check_header_skills_availability();
     void gray_unselected_header_skills();
     int find_skill_in_header(Skill* selected_skill);
-    void calculate_scores();
+    void calculate_scores(int page_index);
     bool is_skill_in_read_skills(int index, QVector<int>* active_basic_skills_in_cur_page);
 
 };

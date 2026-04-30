@@ -9,7 +9,7 @@ PageWidget::PageWidget(int page_number, QWidget *parent)
     installEventFilter(this);
     init_background_colors();
     init_sector_pointers();
-    selection = new Selection(page_skills_data, parent);
+    selection = new Selection(page_skills_data, page_number, parent);
     read_json();
     selection->make_dependencies();
     selection->reset_skills_and_hide_unavailable_skills();
