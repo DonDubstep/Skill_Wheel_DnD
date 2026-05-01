@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->header_widget, SIGNAL(switch_page(int)), this, SLOT(change_page(int)));
     ui->tabWidget->tabBar()->setVisible(false);
     this->setWindowTitle("Skill Wheel DnD");
+    set_version_number();
 
     addTabs();
 }
@@ -62,6 +63,19 @@ void MainWindow::activate_skills_in_pages(QVector<int>* active_basic_skills, QVe
         pages[p]->selection->activate_read_page_skills(&active_page_skills[p]);
     }
     ui->header_widget->header_selection->activate_read_basic_skills(active_basic_skills);
+}
+
+void MainWindow::set_version_number()
+{
+    QFont font;
+    font.setFamily("Trebuchet MS");
+    font.setPointSize(8);
+    font.setBold(true);
+    font.setItalic(false);
+
+    QLabel* version_label = new QLabel("v1.0 by DonDubstep");
+    version_label->setFont(font);
+    statusBar()->addPermanentWidget(version_label);
 }
 
 //! Функция смены вкладки для перехода между классами
