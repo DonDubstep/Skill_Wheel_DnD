@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QLabel>
+#include <QPaintEvent>
+#include <QResizeEvent>
 #include "skill.h"
 #include <QCoreApplication>
 #include "header_selection.h"
@@ -50,7 +52,6 @@ public:
 signals:
     void switch_page(int);
     void set_page_skills_selected_0_in_header_selection();
-
 };
 
 #endif // HEADERWIDGET_H
