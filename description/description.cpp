@@ -52,7 +52,7 @@ void Description::show()
     //! Распологаем посередине относительно иконки по Х
     x = parent_skill->x() - this->width() / 2 + 30;
     //! Располагаем у под иконкой
-    y = parent_skill->y()+60;
+    y = parent_skill->y()+parent_skill->height();
     //! Если выходим за левый край
     if(x < 0)
         x = 0;
