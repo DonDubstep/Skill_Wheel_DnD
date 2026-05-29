@@ -73,7 +73,7 @@ void MainWindow::set_version_number()
     font.setBold(true);
     font.setItalic(false);
 
-    QLabel* version_label = new QLabel("v1.0 by DonDubstep");
+    QLabel* version_label = new QLabel("v1.1 by DonDubstep");
     version_label->setFont(font);
     statusBar()->addPermanentWidget(version_label);
 }
