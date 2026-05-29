@@ -85,8 +85,8 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
     read_json();
     add_combobox();
     add_basic_skills(0);
-    add_scores(0);
     this->current_page = 0;
+    add_scores(0);
     for(int page_i = 0; page_i < pages.size(); page_i++)
     {
         scores_page[page_i] = 0;
