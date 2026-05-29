@@ -47,7 +47,8 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         // Увеличиваем если только уже не увеличили
         if(dont_hide_description_flag == 0)
         {
-            zoom_widget();
+            this->is_changed_size = 1;
+            repaint();
         }
         return true;
     }
@@ -58,7 +59,8 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         // Уменьшаем, если не закрепили скилл
         if(dont_hide_description_flag == 0)
         {
-            zoom_out_widget();
+            this->is_changed_size = 0;
+            repaint();
         }
         return true;
     }
@@ -82,23 +84,3 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-//! Функция увеличения иконки скилла и отображения рамки описания
-void Skill::zoom_widget()
-{
-    this->is_changed_size = 1;
-    int offset = this->width() / 2;
-    this->resize(this->width() * INCREACE_KOEF, this->height() * INCREACE_KOEF);
-    this->move(this->x() - offset, this->y() - offset);
-//    this->description->show();
-//    this->description->raise();
-}
-
-//! Функция возвращения иконки скилла в исходное положение и скрытие рамки
-void Skill::zoom_out_widget()
-{
-    this->is_changed_size = 0;
-    this->resize(this->width() / 2, this->height() / 2);
-    int offset = this->width()  / 2;
-    this->move(this->x() + offset, this->y() + offset);
-//    this->description->hide();
-}

@@ -39,8 +39,6 @@ signals:
 private slots:
     void paintEvent(QPaintEvent *event) override;
     bool eventFilter(QObject* object, QEvent* event) override;
-    void zoom_widget();
-    void zoom_out_widget();
 };
 
 struct skill_struct

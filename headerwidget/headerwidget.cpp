@@ -314,6 +314,7 @@ void HeaderWidget::paintEvent(QPaintEvent *e)
             p.drawEllipse(iconRect.adjusted(inset, inset, -inset, -inset));
         }
     }
+    paint_basic_skills();
 
     QWidget::paintEvent(e);
 }
@@ -398,8 +399,16 @@ void HeaderWidget::paint_basic_skills()
         int x = static_cast<int>(this->width()  * ICON_PADDING_LEFT_K
                 + i * (this->height() * ICON_DIAMETER_K + this->width() * ICON_MARGIN_BETWEEN_K));
         int y = static_cast<int>(this->height() * TOP_PADDING_K);
-        cur_class_skills[i]->move(x, y);
-        cur_class_skills[i]->resize(icon_size, icon_size);
+        if(cur_class_skills[i]->is_changed_size == 0)
+        {
+            cur_class_skills[i]->resize(icon_size, icon_size);
+            cur_class_skills[i]->move(x, y);
+        }
+        else
+        {
+            cur_class_skills[i]->resize(icon_size * 2, icon_size * 2);
+            cur_class_skills[i]->move(x - icon_size / 2, y - icon_size / 2);
+        }
         cur_class_skills[i]->show();
     }
 }
