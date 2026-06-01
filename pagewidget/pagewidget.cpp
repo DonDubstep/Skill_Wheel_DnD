@@ -115,10 +115,10 @@ void PageWidget::read_json()
                 connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
                 switch (circle_i)
                 {
-                case 0: cur_sector_ptr->base_circle[i] = cur_skill; cur_skill->skill_type = BASE_SKILL;   break;
-                case 1: cur_sector_ptr->circle_1[i] = cur_skill;    cur_skill->skill_type = SECTOR_SKILL; break;
-                case 2: cur_sector_ptr->circle_2[i] = cur_skill;    cur_skill->skill_type = SECTOR_SKILL; break;
-                case 3: cur_sector_ptr->circle_3[i] = cur_skill;    cur_skill->skill_type = SECTOR_SKILL; break;
+                case 0: cur_sector_ptr->base_circle[i] = cur_skill; cur_skill->type = BASE_SKILL;   break;
+                case 1: cur_sector_ptr->circle_1[i] = cur_skill;    cur_skill->type = SECTOR_SKILL; break;
+                case 2: cur_sector_ptr->circle_2[i] = cur_skill;    cur_skill->type = SECTOR_SKILL; break;
+                case 3: cur_sector_ptr->circle_3[i] = cur_skill;    cur_skill->type = SECTOR_SKILL; break;
                 }
             }
         }
@@ -142,7 +142,7 @@ void PageWidget::read_json()
             Skill* cur_skill = new Skill(this, PIC_PATH + icon_path, title, description);
             cur_skill->index = index;
             cur_skill->parsed_depends = depends;
-            cur_skill->skill_type = CENTER_SKILL;
+            cur_skill->type = CENTER_SKILL;
             connect(cur_skill, SIGNAL(icon_selected(Skill*)), selection, SLOT(selection_mode_on(Skill*)));
             page_skills_data->center_skills[s] = cur_skill;
         }

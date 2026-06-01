@@ -31,7 +31,7 @@ public:
     int is_gray = 0;
     short state;
     int index;
-    short skill_type;
+    short type;
     bool operator == (const Skill* skill) const;
 
 signals:

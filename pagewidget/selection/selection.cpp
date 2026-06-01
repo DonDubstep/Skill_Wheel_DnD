@@ -134,7 +134,7 @@ Skill *Selection::find_skill_ptr_by_index(int index)
 Skill *Selection::find_regular_skill_ptr_by_index(int index)
 {
     Skill* cur_skill;
-    short skill_type;
+    short type;
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
         sector_data_t* cur_sector_ptr = page_skills_data->sector_ptrs[sector_i];
@@ -143,17 +143,17 @@ Skill *Selection::find_regular_skill_ptr_by_index(int index)
             Skill** cur_circle_ptr;
             switch (circle_i)
             {
-            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      skill_type = SECTOR_SKILL; break;
-            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      skill_type = SECTOR_SKILL; break;
-            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      skill_type = SECTOR_SKILL; break;
-            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   skill_type = BASE_SKILL;   break;
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      type = SECTOR_SKILL; break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      type = SECTOR_SKILL; break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      type = SECTOR_SKILL; break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   type = BASE_SKILL;   break;
             }
             for(int s = 0; s < 3; s++)
             {
                 cur_skill = cur_circle_ptr[s];
                 if(cur_skill->index == index)
                 {
-                    cur_skill->skill_type = skill_type;
+                    cur_skill->type = type;
                     return cur_skill;
                 }
             }
@@ -171,7 +171,7 @@ Skill *Selection::find_center_skill_ptr_by_index(int index)
         cur_skill = page_skills_data->center_skills[s];
         if(cur_skill->index == index)
         {
-            cur_skill->skill_type = CENTER_SKILL;
+            cur_skill->type = CENTER_SKILL;
             return cur_skill;
         }
     }
@@ -182,7 +182,7 @@ Skill *Selection::find_center_skill_ptr_by_index(int index)
 //! Закрашивает все скиллы серыми, если они не относятся к выбранному скиллу
 void Selection::selection_mode_on(Skill* selected_skill)
 {
-    if(selected_skill->skill_type == SECTOR_SKILL || selected_skill->skill_type == BASE_SKILL)
+    if(selected_skill->type == SECTOR_SKILL || selected_skill->type == BASE_SKILL)
     {
         select_dependencies(selected_skill);
     }
@@ -299,7 +299,7 @@ void Selection::select_dependencies_center_skill(Skill* selected_skill)
             {
                 if(related_skill->state != SELECTED)
                 {
-                    if (related_skill->skill_type == CENTER_SKILL)
+                    if (related_skill->type == CENTER_SKILL)
                     {
                         select_dependencies_center_skill(related_skill);
                     }
@@ -335,7 +335,7 @@ void Selection::select_dependencies_center_skill(Skill* selected_skill)
                         chosen_related_skill = related_skill;
                     }
                 }
-                if(chosen_related_skill->skill_type == CENTER_SKILL)
+                if(chosen_related_skill->type == CENTER_SKILL)
                 {
                     select_dependencies_center_skill(chosen_related_skill);
                 }
@@ -697,7 +697,7 @@ short Selection::is_skill_depends_selected(Skill *skill)
 
 int Selection::is_center_skill_available(Skill *skill)
 {
-    if(skill->skill_type == CENTER_SKILL && skill->depends.size() == 0)
+    if(skill->type == CENTER_SKILL && skill->depends.size() == 0)
         return 1;
     QMap<int, int> required_base_skill_in_sector_map = find_minimum_required_base_skills_for_center_skill(skill);
     for(int sector : required_base_skill_in_sector_map.keys())
@@ -728,7 +728,7 @@ QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Ski
                 continue;
             }
             null_map(&required_base_skill_in_sector_for_related_skill_map, 12);
-            if(related_skill->skill_type == CENTER_SKILL)
+            if(related_skill->type == CENTER_SKILL)
             {
                 required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
                 for(int s = 0; s < 12; s++)
@@ -755,7 +755,7 @@ QMap<int, int> Selection::find_minimum_required_base_skills_for_center_skill(Ski
                 null_map(&required_base_skill_in_sector_map, 12);
                 return required_base_skill_in_sector_map;
             }
-            if(related_skill->skill_type == CENTER_SKILL)
+            if(related_skill->type == CENTER_SKILL)
             {
                 required_base_skill_in_sector_for_related_skill_map = find_minimum_required_base_skills_for_center_skill(related_skill);
                 for(int s = 0; s < 12; s++)
@@ -986,7 +986,7 @@ void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
         {
             Skill* cur_skill = find_skill_ptr_by_index(active_page_skills->at(read_s));
             find_skill_in_struct(cur_skill, &sector_n, &sector, &circle_n, &skill_n);
-            if(cur_skill->skill_type == SECTOR_SKILL)
+            if(cur_skill->type == SECTOR_SKILL)
             {
                 cur_skill->state = SELECTED;
                 cur_skill->repaint();
@@ -995,7 +995,7 @@ void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
                     num_of_available_but_not_used_basic_skills[sector_n]--;
                 }
             }
-            else if(cur_skill->skill_type == CENTER_SKILL)
+            else if(cur_skill->type == CENTER_SKILL)
             {
                 cur_skill->state = SELECTED;
                 cur_skill->repaint();
