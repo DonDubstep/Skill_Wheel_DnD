@@ -153,7 +153,7 @@ void PageWidget::read_json()
 //! Обработчик события перерисовки
 void PageWidget::paintEvent(QPaintEvent *e)
 {
-    painter = new QPainter(this);
+    QPainter painter(this);
 
     int width = this->width();
     int height = this->height();
@@ -165,7 +165,7 @@ void PageWidget::paintEvent(QPaintEvent *e)
     paint_skills();
     paint_center_skills();
 
-    delete painter;
+    painter.end();
     QWidget::paintEvent(e);
 }
 
@@ -200,36 +200,38 @@ void PageWidget::paint_concentric_circles()
     radius_small_circles = static_cast<int>(half_min_window_size * SMALL_CIRCLE_KOEF);  // радиус внешних кружочков
     int radius[] = {radius2, radius3, radius4};
 
-    painter->setPen(Qt::black);
+    QPainter painter(this);
+    painter.setPen(Qt::black);
     for(int r = 2; r >= 0; r--)
     {
         int current_angle = 0;
         for(int a = 0; a < 360/SEGMENT_ANGLE; a++)
         {
-            painter->setBrush(QColor(segment_colors[r][a]));
-            painter->drawPie(centerX - radius[r], centerY - radius[r], radius[r] * 2, radius[r] * 2,
+            painter.setBrush(QColor(segment_colors[r][a]));
+            painter.drawPie(centerX - radius[r], centerY - radius[r], radius[r] * 2, radius[r] * 2,
                             current_angle * 16, SEGMENT_ANGLE * 16);
             current_angle += SEGMENT_ANGLE;
         }
     }
-    painter->setBrush(Qt::white);
-    painter->setPen(Qt::black);
-    painter->drawEllipse(centerX - radius1, centerY - radius1, radius1 * 2, radius1 * 2);
+    painter.setBrush(Qt::white);
+    painter.setPen(Qt::black);
+    painter.drawEllipse(centerX - radius1, centerY - radius1, radius1 * 2, radius1 * 2);
 }
 
 //! Отрисовка внешних кружочков
 void PageWidget::paint_small_circles()
 {
+    QPainter painter(this);
     for(int s = 0; s < 360/SEGMENT_ANGLE; s++)
     {
         int hidden_segments_count = 5;
         int current_angle = s*SEGMENT_ANGLE + SEGMENT_ANGLE / hidden_segments_count + SEGMENT_ANGLE / hidden_segments_count / 2;
         for(int c = 0; c < 3; c++)
         {
-            painter->setBrush(QColor(segment_colors[c][s]));
+            painter.setBrush(QColor(segment_colors[c][s]));
             int centerX_circles = centerX + static_cast<int>(radius5 * cos(current_angle * M_PI / 180));
             int centerY_circles = centerY - static_cast<int>(radius5 * sin(current_angle * M_PI / 180));
-            painter->drawEllipse(centerX_circles - radius_small_circles, centerY_circles - radius_small_circles,
+            painter.drawEllipse(centerX_circles - radius_small_circles, centerY_circles - radius_small_circles,
                                 radius_small_circles * 2, radius_small_circles * 2);
             current_angle += SEGMENT_ANGLE / hidden_segments_count;
         }

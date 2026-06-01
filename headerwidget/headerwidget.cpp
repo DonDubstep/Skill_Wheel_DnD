@@ -5,7 +5,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
-#include <QPainter>
 #include <QPainterPath>
 #include <QLinearGradient>
 #include <QRadialGradient>
@@ -316,6 +315,7 @@ void HeaderWidget::paintEvent(QPaintEvent *e)
     }
     paint_basic_skills();
 
+    p.end();
     QWidget::paintEvent(e);
 }
 

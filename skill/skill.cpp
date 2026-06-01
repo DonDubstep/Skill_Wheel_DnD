@@ -33,6 +33,7 @@ void Skill::paintEvent(QPaintEvent *event)
     }
     QRect rect(0,0,width(), height());
     painter.drawImage(rect,img );
+    painter.end();
 
     QWidget::paintEvent(event);
 }
@@ -48,7 +49,7 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         if(dont_hide_description_flag == 0)
         {
             this->is_changed_size = 1;
-            repaint();
+            update();
         }
         return true;
     }
@@ -60,7 +61,7 @@ bool Skill::eventFilter(QObject *object, QEvent *event)
         if(dont_hide_description_flag == 0)
         {
             this->is_changed_size = 0;
-            repaint();
+            update();
         }
         return true;
     }

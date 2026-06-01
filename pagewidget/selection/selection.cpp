@@ -208,7 +208,7 @@ void Selection::select_dependencies(Skill* selected_skill)
         if(circle_n != BASE_CIRCLE)
         {
             selected_skill->state = UNSELECTED;
-            selected_skill->repaint();
+            selected_skill->update();
             unselect_dependens_skills(selected_skill);
         }
         else
@@ -221,7 +221,7 @@ void Selection::select_dependencies(Skill* selected_skill)
         if(circle_n != BASE_CIRCLE)
         {
             selected_skill->state = SELECTED;
-            selected_skill->repaint();
+            selected_skill->update();
             if(num_of_available_but_not_used_basic_skills[sector_n] > 0)
             {
                 num_of_available_but_not_used_basic_skills[sector_n]--;
@@ -231,7 +231,7 @@ void Selection::select_dependencies(Skill* selected_skill)
                 int base_skill_i = num_of_available_basic_skills[sector_n] - 1;
 
                 sector->base_circle[base_skill_i]->state = SELECTED;
-                sector->base_circle[base_skill_i]->repaint();
+                sector->base_circle[base_skill_i]->update();
                 num_of_available_basic_skills[sector_n]--;
             }
         }
@@ -287,12 +287,12 @@ void Selection::select_dependencies_center_skill(Skill* selected_skill)
     if(selected_skill->state == SELECTED)
     {
         selected_skill->state = UNSELECTED;
-        selected_skill->repaint();
+        selected_skill->update();
     }
     else
     {
         selected_skill->state = SELECTED;
-        selected_skill->repaint();
+        selected_skill->update();
         if(selected_skill->depend_type == AND)
         {
             for(Skill* related_skill : selected_skill->depends)
@@ -377,7 +377,7 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
                         if(related_skill == selected_skill)
                         {
                             cur_skill->state = UNSELECTED;
-                            cur_skill->repaint();
+                            cur_skill->update();
                             new_unselected_skills.append(cur_skill);
                         }
                     }
@@ -393,7 +393,7 @@ void Selection::unselect_dependens_skills(Skill *selected_skill)
                             if(check_is_there_still_an_active_skill(related_skill, cur_skill) == 0)
                             {
                                 cur_skill->state = UNSELECTED;
-                                cur_skill->repaint();
+                                cur_skill->update();
                                 new_unselected_skills.append(cur_skill);
                             }
                         }
@@ -436,7 +436,7 @@ void Selection::select_depends_base_circle_skills(int skill_n, int sector_n)
         if(cur_skill->state != SELECTED)
         {
             cur_skill->state = SELECTED;
-            cur_skill->repaint();
+            cur_skill->update();
             num_of_available_basic_skills[sector_n]--;
         }
     }
@@ -453,7 +453,7 @@ void Selection::unselect_depends_base_circle_skills(int skill_n, int sector_n)
         if(cur_skill->state == SELECTED)
         {
             cur_skill->state = UNSELECTED;
-            cur_skill->repaint();
+            cur_skill->update();
             num_of_available_basic_skills[sector_n]++;
             num_of_available_but_not_used_basic_skills[sector_n]--;
         }
@@ -533,7 +533,7 @@ void Selection::hide_of_unselect_unavailable_skills()
                         if(is_skill_depends_selected_val == 0)
                         {
                             cur_skill->state = UNSELECTED;
-                            cur_skill->repaint();
+                            cur_skill->update();
                         }
                         else if(is_skill_depends_selected_val == HIDDEN)
                         {
@@ -568,7 +568,7 @@ void Selection::hide_of_unselect_unavailable_skills()
             cur_skill->state = HIDDEN;
             cur_skill->hide();
         }
-        cur_skill->repaint();
+        cur_skill->update();
     }
 }
 
@@ -610,7 +610,7 @@ void Selection::reset_skills_and_hide_unavailable_skills()
                     {
                         cur_circle_ptr[s]->show();
                     }
-                    cur_circle_ptr[s]->repaint();
+                    cur_circle_ptr[s]->update();
                 }
             }
         }
@@ -631,7 +631,7 @@ void Selection::reset_skills_and_hide_unavailable_skills()
             {
                 cur_skill->show();
             }
-            cur_skill->repaint();
+            cur_skill->update();
         }
     }
 }
@@ -989,7 +989,7 @@ void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
             if(cur_skill->type == SECTOR_SKILL)
             {
                 cur_skill->state = SELECTED;
-                cur_skill->repaint();
+                cur_skill->update();
                 if(num_of_available_but_not_used_basic_skills[sector_n] > 0)
                 {
                     num_of_available_but_not_used_basic_skills[sector_n]--;
@@ -998,7 +998,7 @@ void Selection::activate_read_page_skills(QVector<int> *active_page_skills)
             else if(cur_skill->type == CENTER_SKILL)
             {
                 cur_skill->state = SELECTED;
-                cur_skill->repaint();
+                cur_skill->update();
             }
             else
             {

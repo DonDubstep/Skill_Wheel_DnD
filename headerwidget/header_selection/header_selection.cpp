@@ -22,7 +22,7 @@ void HeaderSelection::selection_header_off(QString page_name)
     for(int i = 0; i < (*basic_skills)[page_name].size(); i++)
     {
         (*basic_skills)[page_name][i]->state = NONE;
-        (*basic_skills)[page_name][i]->repaint();
+        (*basic_skills)[page_name][i]->update();
     }
 }
 
@@ -82,7 +82,7 @@ void HeaderSelection::gray_unselected_header_skills()
         {
             (*basic_skills)[cur_page][i]->state = UNSELECTED;
         }
-        (*basic_skills)[cur_page][i]->repaint();
+        (*basic_skills)[cur_page][i]->update();
     }
 }
 

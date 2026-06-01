@@ -2,7 +2,6 @@
 #define PAGEWIDGET_H
 
 #include <QWidget>
-#include <QPainter>
 #include <QMap>
 #include <QFile>
 #include <QJsonArray>
@@ -37,7 +36,6 @@ private:
     int radius_small_circles;
 
 
-    QPainter* painter;
     QString** segment_colors;
 
     circle_skill_data_t circle_skills;

@@ -31,16 +31,12 @@ Description::Description(QWidget *window, QWidget* skill, QString name_text, QSt
     parent_window = window;
 }
 
-Description::~Description()
-{
-    delete this;
-}
-
 //! Переопределенный метод для отрисовки фонав
 void Description::paintEvent(QPaintEvent *e)
 {
     QPainter painter(this);
     painter.drawPixmap(0, 0, QPixmap("./src/FonOpisania.png").scaled(size()));
+    painter.end();
     QWidget::paintEvent(e);
 }
 

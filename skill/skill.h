@@ -2,7 +2,6 @@
 #define SKILL_H
 #include "description.h"
 #include <QEvent>
-#include <QPainter>
 #include <QKeyEvent>
 
 enum page_skill_type_t
