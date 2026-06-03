@@ -13,6 +13,9 @@ PageWidget::PageWidget(int page_number, QWidget *parent)
     read_json();
     selection->make_dependencies();
     selection->reset_skills_and_hide_unavailable_skills();
+
+    search_widget = new SearchWidget(this);
+    search_widget->move(0, 0);
 }
 
 //! Заносим данные цветов сегментов кругов

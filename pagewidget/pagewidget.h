@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include "selection.h"
 #include <QCoreApplication>
+#include "searchwidget.h"
 
 
 class PageWidget : public QWidget
@@ -18,6 +19,7 @@ public:
     PageWidget(int page_number, QWidget *parent);
     page_skills_data_t* get_page_skill_data();
     Selection* selection;
+    SearchWidget* search_widget;
 
 signals:
     void selection_off();

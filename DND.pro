@@ -26,6 +26,7 @@ SOURCES += \
     pagewidget/pagewidget.cpp \
     pagewidget/selection/selection.cpp \
     preset_handler/preset_handler.cpp \
+    searchwidget/searchwidget.cpp \
     skill/skill.cpp
 
 HEADERS += \
@@ -37,6 +38,7 @@ HEADERS += \
     pagewidget/pagewidget.h \
     pagewidget/selection/selection.h \
     preset_handler/preset_handler.h \
+    searchwidget/searchwidget.h \
     settings.h \
     skill/skill.h
 
@@ -52,6 +54,7 @@ INCLUDEPATH += \
     $$PWD/skill \
     $$PWD/preset_handler \
     $$PWD/messagebox \
+    $$PWD/searchwidget \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/Skill_Wheel_app
