@@ -16,9 +16,12 @@
 
 class SearchWidget : public QWidget
 {
+    Q_OBJECT
 public:
     SearchWidget(QWidget* parent, HeaderWidget* header_widget, QMenuBar* menubar);
 
+public slots:
+    void show_up();
 private:
     void setup_ui();
     void on_search();
@@ -34,6 +37,8 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 };
 
 #endif // SEARCHWIDGET_H

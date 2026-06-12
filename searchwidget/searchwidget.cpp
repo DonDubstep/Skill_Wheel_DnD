@@ -7,8 +7,54 @@ SearchWidget::SearchWidget(QWidget* parent, HeaderWidget* header_widget, QMenuBa
     this->header_widget = header_widget;
     this->menubar = menubar;
     setup_ui();
-//    if(parent)
-//        installEventFilter(this);
+    parent->installEventFilter(this);
+
+    // Стиль
+    setStyleSheet(R"(
+        SearchWidget {
+            background-color: #2b1f0e;
+        }
+
+        QLineEdit {
+            background-color: #1c1408;
+            border: 1px solid #6b4510;
+            color: #f0d890;
+            font-family: "Palatino Linotype", "Book Antiqua", serif;
+            font-size: 12pt;
+            padding: 4px 12px;
+            selection-background-color: #8a5c1a;
+            selection-color: #fff8dc;
+        }
+        QLineEdit:focus {
+            border: 1px solid #c9941a;
+        }
+
+        QPushButton {
+            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
+                stop:0 #8a5c18, stop:1 #4a2e08);
+            border: 1px solid #c9941a;
+            color: #f5d97a;
+            font-family: "Palatino Linotype", "Book Antiqua", serif;
+            font-size: 10pt;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
+                stop:0 #b07820, stop:1 #6a3e10);
+            color: #fff8dc;
+        }
+        QPushButton:pressed {
+            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
+                stop:0 #4a2e08, stop:1 #8a5c18);
+        }
+                  )");
+}
+
+void SearchWidget::show_up()
+{
+    this->show();
+    update_geometry();
+    this->search_line->setFocus();
 }
 
 #define SEARCH_HEIGHT_K 0.0535
@@ -57,7 +103,6 @@ void SearchWidget::setup_ui()
 void SearchWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
-    update_geometry();
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, false);
     p.fillRect(rect(), QColor("#2b1f0e"));
@@ -87,56 +132,26 @@ void SearchWidget::paintEvent(QPaintEvent *event)
     corner(width() - 1, 0,          -1,  1);
     corner(0,          height() - 1, 1, -1);
     corner(width() - 1, height() - 1, -1, -1);
-    // Стиль
-    setStyleSheet(R"(
-        SearchWidget {
-            background-color: #2b1f0e;
-        }
 
-        QLineEdit {
-            background-color: #1c1408;
-            border: 1px solid #6b4510;
-            color: #f0d890;
-            font-family: "Palatino Linotype", "Book Antiqua", serif;
-            font-size: 12pt;
-            padding: 4px 12px;
-            selection-background-color: #8a5c1a;
-            selection-color: #fff8dc;
-        }
-        QLineEdit:focus {
-            border: 1px solid #c9941a;
-        }
+}
 
-        QPushButton {
-            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
-                stop:0 #8a5c18, stop:1 #4a2e08);
-            border: 1px solid #c9941a;
-            color: #f5d97a;
-            font-family: "Palatino Linotype", "Book Antiqua", serif;
-            font-size: 10pt;
-            font-weight: bold;
-        }
-        QPushButton:hover {
-            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
-                stop:0 #b07820, stop:1 #6a3e10);
-            color: #fff8dc;
-        }
-        QPushButton:pressed {
-            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,
-                stop:0 #4a2e08, stop:1 #8a5c18);
-        }
-    )");
+
+bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == parent && event->type() == QEvent::Resize)
+    {
+        update_geometry();
+    }
+    return QWidget::eventFilter(watched, event);
 }
 
 void SearchWidget::update_geometry()
 {
     int margin_central_widget = 9;
-    qDebug() << parent->width() << "X" << parent->height();
     int w = qMax(254, static_cast<int>(parent->width() * SEARCH_WIDTH_K));
     int h = static_cast<int>(parent->height() * SEARCH_HEIGHT_K);
     int x = qMax(0,static_cast<int>(parent->width() - w) - margin_central_widget);
     int y = static_cast<int>(header_widget->height() + menubar->height() + SEARCH_H_PADDING_K * parent->height());
-//    int y = 0;
     setGeometry(x,y,w,h);
 }
 

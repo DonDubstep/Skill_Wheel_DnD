@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget* parent)
     QAction* findAction = new QAction("Find", this);
     findAction->setShortcut(QKeySequence("Ctrl+F"));
     this->addAction(findAction);
-    connect(findAction, SIGNAL(triggered()), search_widget, SLOT(show()));
+    connect(findAction, SIGNAL(triggered()), search_widget, SLOT(show_up()));
     addTabs();
 }
 
