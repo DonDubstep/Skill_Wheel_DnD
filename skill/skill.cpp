@@ -4,7 +4,8 @@
 Skill::Skill(QWidget *parent, QString icon_path, QString name_text, QString desc_txt) : QWidget(parent)
 {
     this->installEventFilter(this);
-    this->icon_path = icon_path;
+    icon = QPixmap(icon_path);
+    create_gray_icon();
     this->description = new Description(parent, this, name_text, desc_txt);
     this->state = NONE;
     this->description->hide();
@@ -21,21 +22,25 @@ bool Skill::operator == (const Skill* skill) const
 void Skill::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-
-    QImage img(this->icon_path);
-
     if(this->state == UNSELECTED)
     {
-        QImage alpha = img.alphaChannel();
-        QImage gray = img.convertToFormat(QImage::Format_Grayscale8);
-        gray.setAlphaChannel(alpha);
-        img = gray;
+        painter.drawPixmap(rect(), icon_gray);
     }
-    QRect rect(0,0,width(), height());
-    painter.drawImage(rect,img );
+    else
+    {
+        painter.drawPixmap(rect(), icon);
+    }
     painter.end();
-
     QWidget::paintEvent(event);
+}
+
+void Skill::create_gray_icon()
+{
+    QImage img = icon.toImage();
+    QImage alpha = img.alphaChannel();
+    QImage gray = img.convertToFormat(QImage::Format_Grayscale8);
+    gray.setAlphaChannel(alpha);
+    icon_gray = QPixmap::fromImage(gray);
 }
 
 //! Обработчик событий

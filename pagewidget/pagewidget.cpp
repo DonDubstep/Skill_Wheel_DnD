@@ -161,8 +161,8 @@ void PageWidget::paintEvent(QPaintEvent *e)
     centerX = width / 2;
     centerY = height / 2;
 
-    paint_concentric_circles();
-    paint_small_circles();
+    paint_concentric_circles(painter);
+    paint_small_circles(painter);
     paint_skills();
     paint_center_skills();
 
@@ -190,7 +190,7 @@ bool PageWidget::eventFilter(QObject *watched, QEvent *event)
 }
 
 //! Отрисовка основных кругов
-void PageWidget::paint_concentric_circles()
+void PageWidget::paint_concentric_circles(QPainter& painter)
 {
     half_min_window_size = std::min(this->width(), this->height()) / 2;
     radius1 = static_cast<int>(half_min_window_size * RADUIS_KOEF);           // малый круг
@@ -201,7 +201,6 @@ void PageWidget::paint_concentric_circles()
     radius_small_circles = static_cast<int>(half_min_window_size * SMALL_CIRCLE_KOEF);  // радиус внешних кружочков
     int radius[] = {radius2, radius3, radius4};
 
-    QPainter painter(this);
     painter.setPen(Qt::black);
     for(int r = 2; r >= 0; r--)
     {
@@ -220,9 +219,8 @@ void PageWidget::paint_concentric_circles()
 }
 
 //! Отрисовка внешних кружочков
-void PageWidget::paint_small_circles()
+void PageWidget::paint_small_circles(QPainter& painter)
 {
-    QPainter painter(this);
     for(int s = 0; s < 360/SEGMENT_ANGLE; s++)
     {
         int hidden_segments_count = 5;

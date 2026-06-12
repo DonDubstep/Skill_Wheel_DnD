@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPen>
-#include <QPolygon>ì
+#include <QPolygon>
 #include <QEvent>
 #include <QMenuBar>
 #include "headerwidget.h"

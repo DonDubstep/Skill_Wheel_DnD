@@ -50,8 +50,8 @@ private:
     void init_background_colors();
     void init_sector_pointers();
     void read_json();
-    void paint_concentric_circles();
-    void paint_small_circles();
+    void paint_concentric_circles(QPainter& painter);
+    void paint_small_circles(QPainter& painter);
     void paint_skills();
     void paint_center_skills();
 };

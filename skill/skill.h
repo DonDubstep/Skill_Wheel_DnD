@@ -18,7 +18,6 @@ class Skill : public QWidget
 public:
     Skill(QWidget *parent, QString pic_path, QString name_text, QString desc_txt);
     Description* description;
-    QString icon_path;
 
     QVector<Skill*> depends;
     QString parsed_depends;
@@ -35,9 +34,16 @@ public:
 
 signals:
     void icon_selected(Skill*);
+
 private slots:
     void paintEvent(QPaintEvent *event) override;
     bool eventFilter(QObject* object, QEvent* event) override;
+
+private:
+    QPixmap icon;
+    QPixmap icon_gray;
+
+    void create_gray_icon();
 };
 
 struct skill_struct
