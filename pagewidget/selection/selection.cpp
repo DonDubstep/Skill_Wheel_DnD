@@ -496,6 +496,7 @@ void Selection::find_skill_in_struct(Skill *selected_skill, int* ret_sector_n, s
 void Selection::hide_of_unselect_unavailable_skills()
 {
     Skill* cur_skill;
+    parent->setUpdatesEnabled(false);
     //! Проверка всех секторных скилов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -570,11 +571,14 @@ void Selection::hide_of_unselect_unavailable_skills()
         }
         cur_skill->update();
     }
+    parent->setUpdatesEnabled(true);
+    parent->update();
 }
 
 void Selection::reset_skills_and_hide_unavailable_skills()
 {
     Skill* cur_skill;
+    parent->setUpdatesEnabled(false);
     //! Проверка всех секторных скилов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -634,6 +638,8 @@ void Selection::reset_skills_and_hide_unavailable_skills()
             cur_skill->update();
         }
     }
+    parent->setUpdatesEnabled(true);
+    parent->update();
 }
 
 //! Проверка все ли зависимые скиллы уже выбраны
@@ -903,6 +909,7 @@ void Selection::reset_active_sectors()
 void Selection::reset_hidden_skill()
 {
     Skill* cur_skill;
+    parent->setUpdatesEnabled(false);
     //! Для всех секторных скиллов
     for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
     {
@@ -938,6 +945,8 @@ void Selection::reset_hidden_skill()
             cur_skill->show();
         }
     }
+    parent->setUpdatesEnabled(true);
+    parent->update();
 }
 
 void Selection::reset_not_used_basic_skills()
