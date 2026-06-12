@@ -8,6 +8,7 @@
 #include <pagewidget.h>
 #include "headerwidget.h"
 #include "preset_handler.h"
+#include "searchwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    SearchWidget* search_widget;
 
 private:
     Ui::MainWindow *ui;

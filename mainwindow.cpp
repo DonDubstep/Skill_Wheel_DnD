@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget* parent)
     this->setWindowTitle("Skill Wheel DnD");
     set_version_number();
 
+    search_widget = new SearchWidget(this, ui->header_widget, ui->menubar);
+    search_widget->hide();
+    QAction* findAction = new QAction("Find", this);
+    findAction->setShortcut(QKeySequence("Ctrl+F"));
+    this->addAction(findAction);
+    connect(findAction, SIGNAL(triggered()), search_widget, SLOT(show()));
     addTabs();
 }
 
