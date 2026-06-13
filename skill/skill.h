@@ -46,16 +46,5 @@ private:
     void create_gray_icon();
 };
 
-struct skill_struct
-{
-    QString icon_path;
-    QString title;
-    QString description;
-    QString title_color;
-    Skill* skill;
-    skill_struct* depends[NUM_OF_DEPENDS];
-};
-
-
 
 #endif // SKILL_H
