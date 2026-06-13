@@ -6,6 +6,7 @@ Description::Description(QWidget *window, QWidget* skill, QString name_text, QSt
     QVBoxLayout* layout = new QVBoxLayout(this);
 
     //! Название
+    name_str = name_text;
     name = new QLabel (name_text, this);
     name->setAlignment(Qt::AlignHCenter);
     name->setStyleSheet("font-family: helvetica;"
@@ -15,6 +16,7 @@ Description::Description(QWidget *window, QWidget* skill, QString name_text, QSt
                              );
     layout->addWidget(name);
     //! Описание
+    desciption_str = desc_txt;
     description_text = new QLabel(desc_txt,this);
     description_text->setWordWrap(true);
     description_text->setMaximumWidth(MINIMUM_FRAME_WIDTH);

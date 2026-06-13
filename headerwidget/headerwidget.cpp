@@ -351,6 +351,12 @@ void HeaderWidget::null_scores(int page_index)
         paint_scores();
 }
 
+//! Слот для смены страницы извне HeaderWidget
+void HeaderWidget::change_combobox(int page_num)
+{
+    combo_pages->setCurrentIndex(page_num);
+}
+
 void HeaderWidget::add_combobox()
 {
     combo_pages = new QComboBox(this);

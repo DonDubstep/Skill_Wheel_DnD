@@ -123,7 +123,14 @@
     <addaction name="save_action"/>
     <addaction name="save_as_action"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Правка</string>
+    </property>
+    <addaction name="search_action"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="open_action">
@@ -142,6 +149,11 @@
   <action name="save_as_action">
    <property name="text">
     <string>Сохранить как(Ctrl+Shift+S)</string>
+   </property>
+  </action>
+  <action name="search_action">
+   <property name="text">
+    <string>Поиск по ключевым словам</string>
    </property>
   </action>
  </widget>

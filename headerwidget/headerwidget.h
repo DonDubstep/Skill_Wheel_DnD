@@ -30,6 +30,7 @@ public slots:
     void set_scores_page(int score, int page_index);
     void set_header_scores(int score, int page_index);
     void null_scores(int page_index);
+    void change_combobox(int page_num);
 
 private slots:
     void combobox_changed(int page_num);

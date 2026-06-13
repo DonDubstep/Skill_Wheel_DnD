@@ -57,6 +57,16 @@ void SearchWidget::show_up()
     this->search_line->setFocus();
 }
 
+//! Получаем ссылки на абсолютно все скиллы для дальнейшего поиска
+void SearchWidget::get_all_skills(PageWidget *pages[], QMap<QString, QVector<Skill *> > *basic_skills)
+{
+    for(int page_i = 0; page_i < NUM_OF_PAGES; page_i++)
+    {
+        page_skills_data[page_i] = pages[page_i]->get_page_skill_data();
+    }
+    this->basic_skills = basic_skills;
+}
+
 #define SEARCH_HEIGHT_K 0.0535
 #define SEARCH_WIDTH_K 0.3
 #define SEARCH_ELEMENT_HEIGHT_K 0.0267
@@ -155,14 +165,198 @@ void SearchWidget::update_geometry()
     setGeometry(x,y,w,h);
 }
 
-void SearchWidget::on_search()
+//! Проверка, содержит ли название или описание скилла ключевые слова
+bool SearchWidget::is_skill_has_keyword(Skill *skill, QString key_word)
 {
-    qDebug() << "SEARCHING...";
+    return skill->description->name_str.contains(key_word,  Qt::CaseInsensitive) ||
+           skill->description->desciption_str.contains(key_word,  Qt::CaseInsensitive);
 }
 
+//! Выбор определённого скилла на всех страницах
+void SearchWidget::select_skill_on_all_pages(int sector_i, int circle_i, int s)
+{
+    Skill* cur_skill;
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        sector_data_t* cur_sector_ptr = page_skills_data[page_i]->sector_ptrs[sector_i];
+        Skill** cur_circle_ptr;
+        switch (circle_i)
+        {
+        case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+        case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+        case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+        default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+        }
+        cur_skill = cur_circle_ptr[s];
+        cur_skill->state = SELECTED;
+        cur_skill->update();
+    }
+}
+
+//! Анселекция (закрашиваение серым) определённого скилла на всех страницах
+void SearchWidget::unselect_skill_on_all_pages(int sector_i, int circle_i, int s)
+{
+    Skill* cur_skill;
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        sector_data_t* cur_sector_ptr = page_skills_data[page_i]->sector_ptrs[sector_i];
+        Skill** cur_circle_ptr;
+        switch (circle_i)
+        {
+        case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+        case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+        case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+        default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+        }
+        cur_skill = cur_circle_ptr[s];
+        cur_skill->state = UNSELECTED;
+        cur_skill->update();
+    }
+}
+
+//! Делаем поиск среди всех скиллов по ключевым словам из строки поиска
+void SearchWidget::on_search()
+{
+    parent->setUpdatesEnabled(false);
+    QString key_word = search_line->text();
+    Skill* cur_skill;
+
+    bool found_sector_skills = false;
+    int first_found_page = -1;
+    // Проверяем все скиллы секторов
+    for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
+    {
+        sector_data_t* cur_sector_ptr = page_skills_data[0]->sector_ptrs[sector_i];
+        for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
+        {
+            Skill** cur_circle_ptr;
+            switch (circle_i)
+            {
+            case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+            case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+            case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+            default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+            }
+            for(int s = 0; s < 3; s++)
+            {
+                cur_skill = cur_circle_ptr[s];
+                if(is_skill_has_keyword(cur_skill, key_word))
+                {
+                    select_skill_on_all_pages(sector_i, circle_i, s);
+                    found_sector_skills = true;
+                }
+                else
+                {
+                    unselect_skill_on_all_pages(sector_i, circle_i, s);
+                }
+            }
+        }
+    }
+
+    // Проверяем все скиллы хэдера
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        QString page_name = pages[page_i];
+        for(int s = 0; s < (*basic_skills)[page_name].size(); s++)
+        {
+            cur_skill = (*basic_skills)[page_name][s];
+            if(is_skill_has_keyword(cur_skill, key_word))
+            {
+                cur_skill->state = SELECTED;
+                // Переключаем на страницу, где впервые нашли скилл, если не нашли секторные скиллы
+                if(first_found_page == -1 && !found_sector_skills)
+                {
+                    first_found_page = page_i;
+                    emit switch_page(page_i);
+                }
+            }
+            else
+            {
+                cur_skill->state = UNSELECTED;
+            }
+            cur_skill->update();
+        }
+    }
+
+    // Проверяем все центральные скиллы
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        for(int s = 0; s < 4; s++)
+        {
+            cur_skill = page_skills_data[page_i]->center_skills[s];
+            if(is_skill_has_keyword(cur_skill, key_word))
+            {
+                cur_skill->state = SELECTED;
+                // Переключаем на страницу, где впервые нашли скилл, если не нашли секторные скиллы
+                if(first_found_page == -1 && !found_sector_skills)
+                {
+                    first_found_page = page_i;
+                    emit switch_page(page_i);
+                }
+            }
+            else
+            {
+                cur_skill->state = UNSELECTED;
+            }
+            cur_skill->update();
+        }
+    }
+    parent->setUpdatesEnabled(true);
+    parent->update();
+}
+
+//! Закытие виджета поиска
 void SearchWidget::on_close()
 {
     this->search_line->clear();
     this->hide();
+
+    parent->setUpdatesEnabled(false);
+    Skill* cur_skill;
+    // Сбрасываем состояния всех скиллов
+    for(int page_i = 0; page_i < pages.size(); page_i++)
+    {
+        QString page_name = pages[page_i];
+        // все скиллы хэдера
+        for(int s = 0; s < (*basic_skills)[page_name].size(); s++)
+        {
+            cur_skill = (*basic_skills)[page_name][s];
+            cur_skill->state = NONE;
+            cur_skill->update();
+        }
+
+        // Все скиллы секторов
+        for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
+        {
+            sector_data_t* cur_sector_ptr = page_skills_data[page_i]->sector_ptrs[sector_i];
+            for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
+            {
+                Skill** cur_circle_ptr;
+                switch (circle_i)
+                {
+                case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
+                case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
+                case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
+                default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
+                }
+                for(int s = 0; s < 3; s++)
+                {
+                    cur_skill = cur_circle_ptr[s];
+                    cur_skill->state = NONE;
+                    cur_skill->update();
+                }
+            }
+        }
+
+        // Все центральные скиллы
+        for(int s = 0; s < 4; s++)
+        {
+            cur_skill = page_skills_data[page_i]->center_skills[s];
+            cur_skill->state = NONE;
+            cur_skill->update();
+        }
+    }
+    parent->setUpdatesEnabled(true);
+    parent->update();
 }
 

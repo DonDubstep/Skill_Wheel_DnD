@@ -13,6 +13,8 @@ class Description : public QWidget
 {
 public:
     Description(QWidget *window, QWidget* skill, QString name_text, QString desc_txt);
+    QString name_str;
+    QString desciption_str;
     //! Окно на котором рисуется рамка
 
 private:

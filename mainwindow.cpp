@@ -14,11 +14,13 @@ MainWindow::MainWindow(QWidget* parent)
     set_version_number();
 
     search_widget = new SearchWidget(this, ui->header_widget, ui->menubar);
+    connect(search_widget, SIGNAL(switch_page(int)), ui->header_widget, SLOT(change_combobox(int)));
     search_widget->hide();
     QAction* findAction = new QAction("Find", this);
     findAction->setShortcut(QKeySequence("Ctrl+F"));
     this->addAction(findAction);
     connect(findAction, SIGNAL(triggered()), search_widget, SLOT(show_up()));
+    connect(ui->search_action, SIGNAL(triggered()), search_widget, SLOT(show_up()));
     addTabs();
 }
 
@@ -42,6 +44,7 @@ void MainWindow::addTabs()
         connect(page->selection, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
         connect(ui->header_widget, SIGNAL(set_page_skills_selected_0_in_header_selection()), ui->header_widget->header_selection, SLOT(set_page_skills_selected_0()));
     }
+    search_widget->get_all_skills(pages, &ui->header_widget->basic_skills);
     preset_handler = new PresetHandler(pages, &ui->header_widget->basic_skills,this);
 
     QAction* openAction = new QAction("Open", this);
