@@ -79,6 +79,7 @@ QComboBox QAbstractItemView::item:hover {
 HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent)
 {
     installEventFilter(this);
+    main_window = parent;
     header_selection = new HeaderSelection(&basic_skills);
     connect(header_selection, SIGNAL(set_header_scores(int, int)), this, SLOT(set_header_scores(int, int)));
     read_json();
@@ -115,7 +116,7 @@ void HeaderWidget::read_json()
             title = cur_obj["title"].toString();
             description = cur_obj["description"].toString();
             index = cur_obj["index"].toInt();
-            Skill* cur_skill = new Skill(this, icon_path, title, description);
+            Skill* cur_skill = new Skill(main_window, icon_path, title, description);
             cur_skill->index = index;
             cur_skill->hide();
             QString class_name = pages[class_i];
@@ -397,17 +398,22 @@ void HeaderWidget::paint_basic_skills()
     for(int i = 0; i < BASIC_SKILL_NUM; i++)
     {
         int x = static_cast<int>(this->width()  * ICON_PADDING_LEFT_K
-                + i * (this->height() * ICON_DIAMETER_K + this->width() * ICON_MARGIN_BETWEEN_K));
+                + i * (icon_size + this->width() * ICON_MARGIN_BETWEEN_K));
         int y = static_cast<int>(this->height() * TOP_PADDING_K);
+
+        QPoint global = mapTo(main_window, QPoint(x, y));
         if(cur_class_skills[i]->is_changed_size == 0)
         {
             cur_class_skills[i]->resize(icon_size, icon_size);
-            cur_class_skills[i]->move(x, y);
+            cur_class_skills[i]->move(global);
+            cur_class_skills[i]->description->hide();
         }
         else
         {
             cur_class_skills[i]->resize(icon_size * 2, icon_size * 2);
-            cur_class_skills[i]->move(x - icon_size / 2, y - icon_size / 2);
+            cur_class_skills[i]->move(global - QPoint(icon_size / 2, icon_size / 2));
+            cur_class_skills[i]->description->show();
+            cur_class_skills[i]->description->raise();
         }
         cur_class_skills[i]->show();
     }

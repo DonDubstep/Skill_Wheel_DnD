@@ -48,6 +48,7 @@ public:
     void paint_scores();
     QMap<QString, QVector<Skill*>> basic_skills;
     HeaderSelection* header_selection;
+    QWidget* main_window;
 
 signals:
     void switch_page(int);
