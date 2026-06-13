@@ -49,6 +49,7 @@ protected:
 
 signals:
     void switch_page(int);
+    void set_all_selection_off();
 
 };
 

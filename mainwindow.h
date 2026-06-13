@@ -33,6 +33,7 @@ private slots:
     void addTabs();
     void activate_skills_in_pages(QVector<int>* active_basic_skills, QVector<int>* active_page_skills);
     void set_version_number();
+    void reset_all_selection();
 
 
 };

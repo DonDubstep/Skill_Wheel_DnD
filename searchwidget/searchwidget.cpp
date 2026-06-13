@@ -217,6 +217,7 @@ void SearchWidget::unselect_skill_on_all_pages(int sector_i, int circle_i, int s
 //! Делаем поиск среди всех скиллов по ключевым словам из строки поиска
 void SearchWidget::on_search()
 {
+    emit set_all_selection_off();
     parent->setUpdatesEnabled(false);
     QString key_word = search_line->text();
     Skill* cur_skill;
@@ -310,48 +311,17 @@ void SearchWidget::on_close()
 {
     this->search_line->clear();
     this->hide();
-
+    emit set_all_selection_off();
     parent->setUpdatesEnabled(false);
     Skill* cur_skill;
     // Сбрасываем состояния всех скиллов
     for(int page_i = 0; page_i < pages.size(); page_i++)
     {
         QString page_name = pages[page_i];
-        // все скиллы хэдера
+        // Все скиллы хэдера
         for(int s = 0; s < (*basic_skills)[page_name].size(); s++)
         {
             cur_skill = (*basic_skills)[page_name][s];
-            cur_skill->state = NONE;
-            cur_skill->update();
-        }
-
-        // Все скиллы секторов
-        for(int sector_i = 0; sector_i < sector_names.size(); sector_i++)
-        {
-            sector_data_t* cur_sector_ptr = page_skills_data[page_i]->sector_ptrs[sector_i];
-            for(int circle_i = 0; circle_i < circle_names.size(); circle_i++)
-            {
-                Skill** cur_circle_ptr;
-                switch (circle_i)
-                {
-                case CIRCLE_1:  cur_circle_ptr = cur_sector_ptr->circle_1;      break;
-                case CIRCLE_2:  cur_circle_ptr = cur_sector_ptr->circle_2;      break;
-                case CIRCLE_3:  cur_circle_ptr = cur_sector_ptr->circle_3;      break;
-                default:        cur_circle_ptr = cur_sector_ptr->base_circle;   break;
-                }
-                for(int s = 0; s < 3; s++)
-                {
-                    cur_skill = cur_circle_ptr[s];
-                    cur_skill->state = NONE;
-                    cur_skill->update();
-                }
-            }
-        }
-
-        // Все центральные скиллы
-        for(int s = 0; s < 4; s++)
-        {
-            cur_skill = page_skills_data[page_i]->center_skills[s];
             cur_skill->state = NONE;
             cur_skill->update();
         }

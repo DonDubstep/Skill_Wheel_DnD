@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     search_widget = new SearchWidget(this, ui->header_widget, ui->menubar);
     connect(search_widget, SIGNAL(switch_page(int)), ui->header_widget, SLOT(change_combobox(int)));
+    connect(search_widget, SIGNAL(set_all_selection_off()), this, SLOT(reset_all_selection()));
+
     search_widget->hide();
     QAction* findAction = new QAction("Find", this);
     findAction->setShortcut(QKeySequence("Ctrl+F"));
@@ -85,6 +87,14 @@ void MainWindow::set_version_number()
     QLabel* version_label = new QLabel("v1.1 by DonDubstep");
     version_label->setFont(font);
     statusBar()->addPermanentWidget(version_label);
+}
+
+void MainWindow::reset_all_selection()
+{
+    for(int i = 0; i < NUM_OF_PAGES; i++)
+    {
+        pages[i]->selection->selection_mode_off();
+    }
 }
 
 //! Функция смены вкладки для перехода между классами
